@@ -14,7 +14,7 @@ return [
         'add_default_role_on_register' => true,
         'default_role'                 => 'user',
         'default_avatar'               => 'users/default.png',
-        'redirect'                     => '/admin',
+        'redirect'                     => '/',
     ],
 
     /*
@@ -104,7 +104,7 @@ return [
         /*
          * Select default language
          */
-        'default' => 'en',
+        'default' => 'bg',
 
         /*
          * Select languages that are supported.
@@ -144,7 +144,8 @@ return [
         ],
 
         'widgets' => [
-
+            'TCG\\Voyager\\Widgets\\UserDimmer',
+            //'App\\Widgets\\LogsDimmer',
         ],
 
     ],
@@ -181,7 +182,7 @@ return [
     |
     */
 
-    'primary_color' => '#22A7F0',
+    'primary_color' => '#FF7700',
 
     'show_dev_tips' => true, // Show development tip "How To Use:" in Menu and Settings
 
