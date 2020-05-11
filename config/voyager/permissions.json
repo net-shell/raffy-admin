@@ -1,0 +1,289 @@
+[
+    {
+        "id": 1,
+        "key": "browse_admin",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 2,
+        "key": "browse_bread",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 3,
+        "key": "browse_database",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 4,
+        "key": "browse_media",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 5,
+        "key": "browse_compass",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 6,
+        "key": "browse_menus",
+        "table_name": "menus",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 7,
+        "key": "read_menus",
+        "table_name": "menus",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 8,
+        "key": "edit_menus",
+        "table_name": "menus",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 9,
+        "key": "add_menus",
+        "table_name": "menus",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 10,
+        "key": "delete_menus",
+        "table_name": "menus",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 11,
+        "key": "browse_roles",
+        "table_name": "roles",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 12,
+        "key": "read_roles",
+        "table_name": "roles",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 13,
+        "key": "edit_roles",
+        "table_name": "roles",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 14,
+        "key": "add_roles",
+        "table_name": "roles",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 15,
+        "key": "delete_roles",
+        "table_name": "roles",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 16,
+        "key": "browse_users",
+        "table_name": "users",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 17,
+        "key": "read_users",
+        "table_name": "users",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 18,
+        "key": "edit_users",
+        "table_name": "users",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 19,
+        "key": "add_users",
+        "table_name": "users",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 20,
+        "key": "delete_users",
+        "table_name": "users",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 21,
+        "key": "browse_settings",
+        "table_name": "settings",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 22,
+        "key": "read_settings",
+        "table_name": "settings",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 23,
+        "key": "edit_settings",
+        "table_name": "settings",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 24,
+        "key": "add_settings",
+        "table_name": "settings",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 25,
+        "key": "delete_settings",
+        "table_name": "settings",
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 26,
+        "key": "browse_hooks",
+        "table_name": null,
+        "created_at": "2020-05-10 22:07:10",
+        "updated_at": "2020-05-10 22:07:10"
+    },
+    {
+        "id": 27,
+        "key": "browse_logs",
+        "table_name": "logs",
+        "created_at": "2020-05-10 22:21:26",
+        "updated_at": "2020-05-10 22:21:26"
+    },
+    {
+        "id": 28,
+        "key": "read_logs",
+        "table_name": "logs",
+        "created_at": "2020-05-10 22:21:26",
+        "updated_at": "2020-05-10 22:21:26"
+    },
+    {
+        "id": 29,
+        "key": "edit_logs",
+        "table_name": "logs",
+        "created_at": "2020-05-10 22:21:26",
+        "updated_at": "2020-05-10 22:21:26"
+    },
+    {
+        "id": 30,
+        "key": "add_logs",
+        "table_name": "logs",
+        "created_at": "2020-05-10 22:21:26",
+        "updated_at": "2020-05-10 22:21:26"
+    },
+    {
+        "id": 31,
+        "key": "delete_logs",
+        "table_name": "logs",
+        "created_at": "2020-05-10 22:21:26",
+        "updated_at": "2020-05-10 22:21:26"
+    },
+    {
+        "id": 32,
+        "key": "browse_readers",
+        "table_name": "readers",
+        "created_at": "2020-05-10 22:43:25",
+        "updated_at": "2020-05-10 22:43:25"
+    },
+    {
+        "id": 33,
+        "key": "read_readers",
+        "table_name": "readers",
+        "created_at": "2020-05-10 22:43:25",
+        "updated_at": "2020-05-10 22:43:25"
+    },
+    {
+        "id": 34,
+        "key": "edit_readers",
+        "table_name": "readers",
+        "created_at": "2020-05-10 22:43:25",
+        "updated_at": "2020-05-10 22:43:25"
+    },
+    {
+        "id": 35,
+        "key": "add_readers",
+        "table_name": "readers",
+        "created_at": "2020-05-10 22:43:25",
+        "updated_at": "2020-05-10 22:43:25"
+    },
+    {
+        "id": 36,
+        "key": "delete_readers",
+        "table_name": "readers",
+        "created_at": "2020-05-10 22:43:25",
+        "updated_at": "2020-05-10 22:43:25"
+    },
+    {
+        "id": 37,
+        "key": "browse_tags",
+        "table_name": "tags",
+        "created_at": "2020-05-11 00:11:18",
+        "updated_at": "2020-05-11 00:11:18"
+    },
+    {
+        "id": 38,
+        "key": "read_tags",
+        "table_name": "tags",
+        "created_at": "2020-05-11 00:11:18",
+        "updated_at": "2020-05-11 00:11:18"
+    },
+    {
+        "id": 39,
+        "key": "edit_tags",
+        "table_name": "tags",
+        "created_at": "2020-05-11 00:11:18",
+        "updated_at": "2020-05-11 00:11:18"
+    },
+    {
+        "id": 40,
+        "key": "add_tags",
+        "table_name": "tags",
+        "created_at": "2020-05-11 00:11:18",
+        "updated_at": "2020-05-11 00:11:18"
+    },
+    {
+        "id": 41,
+        "key": "delete_tags",
+        "table_name": "tags",
+        "created_at": "2020-05-11 00:11:18",
+        "updated_at": "2020-05-11 00:11:18"
+    }
+]

@@ -14,7 +14,9 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "tcg/voyager": "^1.4"
+        "madebybob/voyager-config": "dev-master",
+        "tcg/voyager": "^1.4",
+        "voyager-excel": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
