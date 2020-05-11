@@ -643,5 +643,20 @@
         "delete": 1,
         "details": "{}",
         "order": 7
+    },
+    {
+        "id": 44,
+        "data_type_id": 6,
+        "field": "mac",
+        "type": "text",
+        "display_name": "MAC",
+        "required": 0,
+        "browse": 1,
+        "read": 1,
+        "edit": 1,
+        "add": 1,
+        "delete": 1,
+        "details": "{}",
+        "order": 6
     }
 ]
