@@ -544,7 +544,7 @@
         "data_type_id": 7,
         "field": "tag",
         "type": "text",
-        "display_name": "Tag",
+        "display_name": "\u041d\u043e\u043c\u0435\u0440",
         "required": 1,
         "browse": 1,
         "read": 1,
