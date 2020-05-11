@@ -5,7 +5,7 @@
             "name": "voyager-excel",
             "description": "voyager excel export hook",
             "version": "dev-master",
-            "enabled": true
+            "enabled": false
         }
     }
 }
