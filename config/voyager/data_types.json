@@ -73,7 +73,7 @@
         "slug": "readers",
         "display_name_singular": "\u0427\u0435\u0442\u0435\u0446",
         "display_name_plural": "\u0427\u0435\u0442\u0446\u0438",
-        "icon": "voyager-tag",
+        "icon": "voyager-location",
         "model_name": "App\\Reader",
         "policy_name": null,
         "controller": null,
@@ -82,7 +82,7 @@
         "server_side": 0,
         "details": "{\"order_column\":\"order\",\"order_display_column\":\"name\",\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
         "created_at": "2020-05-10 22:43:25",
-        "updated_at": "2020-05-11 01:18:05"
+        "updated_at": "2020-05-11 02:32:23"
     },
     {
         "id": 7,
@@ -90,7 +90,7 @@
         "slug": "tags",
         "display_name_singular": "\u041a\u0430\u0440\u0442\u0430",
         "display_name_plural": "\u041a\u0430\u0440\u0442\u0438",
-        "icon": "voyager-tag",
+        "icon": "voyager-credit-cards",
         "model_name": "App\\Tag",
         "policy_name": null,
         "controller": null,
@@ -99,6 +99,6 @@
         "server_side": 1,
         "details": "{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}",
         "created_at": "2020-05-11 00:11:18",
-        "updated_at": "2020-05-11 01:17:26"
+        "updated_at": "2020-05-11 02:32:44"
     }
 ]
