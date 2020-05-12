@@ -12,9 +12,9 @@
         "description": null,
         "generate_permissions": 1,
         "server_side": 0,
-        "details": "{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}",
+        "details": "{\"order_column\":\"name\",\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
         "created_at": "2020-05-10 22:07:09",
-        "updated_at": "2020-05-11 01:16:20"
+        "updated_at": "2020-05-11 19:30:12"
     },
     {
         "id": 2,
@@ -100,5 +100,22 @@
         "details": "{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}",
         "created_at": "2020-05-11 00:11:18",
         "updated_at": "2020-05-11 11:49:56"
+    },
+    {
+        "id": 8,
+        "name": "sections",
+        "slug": "sections",
+        "display_name_singular": "\u041e\u0442\u0434\u0435\u043b",
+        "display_name_plural": "\u041e\u0442\u0434\u0435\u043b\u0438",
+        "icon": "voyager-company",
+        "model_name": "App\\Section",
+        "policy_name": null,
+        "controller": null,
+        "description": null,
+        "generate_permissions": 1,
+        "server_side": 0,
+        "details": "{\"order_column\":\"name\",\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:28:42"
     }
 ]

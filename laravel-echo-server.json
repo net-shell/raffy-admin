@@ -1,0 +1,39 @@
+{
+	"authHost": "https://localhost",
+	"authEndpoint": "/broadcasting/auth",
+	"clients": [
+		{
+			"appId": "489b0bf996875b18",
+			"key": "307448428ddc94d23d2db9de9bb2d089"
+		}
+	],
+	"database": "redis",
+	"databaseConfig": {
+		"redis": {
+			"password": "ZTjoYZuO87X/iDbR27kgeCzL8c9HERtQwRpaHu6rgphgOljDsNUznkp0C3zE/vIKVl9AECPnQZQfC6JS"
+		},
+		"sqlite": {
+			"databasePath": "/database/laravel-echo-server.sqlite"
+		}
+	},
+	"devMode": true,
+	"host": null,
+	"port": "6001",
+	"protocol": "https",
+	"socketio": {},
+	"secureOptions": 67108864,
+	"sslCertPath": "/etc/ssl/certs/raffy-admin.crt",
+	"sslKeyPath": "/etc/ssl/private/raffy-admin.key",
+	"sslCertChainPath": "",
+	"sslPassphrase": "",
+	"subscribers": {
+		"http": true,
+		"redis": true
+	},
+	"apiOriginAllow": {
+		"allowCors": true,
+		"allowOrigin": "https://localhost",
+		"allowMethods": "GET, POST",
+		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+	}
+}

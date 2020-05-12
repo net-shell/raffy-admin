@@ -285,5 +285,40 @@
         "table_name": "tags",
         "created_at": "2020-05-11 00:11:18",
         "updated_at": "2020-05-11 00:11:18"
+    },
+    {
+        "id": 42,
+        "key": "browse_sections",
+        "table_name": "sections",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:23:56"
+    },
+    {
+        "id": 43,
+        "key": "read_sections",
+        "table_name": "sections",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:23:56"
+    },
+    {
+        "id": 44,
+        "key": "edit_sections",
+        "table_name": "sections",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:23:56"
+    },
+    {
+        "id": 45,
+        "key": "add_sections",
+        "table_name": "sections",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:23:56"
+    },
+    {
+        "id": 46,
+        "key": "delete_sections",
+        "table_name": "sections",
+        "created_at": "2020-05-11 19:23:56",
+        "updated_at": "2020-05-11 19:23:56"
     }
 ]

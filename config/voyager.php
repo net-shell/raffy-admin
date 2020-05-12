@@ -192,7 +192,8 @@ return [
     ],
 
     'additional_js' => [
-        //'js/custom.js',
+        'js/app.js',
+        env('APP_URL') . ':6001/socket.io/socket.io.js',
     ],
 
     'googlemaps' => [
