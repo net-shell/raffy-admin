@@ -3,9 +3,27 @@ require('./bootstrap');
 import Echo from "laravel-echo"
 
 window.io = require('socket.io-client');
-var moment = require('moment');
-moment.locale('bg');
+window.moment = require('moment');
+window.moment.locale('bg');
+window.Vue = require('vue');
 
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+// Vue
+window.vm = new Vue({
+    el: '#app',
+});
+
+// Echo
 window.Echo = new Echo({
     broadcaster: 'socket.io',
     host: window.location.hostname + ':6001'
@@ -13,61 +31,5 @@ window.Echo = new Echo({
 
 window.Echo.private(`App.Log`)
     .listen('TagLogged', (e) => {
-        let el = document.getElementById('monitor-app');
-        if (!el) return;
-        let log = e.log;
-        let newClass = 'attention-please well';
-        let newChild = document.createElement('div');
-        let timestamp = moment(log.created_at).format('X');
-        newChild.innerHTML = '<div class="log-entry row ' + newClass + '"><div class=col-sm-3><img class=img-responsive src="/storage/' + log.user.avatar + '"></div><div class="details col-sm-9"><div class="reader pull-right badge">' + log.reader.name + '</div><h3 class="name">' + log.user.name + '</h3><div class="live-clock" data-timestamp="' + timestamp + '"><h4 class="live-diff"></h4><h3 class="live-time"></h3><h4 class="live-date"></h4></div></div></div> ';
-        el.insertBefore(newChild, el.firstChild);
-        moment().format();
+        window.vm.$root.$emit('tag-logged', e.log);
     });
-
-function updateClocks(selRoot) {
-    // Live diff
-    let els = document.querySelectorAll(selRoot + ' .live-diff');
-    if (!els) return;
-    for(var elDiff of els) {
-        let now = getParentClock(elDiff);
-        elDiff.innerHTML = moment(now).fromNow();
-    }
-    
-    // Live time
-    els = document.querySelectorAll(selRoot + ' .live-time');
-    if (!els) return;
-    for (var elTime of els) {
-        let now = getParentClock(elTime);
-        elTime.innerHTML = moment(now).format('HH:mm:ss');
-    }
-    
-    // Live date
-    els = document.querySelectorAll(selRoot + ' .live-date');
-    if (!els) return;
-    for(var elDate of els) {
-        let now = getParentClock(elDate);
-        elDate.innerHTML = moment(now).format('dddd L');
-    }
-}
-
-function getParentClock(el) {
-    let root = el.parentNode;
-    
-    let now = new Date();
-    if (root && root.dataset.timestamp && root.dataset.timestamp.length > 0) {
-        now = new Date(root.dataset.timestamp * 1000);
-    }
-    console.log(root, root.dataset.timestamp, now.toUTCString())
-
-    return now;
-}
-
-function initClocks() {
-    updateClocks('.live-clock');
-}
-
-setInterval(initClocks, 1000);
-
-// Init
-initClocks();
-moment().format();

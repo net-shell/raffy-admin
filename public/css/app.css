@@ -4253,9 +4253,9 @@
 
 /* Sliding exits */
 .attention-please {
-  -webkit-animation: zoomIn;
-          animation: zoomIn;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  -webkit-animation: zoomInDown;
+          animation: zoomInDown;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
 }
 
