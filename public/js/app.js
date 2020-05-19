@@ -2005,22 +2005,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['log'],
+  props: ["log"],
+  data: function data() {
+    return {
+      momentCreated: null
+    };
+  },
   mounted: function mounted() {
-    setInterval(this.$forceUpdate, 60000);
+    setInterval(this.createMoment, 60000);
+    this.createMoment();
   },
   computed: {
-    momentCreated: function momentCreated() {
-      return window.moment(this.log.created_at);
-    },
     liveDiff: function liveDiff() {
+      if (!this.momentCreated) return;
       return this.momentCreated.fromNow();
     },
     liveTime: function liveTime() {
-      return this.momentCreated.format('HH:mm:ss');
+      if (!this.momentCreated) return;
+      return this.momentCreated.format("HH:mm:ss");
     },
     liveDate: function liveDate() {
-      return this.momentCreated.format('dddd L');
+      if (!this.momentCreated) return;
+      return this.momentCreated.format("dddd L");
+    }
+  },
+  methods: {
+    createMoment: function createMoment() {
+      this.momentCreated = window.moment(this.log.created_at);
     }
   }
 });
@@ -2105,6 +2116,9 @@ __webpack_require__.r(__webpack_exports__);
       this.newLogs.unshift(log);
     },
     onTagRequested: function onTagRequested(tagId, reader) {
+      this.newRequests = this.newRequests.filter(function (r) {
+        return r.tagId != tagId;
+      });
       this.newRequests.unshift({
         id: window.moment().format('X'),
         tagId: tagId,
@@ -2127,9 +2141,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -4658,7 +4669,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.log-entry[data-v-e693040e] {\n    padding: 0;\n    margin: 1em 0;\n    border: 1px solid #333;\n}\n.log-entry.faded[data-v-e693040e] {\n    opacity: 0.5;\n}\n.log-entry > div[data-v-e693040e] {\n    padding: 0;\n    margin-bottom: 0 !important;\n}\n.log-entry .details[data-v-e693040e] {\n    padding: 0 1.5em;\n}\n.log-entry .details .name[data-v-e693040e] {\n}\n.log-entry .img-responsive[data-v-e693040e] {\n    max-height: 200px;\n}\n.log-entry .reader[data-v-e693040e] {\n    font-size: 1em;\n    margin-top: 1.7em;\n}\n", ""]);
+exports.push([module.i, "\n.log-entry[data-v-e693040e] {\n  padding: 0;\n  margin: 1em 0;\n  border: 1px solid #333;\n}\n.log-entry.faded[data-v-e693040e] {\n  opacity: 0.5;\n}\n.log-entry > div[data-v-e693040e] {\n  padding: 0;\n  margin-bottom: 0 !important;\n}\n.log-entry .details[data-v-e693040e] {\n  padding: 0 1.5em;\n}\n.log-entry .details .name[data-v-e693040e] {\n}\n.log-entry .img-responsive[data-v-e693040e] {\n  max-height: 200px;\n}\n.log-entry .reader[data-v-e693040e] {\n  font-size: 1em;\n  margin-top: 1.7em;\n}\n", ""]);
 
 // exports
 
@@ -51709,7 +51720,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "new-tag alert alert-info attention-tada",
+      staticClass: "new-tag alert alert-danger attention-tada",
       attrs: { role: "alert" }
     },
     [
@@ -51717,7 +51728,7 @@ var render = function() {
       _vm._v(" "),
       _c("p", { staticClass: "lead" }, [
         _vm._v(
-          "\n        Нова карта на\n        " +
+          "\n        Непозната карта на\n        " +
             _vm._s(_vm.request.reader.name) +
             "\n    "
         )
@@ -51729,12 +51740,6 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("p", [_vm._v(_vm._s(_vm.request.creation_date))]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-lg btn-success", attrs: { type: "button" } },
-          [_vm._v("\n                Регистрирай\n            ")]
-        ),
         _vm._v(" "),
         _c("p", [
           _c("span", { staticClass: "icon voyager-tag" }),

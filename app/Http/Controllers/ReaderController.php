@@ -16,13 +16,15 @@ class ReaderController extends BaseController
     public function rfidEndpoint(Request $request) {
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
-        if(!$reader) abort(404);
+        if(!$reader) {
+            return response()->json([ 'error' => 404, 'message' => 'Reader not registered.' ], 404);
+        }
 
         $tagId = base64_decode($request->input('id'));
         $tag = Tag::whereTag($tagId)->first();
         if(!$tag) {
             broadcast(new TagRequested($tagId, $reader));
-            abort(404);
+            return response()->json([ 'status' => 'Requested' ], 404);
         }   
     
         $log = Log::create([

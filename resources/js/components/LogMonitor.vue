@@ -62,6 +62,7 @@
                 this.newLogs.unshift(log);
             },
             onTagRequested(tagId, reader) {
+                this.newRequests = this.newRequests.filter(r => r.tagId != tagId);
                 this.newRequests.unshift({
                     id: window.moment().format('X'),
                     tagId: tagId,
