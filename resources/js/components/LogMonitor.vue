@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-md-7">
             <h1>Монитор на записите в реално време</h1>
+            <div v-for="request in newRequests" :key="request.id">
+                <tag-request :request="request"></tag-request>
+            </div>
             <div v-for="log in logs" :key="log.id">
                 <log-entry :log="log"></log-entry>
             </div>
@@ -25,10 +28,12 @@
         },
         created() {
             this.$root.$on('tag-logged', this.onEntryLogged);
+            this.$root.$on('tag-requested', this.onTagRequested);
         },
         data() {
             return {
                 newLogs: [],
+                newRequests: [],
                 timestamp: null,
             }
         },
@@ -55,6 +60,15 @@
             },
             onEntryLogged(log) {
                 this.newLogs.unshift(log);
+            },
+            onTagRequested(tagId, reader) {
+                this.newRequests.unshift({
+                    id: window.moment().format('X'),
+                    tagId: tagId,
+                    reader: reader,
+                    creation_time: window.moment().format('HH:mm:ss'),
+                    creation_date: window.moment().format('dddd L')
+                });
             }
         }
     }

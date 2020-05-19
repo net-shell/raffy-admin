@@ -1,5 +1,5 @@
 {
-	"authHost": "https://localhost",
+	"authHost": "http://raffy-admin",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -19,11 +19,11 @@
 	"devMode": true,
 	"host": null,
 	"port": "6001",
-	"protocol": "https",
+	"protocol": "http",
 	"socketio": {},
 	"secureOptions": 67108864,
-	"sslCertPath": "/etc/ssl/certs/raffy-admin.crt",
-	"sslKeyPath": "/etc/ssl/private/raffy-admin.key",
+	"sslCertPath": "/home/ash/ssl/raffy-admin.crt",
+	"sslKeyPath": "/home/ash/ssl/raffy-admin.key",
 	"sslCertChainPath": "",
 	"sslPassphrase": "",
 	"subscribers": {
@@ -32,7 +32,7 @@
 	},
 	"apiOriginAllow": {
 		"allowCors": true,
-		"allowOrigin": "https://localhost",
+		"allowOrigin": "https://raffy-admin",
 		"allowMethods": "GET, POST",
 		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 	}

@@ -4252,10 +4252,30 @@
 /* Sliding entrances */
 
 /* Sliding exits */
-.attention-please {
+.attention-zoom {
   -webkit-animation: zoomInDown;
           animation: zoomInDown;
   -webkit-animation-duration: 1s;
           animation-duration: 1s;
+}
+
+.attention-tada {
+  -webkit-animation: tada;
+          animation: tada;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+}
+
+.alert .close {
+  right: -20px;
+  top: -15px;
+  padding: 5px 10px;
+  background: #333;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.no-margin {
+  margin: 0 !important;
 }
 

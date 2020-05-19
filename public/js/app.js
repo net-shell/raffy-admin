@@ -2054,6 +2054,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['lastLogs'],
@@ -2066,10 +2069,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.$root.$on('tag-logged', this.onEntryLogged);
+    this.$root.$on('tag-requested', this.onTagRequested);
   },
   data: function data() {
     return {
       newLogs: [],
+      newRequests: [],
       timestamp: null
     };
   },
@@ -2098,8 +2103,53 @@ __webpack_require__.r(__webpack_exports__);
     },
     onEntryLogged: function onEntryLogged(log) {
       this.newLogs.unshift(log);
+    },
+    onTagRequested: function onTagRequested(tagId, reader) {
+      this.newRequests.unshift({
+        id: window.moment().format('X'),
+        tagId: tagId,
+        reader: reader,
+        creation_time: window.moment().format('HH:mm:ss'),
+        creation_date: window.moment().format('dddd L')
+      });
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TagRequest.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TagRequest.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['request']
 });
 
 /***/ }),
@@ -5327,7 +5377,7 @@ module.exports.parser = __webpack_require__(/*! engine.io-parser */ "./node_modu
  */
 
 var transports = __webpack_require__(/*! ./transports/index */ "./node_modules/engine.io-client/lib/transports/index.js");
-var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/component-emitter/index.js");
+var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/engine.io-client/node_modules/component-emitter/index.js");
 var debug = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js")('engine.io-client:socket');
 var index = __webpack_require__(/*! indexof */ "./node_modules/indexof/index.js");
 var parser = __webpack_require__(/*! engine.io-parser */ "./node_modules/engine.io-parser/lib/browser.js");
@@ -6086,7 +6136,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  */
 
 var parser = __webpack_require__(/*! engine.io-parser */ "./node_modules/engine.io-parser/lib/browser.js");
-var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/component-emitter/index.js");
+var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/engine.io-client/node_modules/component-emitter/index.js");
 
 /**
  * Module exports.
@@ -6566,7 +6616,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 var XMLHttpRequest = __webpack_require__(/*! xmlhttprequest-ssl */ "./node_modules/engine.io-client/lib/xmlhttprequest.js");
 var Polling = __webpack_require__(/*! ./polling */ "./node_modules/engine.io-client/lib/transports/polling.js");
-var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/component-emitter/index.js");
+var Emitter = __webpack_require__(/*! component-emitter */ "./node_modules/engine.io-client/node_modules/component-emitter/index.js");
 var inherit = __webpack_require__(/*! component-inherit */ "./node_modules/component-inherit/index.js");
 var debug = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js")('engine.io-client:polling-xhr');
 var globalThis = __webpack_require__(/*! ../globalThis */ "./node_modules/engine.io-client/lib/globalThis.browser.js");
@@ -7587,6 +7637,192 @@ module.exports = function (opts) {
       return new globalThis[['Active'].concat('Object').join('X')]('Microsoft.XMLHTTP');
     } catch (e) { }
   }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/engine.io-client/node_modules/component-emitter/index.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/engine.io-client/node_modules/component-emitter/index.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (true) {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+
+  // Remove event specific arrays for event types that no
+  // one is subscribed for to avoid memory leak.
+  if (callbacks.length === 0) {
+    delete this._callbacks['$' + event];
+  }
+
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+
+  var args = new Array(arguments.length - 1)
+    , callbacks = this._callbacks['$' + event];
+
+  for (var i = 1; i < arguments.length; i++) {
+    args[i - 1] = arguments[i];
+  }
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
 };
 
 
@@ -51356,7 +51592,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.log
-    ? _c("div", { staticClass: "log-entry well row attention-please" }, [
+    ? _c("div", { staticClass: "log-entry well row attention-zoom" }, [
         _c("div", { staticClass: "col-sm-3" }, [
           _c("img", {
             staticClass: "img-responsive",
@@ -51413,6 +51649,15 @@ var render = function() {
       [
         _c("h1", [_vm._v("Монитор на записите в реално време")]),
         _vm._v(" "),
+        _vm._l(_vm.newRequests, function(request) {
+          return _c(
+            "div",
+            { key: request.id },
+            [_c("tag-request", { attrs: { request: request } })],
+            1
+          )
+        }),
+        _vm._v(" "),
         _vm._l(_vm.logs, function(log) {
           return _c(
             "div",
@@ -51440,6 +51685,86 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "new-tag alert alert-info attention-tada",
+      attrs: { role: "alert" }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v(
+          "\n        Нова карта на\n        " +
+            _vm._s(_vm.request.reader.name) +
+            "\n    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("p", { staticClass: "lead no-margin" }, [
+          _vm._v(_vm._s(_vm.request.creation_time))
+        ]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.request.creation_date))]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-lg btn-success", attrs: { type: "button" } },
+          [_vm._v("\n                Регистрирай\n            ")]
+        ),
+        _vm._v(" "),
+        _c("p", [
+          _c("span", { staticClass: "icon voyager-tag" }),
+          _vm._v(
+            "\n                " + _vm._s(_vm.request.tagId) + "\n            "
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -63697,7 +64022,8 @@ module.exports = yeast;
 
 var map = {
 	"./components/LogEntry.vue": "./resources/js/components/LogEntry.vue",
-	"./components/LogMonitor.vue": "./resources/js/components/LogMonitor.vue"
+	"./components/LogMonitor.vue": "./resources/js/components/LogMonitor.vue",
+	"./components/TagRequest.vue": "./resources/js/components/TagRequest.vue"
 };
 
 
@@ -63735,35 +64061,43 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-window.moment.locale('bg');
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
+if (document.getElementById('app')) {
+  window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+  window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+  window.moment.locale('bg');
+  window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+  /**
+   * The following block of code may be used to automatically register your
+   * Vue components. It will recursively scan this directory for the Vue
+   * components and automatically register them with their "basename".
+   *
+   * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+   */
 
-files.keys().map(function (key) {
-  return Vue.component(key.split('/').pop().split('.')[0], files(key)["default"]);
-}); // Vue
+  var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 
-window.vm = new Vue({
-  el: '#app'
-}); // Echo
+  files.keys().map(function (key) {
+    return Vue.component(key.split('/').pop().split('.')[0], files(key)["default"]);
+  }); // Vue
 
-window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
-});
-window.Echo["private"]("App.Log").listen('TagLogged', function (e) {
-  window.vm.$root.$emit('tag-logged', e.log);
-});
+  window.vm = new Vue({
+    el: '#app'
+  }); // Echo
+
+  if (typeof io !== 'undefined') {
+    window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      broadcaster: 'socket.io',
+      host: window.location.hostname + ':6001'
+    });
+    window.Echo["private"]("App.Log").listen('TagLogged', function (e) {
+      window.vm.$root.$emit('tag-logged', e.log);
+    });
+    window.Echo["private"]("App.Tag").listen('TagRequested', function (e) {
+      window.vm.$root.$emit('tag-requested', e.tagId, e.reader);
+    });
+  }
+}
 
 /***/ }),
 
@@ -63968,6 +64302,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LogMonitor_vue_vue_type_template_id_1a0c3f21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LogMonitor_vue_vue_type_template_id_1a0c3f21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TagRequest.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/TagRequest.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TagRequest.vue?vue&type=template&id=0436c3c0& */ "./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0&");
+/* harmony import */ var _TagRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TagRequest.vue?vue&type=script&lang=js& */ "./resources/js/components/TagRequest.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TagRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TagRequest.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TagRequest.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/TagRequest.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TagRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TagRequest.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TagRequest.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TagRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TagRequest.vue?vue&type=template&id=0436c3c0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TagRequest.vue?vue&type=template&id=0436c3c0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TagRequest_vue_vue_type_template_id_0436c3c0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

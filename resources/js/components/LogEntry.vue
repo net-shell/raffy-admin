@@ -1,5 +1,5 @@
 <template>
-    <div class="log-entry well row attention-please" v-if="log">
+    <div class="log-entry well row attention-zoom" v-if="log">
         <div class=col-sm-3>
             <img class=img-responsive :src="'/storage/' + log.user.avatar">
         </div>

@@ -1,6 +1,24 @@
 @import '~animate.css/source/animate.css';
 
-.attention-please {
+.attention-zoom {
     animation: zoomInDown;
     animation-duration: 1s;
+}
+
+.attention-tada {
+    animation: tada;
+    animation-duration: 1s;
+}
+
+.alert .close {
+    right: -20px;
+    top: -15px;
+    padding: 5px 10px;
+    background: #333;
+    border-radius: 2px;
+    color: #fff;
+}
+
+.no-margin {
+    margin: 0 !important;
 }

@@ -91,7 +91,10 @@ chgrp www-data -R ./;
 chmod g+w -R ./;
 ```
 
-5. **Test in browser!**
+5. Start the web socket server
+`laravel-echo-server start`
+
+6. **Test in browser!**
 
 Go to
 

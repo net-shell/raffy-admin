@@ -98,7 +98,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="locale">{{ __('voyager::generic.section') }}</label>
+                                <label for="locale">Отдел</label>
                                 <select class="form-control select2" id="section" name="section">
                                     @php
                                         $row = $dataTypeContent;

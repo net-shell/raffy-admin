@@ -21,3 +21,7 @@ Broadcast::channel('App.Log', function ($user) {
     return true;
     return $user->role_id == 1;
 });
+
+Broadcast::channel('App.Tag', function ($user) {
+    return true;
+});

@@ -9,18 +9,21 @@ use App\Tag;
 use App\Reader;
 use App\User;
 use App\Events\TagLogged;
+use App\Events\TagRequested;
 
 class ReaderController extends BaseController
 {
     public function rfidEndpoint(Request $request) {
-        $tagId = base64_decode($request->input('id'));
         $readerId = base64_decode($request->input('reader'));
-    
-        $tag = Tag::whereTag($tagId)->first();
-        if(!$tag) abort(404);
-    
         $reader = Reader::whereMac($readerId)->first();
         if(!$reader) abort(404);
+
+        $tagId = base64_decode($request->input('id'));
+        $tag = Tag::whereTag($tagId)->first();
+        if(!$tag) {
+            broadcast(new TagRequested($tagId, $reader));
+            abort(404);
+        }   
     
         $log = Log::create([
             'user_id' => $tag->user_id,
