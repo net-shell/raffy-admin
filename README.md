@@ -1,5 +1,5 @@
 # NetShell Raffy
-RFID Identification And Time Tracking
+RFID-enabled authentication, authorization and time tracking for company propery access control.
 
 ## Requirements
 
@@ -65,6 +65,12 @@ server {
 
 `sudo service nginx reload`
 
+### Hosts File
+Edit `/etc/hosts` as root and add entry for `raffy-admin` to match your IP:
+```
+127.0.0.1     raffy-admin
+```
+
 ### Raffy
 1. Navigate to where you cloned Raffy Admin.
 
@@ -91,19 +97,6 @@ chgrp www-data -R ./;
 chmod g+w -R ./;
 ```
 
-5. Start the web socket server
-`laravel-echo-server start`
-
-6. **Test in browser!**
-
-Go to
-
-[https://localhost](https://localhost)
-
-You should see the login screen or maybe a friendly error if something went wrong.
-
-If you are warned about the certificate you'll have to click on "Advanced" under the warning and then look for a "Proceed to localhost" button.
-
 ## Configuration
 1. Set environment variables.
 
@@ -122,3 +115,15 @@ Edit `laravel-echo-server.json` and set the Redis password there as well.
 4. Import Voyager configuration.
 
 `php artisan voyager:import -y`
+
+## Running
+1. Start the web socket server
+`laravel-echo-server start`
+
+2. **Test in browser!**
+
+Go to
+
+[http://raffy-admin](http://raffy-admin)
+
+You should see the login screen or maybe a friendly error if something went wrong.
