@@ -10,6 +10,7 @@
             </div>
         </div>
         <div class="live-clock big-clock col-md-5 text-center">
+            <notifications group="reader" />
             <h1>{{ liveTime }}</h1>
             <h4>{{ liveDate }}</h4>
             <clock size="300px"></clock>

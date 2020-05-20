@@ -6,4 +6,7 @@ Voyager::routes();
 
 Route::get('monitor', 'MonitorController@index')->middleware('admin.user');
 
-Route::post('rfid-endpoint', 'ReaderController@rfidEndpoint');
+Route::group(['prefix' => '/iot'], function() {
+    Route::post('log-tag', 'ReaderController@logTag');
+    Route::post('start-reader', 'ReaderController@startReader');
+});

@@ -25,3 +25,7 @@ Broadcast::channel('App.Log', function ($user) {
 Broadcast::channel('App.Tag', function ($user) {
     return true;
 });
+
+Broadcast::channel('App.Reader', function ($user) {
+    return true;
+});

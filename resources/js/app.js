@@ -1,11 +1,15 @@
 require('./bootstrap');
-import Echo from 'laravel-echo';
+import Echo from 'laravel-echo'
+import Notifications from 'vue-notification'
 
-if(document.getElementById('app')) {
+if (document.getElementById('app')) {
     window.io = require('socket.io-client');
     window.moment = require('moment');
     window.moment.locale('bg');
     window.Vue = require('vue');
+    window.Notifications = require('vue-notification');
+
+    Vue.use(Notifications);
 
     /**
      * The following block of code may be used to automatically register your
@@ -38,6 +42,30 @@ if(document.getElementById('app')) {
         window.Echo.private(`App.Tag`)
             .listen('TagRequested', (e) => {
                 window.vm.$root.$emit('tag-requested', e.tagId, e.reader);
+            });
+
+        window.Echo.private(`App.Reader`)
+            .listen('ReaderStarted', (e) => {
+                window.vm.$root.$emit('reader-started', e.reader);
+                console.log('STARTED', e.reader)
+                Vue.notify({
+                    group: 'reader',
+                    type: 'success',
+                    duration: 10000,
+                    title: "Стартиран е четец",
+                    text: e.reader.name
+                });
+            })
+            .listen('ReaderRequested', (e) => {
+                window.vm.$root.$emit('reader-requested', e.readerId);
+                console.log('REQUESTED', e.readerId)
+                Vue.notify({
+                    group: 'reader',
+                    type: 'danger',
+                    duration: 10000,
+                    title: "Нова заявка за четец",
+                    text: e.readerId
+                });
             });
     }
 }

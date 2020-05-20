@@ -4,7 +4,10 @@
       <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
     </div>
     <div class="details col-sm-9">
-      <div class="reader pull-right badge">{{ log.reader.name }}</div>
+      <div class="reader pull-right label label-default">
+        <span class="icon voyager-location"></span>
+        {{ log.reader.name }}
+      </div>
       <h3 class="name">{{ log.user.name }}</h3>
       <div class="live-clock">
         <h4>{{ liveDiff }}</h4>

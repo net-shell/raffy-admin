@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReaderStarted;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Log;
@@ -10,10 +11,23 @@ use App\Reader;
 use App\User;
 use App\Events\TagLogged;
 use App\Events\TagRequested;
+use App\Events\ReaderRequested;
 
 class ReaderController extends BaseController
 {
-    public function rfidEndpoint(Request $request) {
+    public function startReader(Request $request) {
+        $readerId = base64_decode($request->input('reader'));
+        $reader = Reader::whereMac($readerId)->first();
+        if(!$reader) {
+            broadcast(new ReaderRequested($readerId));
+            return response()->json([ 'error' => 404, 'message' => 'Reader not registered.' ], 404);
+        }
+
+        broadcast(new ReaderStarted($reader));
+        return $reader->toJson();
+    }
+
+    public function logTag(Request $request) {
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
         if(!$reader) {
