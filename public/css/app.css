@@ -4252,6 +4252,14 @@
 /* Sliding entrances */
 
 /* Sliding exits */
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
 .attention-zoom {
   -webkit-animation: zoomInDown;
           animation: zoomInDown;
@@ -4275,7 +4283,12 @@
   color: #fff;
 }
 
-.no-margin {
-  margin: 0 !important;
+.row.condensed {
+  margin: 0;
+}
+
+.row.condensed > div {
+  padding: 0;
+  margin-bottom: 0 !important;
 }
 

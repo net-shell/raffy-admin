@@ -1,5 +1,13 @@
 @import '~animate.css/source/animate.css';
 
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
 .attention-zoom {
     animation: zoomInDown;
     animation-duration: 1s;
@@ -19,6 +27,11 @@
     color: #fff;
 }
 
-.no-margin {
-    margin: 0 !important;
+.row.condensed {
+    margin: 0;
+}
+
+.row.condensed > div {
+    padding: 0;
+    margin-bottom: 0 !important;
 }

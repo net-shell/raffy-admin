@@ -2007,6 +2007,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["log"],
   data: function data() {
@@ -4673,7 +4689,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.log-entry[data-v-e693040e] {\n  padding: 0;\n  margin: 1em 0;\n  border: 1px solid #333;\n}\n.log-entry.faded[data-v-e693040e] {\n  opacity: 0.5;\n}\n.log-entry > div[data-v-e693040e] {\n  padding: 0;\n  margin-bottom: 0 !important;\n}\n.log-entry .details[data-v-e693040e] {\n  padding: 0 1.5em;\n}\n.log-entry .details .name[data-v-e693040e] {\n}\n.log-entry .img-responsive[data-v-e693040e] {\n  max-height: 200px;\n}\n.log-entry .reader[data-v-e693040e] {\n  font-size: 1em;\n  margin-top: 1.7em;\n}\n", ""]);
+exports.push([module.i, "\n.log-entry[data-v-e693040e] {\n  padding: 0;\n  margin: 1em 0;\n  border: 1px solid #333;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-responsive[data-v-e693040e] {\n  max-height: 200px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0 0 .5em 0;\n}\n.log-entry .alert[data-v-e693040e] {\n  padding: .5em 1.5em;\n  margin: 0;\n}\n.log-entry .alert > h3[data-v-e693040e] {\n  margin: .2em 0;\n}\n.log-entry .alert > h4[data-v-e693040e] {\n  margin: 0;\n}\n", ""]);
 
 // exports
 
@@ -51607,36 +51623,73 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.log
-    ? _c("div", { staticClass: "log-entry well row attention-zoom" }, [
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("img", {
-            staticClass: "img-responsive",
-            attrs: { src: "/storage/" + _vm.log.user.avatar }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "details col-sm-9" }, [
-          _c("div", { staticClass: "reader pull-right label label-default" }, [
-            _c("span", { staticClass: "icon voyager-location" }),
-            _vm._v("\n      " + _vm._s(_vm.log.reader.name) + "\n    ")
-          ]),
-          _vm._v(" "),
-          _c("h3", { staticClass: "name" }, [
-            _vm._v(_vm._s(_vm.log.user.name))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "live-clock" }, [
-            _c("h4", [_vm._v(_vm._s(_vm.liveDiff))]),
+    ? _c("div", { staticClass: "log-entry attention-zoom" }, [
+        _c("div", { staticClass: "well no-margin no-padding" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-4 no-margin" }, [
+              _c("img", {
+                staticClass: "img-responsive",
+                attrs: { src: "/storage/" + _vm.log.user.avatar }
+              })
+            ]),
             _vm._v(" "),
-            _c("h3", [_vm._v(_vm._s(_vm.liveTime))]),
-            _vm._v(" "),
-            _c("h4", [_vm._v(_vm._s(_vm.liveDate))])
+            _c(
+              "div",
+              { staticClass: "col-sm-8 no-padding no-margin details" },
+              [
+                _c("div", [
+                  _c("h3", { staticClass: "name" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.log.user.name) +
+                        "\n          "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.log.user.section
+                    ? _c("p", [
+                        _c("span", { staticClass: "icon voyager-company" }),
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.log.user.section.name) +
+                            "\n          "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row condensed" }, [
+                  _c("div", { staticClass: "col-xs-6" }, [
+                    _c("p", [_vm._v("ВХОД")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "alert alert-success" }, [
+                      _c("p", [_vm._v(_vm._s(_vm.liveDiff))]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "lead" }, [
+                        _vm._v(_vm._s(_vm.liveTime))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.liveDate))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              ]
+            )
           ])
         ])
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-6" }, [_c("p", [_vm._v("ИЗХОД")])])
+  }
+]
 render._withStripped = true
 
 
@@ -51694,7 +51747,7 @@ var render = function() {
         _vm._v(" "),
         _c("h1", [_vm._v(_vm._s(_vm.liveTime))]),
         _vm._v(" "),
-        _c("h4", [_vm._v(_vm._s(_vm.liveDate))]),
+        _c("h3", [_vm._v(_vm._s(_vm.liveDate))]),
         _vm._v(" "),
         _c("clock", { attrs: { size: "300px" } })
       ],

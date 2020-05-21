@@ -1,18 +1,34 @@
 <template>
-  <div class="log-entry well row attention-zoom" v-if="log">
-    <div class="col-sm-3">
-      <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
-    </div>
-    <div class="details col-sm-9">
-      <div class="reader pull-right label label-default">
-        <span class="icon voyager-location"></span>
-        {{ log.reader.name }}
-      </div>
-      <h3 class="name">{{ log.user.name }}</h3>
-      <div class="live-clock">
-        <h4>{{ liveDiff }}</h4>
-        <h3>{{ liveTime }}</h3>
-        <h4>{{ liveDate }}</h4>
+  <div class="log-entry attention-zoom" v-if="log">
+    <div class="well no-margin no-padding">
+      <div class="row">
+        <div class="col-sm-4 no-margin">
+          <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
+        </div>
+        <div class="col-sm-8 no-padding no-margin details">
+          <div>
+            <h3 class="name">
+              {{ log.user.name }}
+            </h3>
+            <p v-if="log.user.section">
+              <span class="icon voyager-company"></span>
+              {{ log.user.section.name }}
+            </p>
+          </div>
+          <div class="row condensed">
+            <div class="col-xs-6">
+              <p>ВХОД</p>
+              <div class="alert alert-success">
+                <p>{{ liveDiff }}</p>
+                <p class="lead">{{ liveTime }}</p>
+                <p>{{ liveDate }}</p>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <p>ИЗХОД</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,23 +74,29 @@ export default {
   margin: 1em 0;
   border: 1px solid #333;
 }
-.log-entry.faded {
-  opacity: 0.5;
+
+.log-entry .row.condensed {
+  margin: 0 15px 0 0;
 }
-.log-entry > div {
-  padding: 0;
-  margin-bottom: 0 !important;
-}
-.log-entry .details {
-  padding: 0 1.5em;
-}
-.log-entry .details .name {
-}
+
 .log-entry .img-responsive {
   max-height: 200px;
 }
-.log-entry .reader {
-  font-size: 1em;
-  margin-top: 1.7em;
+
+.log-entry .name {
+  margin: 0 0 .5em 0;
+}
+
+.log-entry .alert {
+  padding: .5em 1.5em;
+  margin: 0;
+}
+
+.log-entry .alert > h3 {
+  margin: .2em 0;
+}
+
+.log-entry .alert > h4 {
+  margin: 0;
 }
 </style>
