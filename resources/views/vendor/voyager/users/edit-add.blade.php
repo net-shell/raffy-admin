@@ -98,13 +98,13 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="locale">Отдел</label>
-                                <select class="form-control select2" id="section" name="section">
-                                    @php
-                                        $row = $dataTypeContent;
-                                    @endphp
-                                    @include('voyager::formfields.relationship', ['options' => $dataTypeContent->details])
-                                </select>
+                                <label for="section">Отдел</label>
+                                @php
+                                    $dataTypeRows = $dataType->{(isset($dataTypeContent->id) ? 'editRows' : 'addRows' )};
+                                    $row     = $dataTypeRows->where('field', 'user_belongsto_section_relationship')->first();
+                                    $options = $row->details;
+                                @endphp
+                                @include('voyager::formfields.relationship')
                             </div>
                         </div>
                     </div>
