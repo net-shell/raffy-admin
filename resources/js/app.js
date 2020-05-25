@@ -1,6 +1,10 @@
 require('./bootstrap');
+
 import Echo from 'laravel-echo'
 import Notifications from 'vue-notification'
+import Multiselect from 'vue-multiselect'
+
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 if (document.getElementById('app')) {
     window.io = require('socket.io-client');
@@ -10,6 +14,8 @@ if (document.getElementById('app')) {
     window.Notifications = require('vue-notification');
 
     Vue.use(Notifications);
+
+    Vue.component('multiselect', Multiselect)
 
     /**
      * The following block of code may be used to automatically register your

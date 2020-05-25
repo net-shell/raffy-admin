@@ -39,7 +39,7 @@ class ReaderController extends BaseController
         if(!$tag) {
             broadcast(new TagRequested($tagId, $reader));
             return response()->json([ 'status' => 'Requested' ], 404);
-        }   
+        }
     
         $log = Log::create([
             'user_id' => $tag->user_id,

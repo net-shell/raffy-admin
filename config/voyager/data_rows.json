@@ -102,7 +102,7 @@
         "add": 0,
         "delete": 0,
         "details": "{}",
-        "order": 7
+        "order": 8
     },
     {
         "id": 8,
@@ -117,7 +117,7 @@
         "add": 1,
         "delete": 1,
         "details": "{}",
-        "order": 8
+        "order": 9
     },
     {
         "id": 9,
@@ -132,7 +132,7 @@
         "add": 1,
         "delete": 0,
         "details": "{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":\"0\",\"taggable\":\"0\"}",
-        "order": 10
+        "order": 11
     },
     {
         "id": 10,
@@ -147,7 +147,7 @@
         "add": 1,
         "delete": 0,
         "details": "{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}",
-        "order": 11
+        "order": 12
     },
     {
         "id": 11,
@@ -162,7 +162,7 @@
         "add": 0,
         "delete": 0,
         "details": "{}",
-        "order": 12
+        "order": 15
     },
     {
         "id": 12,
@@ -312,7 +312,7 @@
         "add": 1,
         "delete": 1,
         "details": "{}",
-        "order": 9
+        "order": 10
     },
     {
         "id": 22,
@@ -349,7 +349,7 @@
         "data_type_id": 5,
         "field": "created_at",
         "type": "timestamp",
-        "display_name": "\u0412\u0440\u0435\u043c\u0435",
+        "display_name": "\u0412\u0445\u043e\u0434",
         "required": 0,
         "browse": 1,
         "read": 1,
@@ -358,21 +358,6 @@
         "delete": 1,
         "details": "{\"format\":\"%d\\\/%m\\\/%y %H:%M:%S\"}",
         "order": 3
-    },
-    {
-        "id": 25,
-        "data_type_id": 5,
-        "field": "updated_at",
-        "type": "timestamp",
-        "display_name": "Updated At",
-        "required": 0,
-        "browse": 0,
-        "read": 0,
-        "edit": 0,
-        "add": 0,
-        "delete": 0,
-        "details": "{}",
-        "order": 4
     },
     {
         "id": 26,
@@ -522,7 +507,7 @@
         "add": 1,
         "delete": 1,
         "details": "{}",
-        "order": 6
+        "order": 7
     },
     {
         "id": 36,
@@ -732,7 +717,7 @@
         "add": 1,
         "delete": 1,
         "details": "{\"model\":\"App\\\\Section\",\"table\":\"sections\",\"type\":\"belongsTo\",\"column\":\"section_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}",
-        "order": 13
+        "order": 14
     },
     {
         "id": 50,
@@ -740,13 +725,28 @@
         "field": "section_id",
         "type": "text",
         "display_name": "Section Id",
-        "required": 1,
+        "required": 0,
         "browse": 1,
         "read": 1,
         "edit": 1,
         "add": 1,
         "delete": 1,
         "details": "{}",
-        "order": 12
+        "order": 13
+    },
+    {
+        "id": 51,
+        "data_type_id": 5,
+        "field": "exited_at",
+        "type": "timestamp",
+        "display_name": "\u0418\u0437\u0445\u043e\u0434",
+        "required": 0,
+        "browse": 1,
+        "read": 1,
+        "edit": 1,
+        "add": 1,
+        "delete": 1,
+        "details": "{\"format\":\"%d\\\/%m\\\/%y %H:%M:%S\",\"datepicker\":{\"format\":\"DD-MM-YYYY\"}}",
+        "order": 4
     }
 ]

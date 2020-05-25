@@ -1,31 +1,32 @@
 <template>
   <div class="log-entry attention-zoom" v-if="log">
-    <div class="well no-margin no-padding">
-      <div class="row">
-        <div class="col-sm-4 no-margin">
-          <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
-        </div>
-        <div class="col-sm-8 no-padding no-margin details">
-          <div>
-            <h3 class="name">
-              {{ log.user.name }}
-            </h3>
-            <p v-if="log.user.section">
-              <span class="icon voyager-company"></span>
-              {{ log.user.section.name }}
-            </p>
+    <div class="panel panel-bordered">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-3 no-margin">
+            <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
           </div>
-          <div class="row condensed">
-            <div class="col-xs-6">
-              <p>ВХОД</p>
-              <div class="alert alert-success">
-                <p>{{ liveDiff }}</p>
-                <p class="lead">{{ liveTime }}</p>
-                <p>{{ liveDate }}</p>
-              </div>
+          <div class="col-sm-9 no-padding no-margin details">
+            <div>
+              <h3 class="name">{{ log.user.name }}</h3>
+              <p class="text-uppercase" v-if="log.user.section">
+                <span class="icon voyager-company"></span>
+                {{ log.user.section.name }}
+              </p>
             </div>
-            <div class="col-xs-6">
-              <p>ИЗХОД</p>
+            <div class="row condensed timestamps">
+              <div class="col-xs-6 time-entry">
+                <p class="lead highlighted">ВХОД</p>
+                <p>{{ entryDiff }}</p>
+                <p class="lead">{{ entryTime }}</p>
+                <p>{{ entryDate }}</p>
+              </div>
+              <div class="col-xs-6 time-exit">
+                <p class="lead highlighted">ИЗХОД</p>
+                <p>{{ exitDiff }}</p>
+                <p class="lead">{{ exitTime }}</p>
+                <p>{{ exitDate }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -39,40 +40,53 @@ export default {
   props: ["log"],
   data() {
     return {
-      momentCreated: null
+      momentCreated: null,
+      momentExited: null
     };
   },
   mounted() {
-    setInterval(this.createMoment, 60000);
-    this.createMoment();
+    setInterval(this.updateMoments, 60000);
+    this.updateMoments();
   },
   computed: {
-    liveDiff() {
+    entryDiff() {
       if (!this.momentCreated) return;
       return this.momentCreated.fromNow();
     },
-    liveTime() {
+    entryTime() {
       if (!this.momentCreated) return;
       return this.momentCreated.format("HH:mm:ss");
     },
-    liveDate() {
+    entryDate() {
       if (!this.momentCreated) return;
       return this.momentCreated.format("dddd L");
+    },
+    exitDiff() {
+      if (!this.momentExited) return;
+      return this.momentExited.fromNow();
+    },
+    exitTime() {
+      if (!this.momentExited) return;
+      return this.momentExited.format("HH:mm:ss");
+    },
+    exitDate() {
+      if (!this.momentExited) return;
+      return this.momentExited.format("dddd L");
     }
   },
   methods: {
-    createMoment() {
+    updateMoments() {
       this.momentCreated = window.moment(this.log.created_at);
+      this.momentExited = window.moment(this.log.exited_at);
+      console.log(this.log);
     }
   }
 };
 </script>
 
 <style scoped>
-.log-entry {
+.log-entry .panel-body {
   padding: 0;
-  margin: 1em 0;
-  border: 1px solid #333;
 }
 
 .log-entry .row.condensed {
@@ -84,19 +98,22 @@ export default {
 }
 
 .log-entry .name {
-  margin: 0 0 .5em 0;
+  margin: 0.5em 0;
 }
 
-.log-entry .alert {
-  padding: .5em 1.5em;
+.log-entry .timestamps p {
   margin: 0;
 }
 
-.log-entry .alert > h3 {
-  margin: .2em 0;
+.log-entry .highlighted {
+  border-bottom: 1px solid #666;
 }
 
-.log-entry .alert > h4 {
-  margin: 0;
+.log-entry .time-entry {
+  color: green;
+}
+
+.log-entry .time-exit {
+  color: blue;
 }
 </style>
