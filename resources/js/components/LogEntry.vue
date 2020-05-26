@@ -77,8 +77,18 @@ export default {
   methods: {
     updateMoments() {
       this.momentCreated = window.moment(this.log.created_at);
-      this.momentExited = window.moment(this.log.exited_at);
+      this.momentExited = this.log.exited_at
+        ? window.moment(this.log.exited_at)
+        : null;
       console.log(this.log);
+    }
+  },
+  watch: {
+    log: {
+      deep: true,
+      handler() {
+        this.updateMoments();
+      }
     }
   }
 };

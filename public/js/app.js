@@ -2077,8 +2077,16 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateMoments: function updateMoments() {
       this.momentCreated = window.moment(this.log.created_at);
-      this.momentExited = window.moment(this.log.exited_at);
+      this.momentExited = this.log.exited_at ? window.moment(this.log.exited_at) : null;
       console.log(this.log);
+    }
+  },
+  watch: {
+    log: {
+      deep: true,
+      handler: function handler() {
+        this.updateMoments();
+      }
     }
   }
 });
@@ -2138,23 +2146,23 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
+    this.lastParsed = JSON.parse(this.lastLogs);
   },
   data: function data() {
     return {
       newLogs: [],
+      lastParsed: [],
       newRequests: [],
       timestamp: null
     };
   },
   computed: {
     logs: function logs() {
-      var last = JSON.parse(this.lastLogs);
-
-      if (!last || !last.length) {
+      if (!this.lastParsed || !this.lastParsed.length) {
         return this.newLogs;
       }
 
-      return this.newLogs.concat(last);
+      return this.newLogs.concat(this.lastParsed);
     },
     liveTime: function liveTime() {
       if (!this.timestamp) return;
@@ -2170,7 +2178,28 @@ __webpack_require__.r(__webpack_exports__);
       this.timestamp = window.moment();
     },
     onEntryLogged: function onEntryLogged(log) {
-      this.newLogs.unshift(log);
+      if (this.logs.filter(function (l) {
+        return l.id == log.id;
+      }).length > 0) {
+        if (this.newLogs.filter(function (l) {
+          return l.id == log.id;
+        }).length > 0) {
+          var i = this.newLogs.findIndex(function (l) {
+            return l.id == log.id;
+          });
+          this.newLogs.splice(i, 1, log);
+        } else if (this.lastParsed.filter(function (l) {
+          return l.id == log.id;
+        }).length > 0) {
+          var _i = this.lastParsed.findIndex(function (l) {
+            return l.id == log.id;
+          });
+
+          this.lastParsed.splice(_i, 1, log);
+        }
+      } else {
+        this.newLogs.unshift(log);
+      }
     },
     onTagRequested: function onTagRequested(tagId, reader) {
       this.newRequests = this.newRequests.filter(function (r) {
@@ -52698,7 +52727,13 @@ var render = function() {
             return _c(
               "div",
               { key: log.id },
-              [_c("log-entry", { attrs: { log: log } })],
+              [
+                _c("log-entry", {
+                  ref: "logs",
+                  refInFor: true,
+                  attrs: { log: log }
+                })
+              ],
               1
             )
           })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\ReaderStarted;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Log;
 use App\Tag;
 use App\Reader;
@@ -15,46 +16,61 @@ use App\Events\ReaderRequested;
 
 class ReaderController extends BaseController
 {
-    public function startReader(Request $request) {
+    public function startReader(Request $request)
+    {
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
-        if(!$reader) {
+        if (!$reader) {
             broadcast(new ReaderRequested($readerId));
-            return response()->json([ 'error' => 404, 'message' => 'Reader not registered.' ], 404);
+            return response()->json(['error' => 404, 'message' => 'Reader not registered.'], 404);
         }
 
         broadcast(new ReaderStarted($reader));
         return $reader->toJson();
     }
 
-    public function logTag(Request $request) {
+    public function logTag(Request $request)
+    {
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
-        if(!$reader) {
-            return response()->json([ 'error' => 404, 'message' => 'Reader not registered.' ], 404);
+        if (!$reader) {
+            return response()->json(['error' => 404, 'message' => 'Reader not registered.'], 404);
         }
 
         $tagId = base64_decode($request->input('id'));
         $tag = Tag::whereTag($tagId)->first();
-        if(!$tag) {
+        if (!$tag) {
             broadcast(new TagRequested($tagId, $reader));
-            return response()->json([ 'status' => 'Requested' ], 404);
+            return response()->json(['status' => 'Requested'], 404);
         }
-    
-        $log = Log::create([
-            'user_id' => $tag->user_id,
-            'reader_id' => $reader->id,
-            'tag_id' => $tag->id,
-        ]);
+
+        $log = Log::where('user_id', $tag->user_id)
+            ->where('reader_id', $reader->id)
+            ->where('tag_id', $tag->id)
+            ->whereRaw('DATE(created_at) = CURDATE()')
+            ->orderBy('created_at', 'desc')
+            ->first();
+        
+        if($log && !$log->exited_at) {
+            $log->exited_at = Carbon::now();
+            $log->save();
+        } else {
+            $log = Log::create([
+                'user_id' => $tag->user_id,
+                'reader_id' => $reader->id,
+                'tag_id' => $tag->id,
+            ]);
+        }
+
         $log->load('user');
         $log->load('reader');
         $log->load('tag');
-    
-        if($log) {
+
+        if ($log) {
             broadcast(new TagLogged($log));
             return $log->toJson();
         }
-    
+
         return 'Error while logging.';
     }
 }

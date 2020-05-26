@@ -10,7 +10,7 @@
           <tag-request :request="request"></tag-request>
         </div>
         <div v-for="log in logs" :key="log.id">
-          <log-entry :log="log"></log-entry>
+          <log-entry ref="logs" :log="log"></log-entry>
         </div>
       </div>
     </div>
@@ -39,21 +39,22 @@ export default {
   created() {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
+    this.lastParsed = JSON.parse(this.lastLogs);
   },
   data() {
     return {
       newLogs: [],
+      lastParsed: [],
       newRequests: [],
       timestamp: null
     };
   },
   computed: {
     logs() {
-      let last = JSON.parse(this.lastLogs);
-      if (!last || !last.length) {
+      if (!this.lastParsed || !this.lastParsed.length) {
         return this.newLogs;
       }
-      return this.newLogs.concat(last);
+      return this.newLogs.concat(this.lastParsed);
     },
     liveTime() {
       if (!this.timestamp) return;
@@ -69,7 +70,17 @@ export default {
       this.timestamp = window.moment();
     },
     onEntryLogged(log) {
-      this.newLogs.unshift(log);
+      if(this.logs.filter(l => l.id == log.id).length > 0) {
+        if(this.newLogs.filter(l => l.id == log.id).length > 0) {
+          let i = this.newLogs.findIndex(l => l.id == log.id);
+          this.newLogs.splice(i, 1, log);
+        } else if(this.lastParsed.filter(l => l.id == log.id).length > 0) {
+          let i = this.lastParsed.findIndex(l => l.id == log.id);
+          this.lastParsed.splice(i, 1, log);
+        }
+      } else {
+        this.newLogs.unshift(log);
+      }
     },
     onTagRequested(tagId, reader) {
       this.newRequests = this.newRequests.filter(r => r.tagId != tagId);
