@@ -27,6 +27,7 @@
         "vue": "^2.5.17",
         "vue-clock2": "^1.1.5",
         "vue-multiselect": "^2.1.6",
-        "vue-notification": "^1.3.20"
+        "vue-notification": "^1.3.20",
+        "vuejs-datepicker": "^1.6.2"
     }
 }

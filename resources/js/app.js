@@ -3,6 +3,7 @@ require('./bootstrap');
 import Echo from 'laravel-echo'
 import Notifications from 'vue-notification'
 import Multiselect from 'vue-multiselect'
+import Datepicker from 'vuejs-datepicker';
 
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -16,6 +17,7 @@ if (document.getElementById('app')) {
     Vue.use(Notifications);
 
     Vue.component('multiselect', Multiselect)
+    Vue.component('datepicker', Datepicker)
 
     /**
      * The following block of code may be used to automatically register your
