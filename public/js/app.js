@@ -2036,6 +2036,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["log"],
   data: function data() {
@@ -2072,13 +2076,17 @@ __webpack_require__.r(__webpack_exports__);
     exitDate: function exitDate() {
       if (!this.momentExited) return;
       return this.momentExited.format("dddd L");
+    },
+    duration: function duration() {
+      if (!this.momentExited) return;
+      var diff = this.momentExited.diff(this.momentCreated);
+      return moment.utc(moment.duration(diff).asMilliseconds()).format("HH:mm");
     }
   },
   methods: {
     updateMoments: function updateMoments() {
       this.momentCreated = window.moment(this.log.created_at);
       this.momentExited = this.log.exited_at ? window.moment(this.log.exited_at) : null;
-      console.log(this.log);
     }
   },
   watch: {
@@ -2181,13 +2189,15 @@ __webpack_require__.r(__webpack_exports__);
       if (this.logs.filter(function (l) {
         return l.id == log.id;
       }).length > 0) {
+        // Update existing log
         if (this.newLogs.filter(function (l) {
           return l.id == log.id;
         }).length > 0) {
           var i = this.newLogs.findIndex(function (l) {
             return l.id == log.id;
           });
-          this.newLogs.splice(i, 1, log);
+          this.newLogs.splice(i, 1);
+          this.newLogs.unshift(log);
         } else if (this.lastParsed.filter(function (l) {
           return l.id == log.id;
         }).length > 0) {
@@ -2195,9 +2205,11 @@ __webpack_require__.r(__webpack_exports__);
             return l.id == log.id;
           });
 
-          this.lastParsed.splice(_i, 1, log);
+          this.lastParsed.splice(_i, 1);
+          this.lastParsed.unshift(log);
         }
       } else {
+        // Add to new logs
         this.newLogs.unshift(log);
       }
     },
@@ -2303,6 +2315,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2314,7 +2331,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         user: null
       },
       users: [],
-      results: []
+      results: [],
+      loading: true
     };
   },
   created: function created() {
@@ -2363,6 +2381,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getResults: function getResults() {
       var _this2 = this;
 
+      this.loading = true;
       var url = "/report-json";
       var res = axios.post(url, this.filter, {
         headers: {
@@ -2372,6 +2391,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.results = response.data;
       }, function (error) {
         console.log(error);
+      })["finally"](function () {
+        return _this2.loading = false;
       });
     },
     formatDate: function formatDate(date) {
@@ -52694,7 +52715,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row condensed timestamps" }, [
-                    _c("div", { staticClass: "col-xs-6 time-entry" }, [
+                    _c("div", { staticClass: "col-xs-5 time-entry" }, [
                       _c("p", { staticClass: "lead highlighted" }, [
                         _vm._v("ВХОД")
                       ]),
@@ -52708,19 +52729,33 @@ var render = function() {
                       _c("p", [_vm._v(_vm._s(_vm.entryDate))])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-xs-6 time-exit" }, [
-                      _c("p", { staticClass: "lead highlighted" }, [
-                        _vm._v("ИЗХОД")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.exitDiff))]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "lead" }, [
-                        _vm._v(_vm._s(_vm.exitTime))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.exitDate))])
-                    ])
+                    _vm.momentExited
+                      ? _c("div", { staticClass: "col-xs-5 time-exit" }, [
+                          _c("p", { staticClass: "lead highlighted" }, [
+                            _vm._v("ИЗХОД")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.exitDiff))]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "lead" }, [
+                            _vm._v(_vm._s(_vm.exitTime))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.exitDate))])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.duration
+                      ? _c("div", { staticClass: "col-xs-2 time-duration" }, [
+                          _c("p", { staticClass: "lead highlighted" }, [
+                            _vm._v("ЧАСОВЕ")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "lead" }, [
+                            _vm._v(_vm._s(_vm.duration))
+                          ])
+                        ])
+                      : _vm._e()
                   ])
                 ]
               )
@@ -52932,31 +52967,37 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "panel panel-bordered" }, [
-        _c("div", { staticClass: "panel-body" }, [
-          _c("table", { staticClass: "table table-striped table-hover" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.results, function(result) {
-                return _c("tr", { key: result.user_id }, [
-                  _c("td", [_vm._v(_vm._s(result.user.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(result.from))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(result.to))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s((result.seconds / 60 / 60).toFixed(2)))
-                  ])
-                ])
-              }),
-              0
-            )
+      _vm.loading
+        ? _c("div", { staticClass: "panel panel-bordered" }, [_vm._m(1)])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.loading
+        ? _c("div", { staticClass: "panel panel-bordered" }, [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("table", { staticClass: "table table-striped table-hover" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.results, function(result) {
+                    return _c("tr", { key: result.user_id }, [
+                      _c("td", [_vm._v(_vm._s(result.user.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.from))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.to))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s((result.seconds / 60 / 60).toFixed(2)))
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
           ])
-        ])
-      ])
+        : _vm._e()
     ])
   ])
 }
@@ -52968,6 +53009,14 @@ var staticRenderFns = [
     return _c("h1", { staticClass: "page-title" }, [
       _c("i", { staticClass: "voyager-logbook" }),
       _vm._v(" Отчети\n  ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-body text-center" }, [
+      _c("h4", [_vm._v("Зареждане...")])
     ])
   },
   function() {

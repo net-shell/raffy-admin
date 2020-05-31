@@ -71,14 +71,18 @@ export default {
     },
     onEntryLogged(log) {
       if(this.logs.filter(l => l.id == log.id).length > 0) {
+        // Update existing log
         if(this.newLogs.filter(l => l.id == log.id).length > 0) {
           let i = this.newLogs.findIndex(l => l.id == log.id);
-          this.newLogs.splice(i, 1, log);
+          this.newLogs.splice(i, 1);
+          this.newLogs.unshift(log);
         } else if(this.lastParsed.filter(l => l.id == log.id).length > 0) {
           let i = this.lastParsed.findIndex(l => l.id == log.id);
-          this.lastParsed.splice(i, 1, log);
+          this.lastParsed.splice(i, 1);
+          this.lastParsed.unshift(log);
         }
       } else {
+        // Add to new logs
         this.newLogs.unshift(log);
       }
     },

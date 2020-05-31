@@ -98,5 +98,25 @@
         "type": "text",
         "order": 1,
         "group": "Admin"
+    },
+    {
+        "id": 11,
+        "key": "site.workday_start",
+        "display_name": "\u0420\u0430\u0431\u043e\u0442\u043d\u043e \u0432\u0440\u0435\u043c\u0435 - \u043d\u0430\u0447\u0430\u043b\u043e",
+        "value": "08:00",
+        "details": null,
+        "type": "text",
+        "order": 6,
+        "group": "Site"
+    },
+    {
+        "id": 12,
+        "key": "site.workday_end",
+        "display_name": "\u0420\u0430\u0431\u043e\u0442\u043d\u043e \u0432\u0440\u0435\u043c\u0435 - \u043a\u0440\u0430\u0439",
+        "value": "17:00",
+        "details": null,
+        "type": "text",
+        "order": 7,
+        "group": "Site"
     }
 ]

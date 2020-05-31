@@ -38,7 +38,12 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-bordered">
+      <div class="panel panel-bordered" v-if="loading">
+        <div class="panel-body text-center">
+          <h4>Зареждане...</h4>
+        </div>
+      </div>
+      <div class="panel panel-bordered" v-if="!loading">
         <div class="panel-body">
           <table class="table table-striped table-hover">
             <thead>
@@ -76,7 +81,8 @@ export default {
         user: null
       },
       users: [],
-      results: []
+      results: [],
+      loading: true,
     };
   },
   created() {
@@ -99,6 +105,7 @@ export default {
       this.users = users.results;
     },
     getResults() {
+      this.loading = true;
       let url = "/report-json";
       const res = axios
         .post(url, this.filter, {
@@ -111,7 +118,8 @@ export default {
           error => {
             console.log(error);
           }
-        );
+        )
+        .finally(() => this.loading = false );
     },
     formatDate(date) {
       return moment(date).format('DD/MM/YYYY');

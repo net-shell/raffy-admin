@@ -23,10 +23,10 @@ class ReportController extends BaseController
         $tsTo = new Carbon($filter['to']);
         $stats = Log::selectRaw('user_id, SUM(TIMESTAMPDIFF(SECOND, created_at, exited_at)) as seconds')->whereNotNull('exited_at');
         if($filter['from']) {
-            $stats->where('created_at', '>=', $tsFrom->format('Y-m-d'));
+            $stats->where('created_at', '>=', $tsFrom->format('Y-m-d 00:00:00'));
         }
         if($filter['to']) {
-            $stats->where('created_at', '<=', $tsTo->format('Y-m-d'));
+            $stats->where('created_at', '<=', $tsTo->format('Y-m-d 23:59:59'));
         }
         if($filter['user']) {
             $stats->where('user_id', $filter['user']);

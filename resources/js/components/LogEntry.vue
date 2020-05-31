@@ -15,17 +15,21 @@
               </p>
             </div>
             <div class="row condensed timestamps">
-              <div class="col-xs-6 time-entry">
+              <div class="col-xs-5 time-entry">
                 <p class="lead highlighted">ВХОД</p>
                 <p>{{ entryDiff }}</p>
                 <p class="lead">{{ entryTime }}</p>
                 <p>{{ entryDate }}</p>
               </div>
-              <div class="col-xs-6 time-exit">
+              <div class="col-xs-5 time-exit" v-if="momentExited">
                 <p class="lead highlighted">ИЗХОД</p>
                 <p>{{ exitDiff }}</p>
                 <p class="lead">{{ exitTime }}</p>
                 <p>{{ exitDate }}</p>
+              </div>
+              <div class="col-xs-2 time-duration" v-if="duration">
+                <p class="lead highlighted">ЧАСОВЕ</p>
+                <p class="lead">{{ duration }}</p>
               </div>
             </div>
           </div>
@@ -72,7 +76,12 @@ export default {
     exitDate() {
       if (!this.momentExited) return;
       return this.momentExited.format("dddd L");
-    }
+    },
+    duration() {
+      if(!this.momentExited) return;
+      let diff = this.momentExited.diff(this.momentCreated);
+      return moment.utc(moment.duration(diff).asMilliseconds()).format("HH:mm");
+    },
   },
   methods: {
     updateMoments() {
@@ -80,7 +89,6 @@ export default {
       this.momentExited = this.log.exited_at
         ? window.moment(this.log.exited_at)
         : null;
-      console.log(this.log);
     }
   },
   watch: {
