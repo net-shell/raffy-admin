@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "animate.css": "^4.1.0",
+        "js-file-download": "^0.4.12",
         "laravel-echo": "^1.7.0",
         "moment": "^2.25.3",
         "socket.io-client": "^2.3.0",

@@ -40,11 +40,28 @@
       </div>
       <div class="panel panel-bordered" v-if="loading">
         <div class="panel-body text-center">
-          <h4>Зареждане...</h4>
+          <p class="lead">Зареждане...</p>
         </div>
       </div>
       <div class="panel panel-bordered" v-if="!loading">
-        <div class="panel-body">
+        <div class="panel-body" v-if="!results.length">
+          <p class="lead">Няма открити резултати.</p>
+        </div>
+        <div class="panel-heading" v-if="results.length">
+          <button type="button" class="btn btn-success" @click="getResultsCsv()">
+            <i class="icon voyager-file-text"></i>
+            Свали като CSV
+          </button>
+          <button type="button" class="btn btn-warning" @click="getResultsExcel()">
+            <i class="icon voyager-file-text"></i>
+            Свали като Excel
+          </button>
+          <button type="button" class="btn btn-warning" @click="getResultsPdf()">
+            <i class="icon voyager-file-text"></i>
+            Свали като PDF
+          </button>
+        </div>
+        <div class="panel-body" v-if="results.length">
           <table class="table table-striped table-hover">
             <thead>
               <tr>
@@ -82,7 +99,7 @@ export default {
       },
       users: [],
       results: [],
-      loading: true,
+      loading: true
     };
   },
   created() {
@@ -119,11 +136,35 @@ export default {
             console.log(error);
           }
         )
-        .finally(() => this.loading = false );
+        .finally(() => (this.loading = false));
+    },
+    getResultsExcel() {
+      this.downloadReport("/report-excel", "report.xls");
+    },
+    getResultsCsv() {
+      this.downloadReport("/report-csv", "report.csv");
+    },
+    getResultsPdf() {
+      this.downloadReport("/report-pdf", "report.pdf");
+    },
+    downloadReport(url, filename) {
+      const request = axios
+        .post(url, this.filter, {
+          headers: { "Content-type": "application/json" }
+        })
+        .then(
+          response => {
+            console.log(response, request);
+            fileDownload(response.data, filename);
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
     formatDate(date) {
-      return moment(date).format('DD/MM/YYYY');
-    },
+      return moment(date).format("DD/MM/YYYY");
+    }
   }
 };
 </script>

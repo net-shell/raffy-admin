@@ -13,6 +13,7 @@ if (document.getElementById('app')) {
     window.moment.locale('bg');
     window.Vue = require('vue');
     window.Notifications = require('vue-notification');
+    window.fileDownload = require('js-file-download');
 
     Vue.use(Notifications);
 

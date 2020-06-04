@@ -4,41 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
-use App\Log;
-use App\Tag;
-use App\Reader;
-use App\User;
-use Carbon\Carbon;
+use App\Exports\LogsExport;
+use Excel;
 
 class ReportController extends BaseController
 {
+    public $filter;
+
+    public function __construct(Request $request)
+    {
+        $this->filter = json_decode($request->getContent(), true);
+    }
+
     public function index(Request $request) {
         return view('reports');
     }
 
     public function reportJson(Request $request) {
-        $filter = json_decode($request->getContent(), true);
-        $tsFrom = new Carbon($filter['from']);
-        $tsTo = new Carbon($filter['to']);
-        $stats = Log::selectRaw('user_id, SUM(TIMESTAMPDIFF(SECOND, created_at, exited_at)) as seconds')->whereNotNull('exited_at');
-        if($filter['from']) {
-            $stats->where('created_at', '>=', $tsFrom->format('Y-m-d 00:00:00'));
-        }
-        if($filter['to']) {
-            $stats->where('created_at', '<=', $tsTo->format('Y-m-d 23:59:59'));
-        }
-        if($filter['user']) {
-            $stats->where('user_id', $filter['user']);
-        }
-        $stats = $stats->groupBy('user_id')->get();
-        foreach($stats as &$stat) {
-            $stat->user = User::find($stat->user_id);
-            if(!$filter['from']) continue;
-            $stat->from = $tsFrom->format('d/m/Y');
-            if(!$filter['to']) continue;
-            $stat->to = $tsTo->format('d/m/Y');
-        }
+        $stats = (new LogsExport($this->filter))->collection();
         return $stats->toArray();
+    }
+    
+    public function reportExcel(Request $request) {
+        return Excel::download(new LogsExport($this->filter), 'report.xls', \Maatwebsite\Excel\Excel::XLS);
+    }
+
+    public function reportCsv(Request $request) {
+        return Excel::download(new LogsExport($this->filter), 'report.csv');
+    }
+
+    public function reportPdf(Request $request) {
+        return Excel::download(new LogsExport($this->filter), 'report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

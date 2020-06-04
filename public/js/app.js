@@ -2320,6 +2320,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2395,8 +2412,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _this2.loading = false;
       });
     },
+    getResultsExcel: function getResultsExcel() {
+      this.downloadReport("/report-excel", "report.xls");
+    },
+    getResultsCsv: function getResultsCsv() {
+      this.downloadReport("/report-csv", "report.csv");
+    },
+    getResultsPdf: function getResultsPdf() {
+      this.downloadReport("/report-pdf", "report.pdf");
+    },
+    downloadReport: function downloadReport(url, filename) {
+      var request = axios.post(url, this.filter, {
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then(function (response) {
+        console.log(response, request);
+        fileDownload(response.data, filename);
+      }, function (error) {
+        console.log(error);
+      });
+    },
     formatDate: function formatDate(date) {
-      return moment(date).format('DD/MM/YYYY');
+      return moment(date).format("DD/MM/YYYY");
     }
   }
 });
@@ -9246,6 +9284,52 @@ var toString = {}.toString;
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/js-file-download/file-download.js":
+/*!********************************************************!*\
+  !*** ./node_modules/js-file-download/file-download.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(data, filename, mime, bom) {
+    var blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
+    var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
+    if (typeof window.navigator.msSaveBlob !== 'undefined') {
+        // IE workaround for "HTML7007: One or more blob URLs were
+        // revoked by closing the blob for which they were created.
+        // These URLs will no longer resolve as the data backing
+        // the URL has been freed."
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else {
+        var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+        var tempLink = document.createElement('a');
+        tempLink.style.display = 'none';
+        tempLink.href = blobURL;
+        tempLink.setAttribute('download', filename);
+
+        // Safari thinks _blank anchor are pop ups. We only want to set _blank
+        // target if the browser does not support the HTML5 download attribute.
+        // This allows you to download files in desktop safari if pop up blocking
+        // is enabled.
+        if (typeof tempLink.download === 'undefined') {
+            tempLink.setAttribute('target', '_blank');
+        }
+
+        document.body.appendChild(tempLink);
+        tempLink.click();
+
+        // Fixes "webkit blob resource error 1"
+        setTimeout(function() {
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(blobURL);
+        }, 200)
+    }
+}
 
 
 /***/ }),
@@ -52973,29 +53057,100 @@ var render = function() {
       _vm._v(" "),
       !_vm.loading
         ? _c("div", { staticClass: "panel panel-bordered" }, [
-            _c("div", { staticClass: "panel-body" }, [
-              _c("table", { staticClass: "table table-striped table-hover" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.results, function(result) {
-                    return _c("tr", { key: result.user_id }, [
-                      _c("td", [_vm._v(_vm._s(result.user.name))]),
+            !_vm.results.length
+              ? _c("div", { staticClass: "panel-body" }, [
+                  _c("p", { staticClass: "lead" }, [
+                    _vm._v("Няма открити резултати.")
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.results.length
+              ? _c("div", { staticClass: "panel-heading" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.getResultsCsv()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "icon voyager-file-text" }),
+                      _vm._v("\n          Свали като CSV\n        ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.getResultsExcel()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "icon voyager-file-text" }),
+                      _vm._v("\n          Свали като Excel\n        ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.getResultsPdf()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "icon voyager-file-text" }),
+                      _vm._v("\n          Свали като PDF\n        ")
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.results.length
+              ? _c("div", { staticClass: "panel-body" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover" },
+                    [
+                      _vm._m(2),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(result.from))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(result.to))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s((result.seconds / 60 / 60).toFixed(2)))
-                      ])
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.results, function(result) {
+                          return _c("tr", { key: result.user_id }, [
+                            _c("td", [_vm._v(_vm._s(result.user.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(result.from))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(result.to))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s((result.seconds / 60 / 60).toFixed(2))
+                              )
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e()
           ])
         : _vm._e()
     ])
@@ -53016,7 +53171,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "panel-body text-center" }, [
-      _c("h4", [_vm._v("Зареждане...")])
+      _c("p", { staticClass: "lead" }, [_vm._v("Зареждане...")])
     ])
   },
   function() {
@@ -69096,6 +69251,7 @@ if (document.getElementById('app')) {
   window.moment.locale('bg');
   window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
   window.Notifications = __webpack_require__(/*! vue-notification */ "./node_modules/vue-notification/dist/index.js");
+  window.fileDownload = __webpack_require__(/*! js-file-download */ "./node_modules/js-file-download/file-download.js");
   Vue.use(vue_notification__WEBPACK_IMPORTED_MODULE_1___default.a);
   Vue.component('multiselect', vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default.a);
   Vue.component('datepicker', vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"]);
