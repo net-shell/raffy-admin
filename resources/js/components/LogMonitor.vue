@@ -1,10 +1,24 @@
 <template>
   <div class="row">
     <div class="col-md-7">
-      <h1 class="page-title">
-        <i class="voyager-eye"></i>
-        Монитор на записите в реално време
-      </h1>
+      <div class="row">
+        <div class="col-sm-6">
+          <h1 class="page-title">
+            <i class="voyager-eye"></i>
+            Монитор на записите в реално време
+          </h1>
+        </div>
+        <div class="col-sm-6">
+            <label class="control-label">Четец:</label>
+            <multiselect
+            v-model="selectedReader"
+            placeholder="Избор на четец..."
+            track-by="id"
+            label="text"
+            :options="readers"
+            ></multiselect>
+        </div>
+      </div>
       <div class="page-content containter-fluid">
         <div v-for="request in newRequests" :key="request.id">
           <tag-request :request="request"></tag-request>
@@ -40,13 +54,16 @@ export default {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
     this.lastParsed = JSON.parse(this.lastLogs);
+    this.getReaders();
   },
   data() {
     return {
       newLogs: [],
       lastParsed: [],
       newRequests: [],
-      timestamp: null
+      timestamp: null,
+      readers: [],
+      selectedReader: null,
     };
   },
   computed: {
@@ -54,7 +71,11 @@ export default {
       if (!this.lastParsed || !this.lastParsed.length) {
         return this.newLogs;
       }
-      return this.newLogs.concat(this.lastParsed);
+      let logs = this.newLogs.concat(this.lastParsed);
+      if(this.selectedReader) {
+          logs = logs.filter(l => l.reader_id == this.selectedReader.id);
+      }
+      return logs;
     },
     liveTime() {
       if (!this.timestamp) return;
@@ -66,17 +87,23 @@ export default {
     }
   },
   methods: {
+    async getReaders() {
+      let url = "/logs/relation?type=log_belongsto_reader_relationship";
+      const res = await fetch(url);
+      const readers = await res.json();
+      this.readers = readers.results;
+    },
     updateTimestamp() {
       this.timestamp = window.moment();
     },
     onEntryLogged(log) {
-      if(this.logs.filter(l => l.id == log.id).length > 0) {
+      if (this.logs.filter(l => l.id == log.id).length > 0) {
         // Update existing log
-        if(this.newLogs.filter(l => l.id == log.id).length > 0) {
+        if (this.newLogs.filter(l => l.id == log.id).length > 0) {
           let i = this.newLogs.findIndex(l => l.id == log.id);
           this.newLogs.splice(i, 1);
           this.newLogs.unshift(log);
-        } else if(this.lastParsed.filter(l => l.id == log.id).length > 0) {
+        } else if (this.lastParsed.filter(l => l.id == log.id).length > 0) {
           let i = this.lastParsed.findIndex(l => l.id == log.id);
           this.lastParsed.splice(i, 1);
           this.lastParsed.unshift(log);

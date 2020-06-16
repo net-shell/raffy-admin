@@ -4,92 +4,98 @@
       <i class="voyager-logbook"></i> Отчети
     </h1>
     <div class="page-content">
-      <div class="panel panel-bordered">
-        <div class="panel-body filters">
-          <div class="row">
-            <div class="col-sm-2">
-              <label class="control-label">Период от:</label>
-              <datepicker
-                v-model="filter.from"
-                :language="bg"
-                input-class="form-control"
-                :monday-first="true"
-              ></datepicker>
-            </div>
-            <div class="col-sm-2">
-              <label class="control-label">до:</label>
-              <datepicker
-                v-model="filter.to"
-                :language="bg"
-                input-class="form-control"
-                :monday-first="true"
-              ></datepicker>
-            </div>
-            <div class="col-sm-4">
-              <label class="control-label">Служител:</label>
-              <multiselect
-                v-model="filter.user"
-                placeholder="Търсене и избор на служител..."
-                track-by="id"
-                label="text"
-                :options="users"
-              ></multiselect>
-            </div>
-            <div class="col-sm-4">
-              <label class="control-label">Четец:</label>
-              <multiselect
-                v-model="filter.reader"
-                placeholder="Избор на четец..."
-                track-by="id"
-                label="text"
-                :options="readers"
-              ></multiselect>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-bordered">
+            <div class="panel-body filters">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Период от:</label>
+                  <datepicker
+                    v-model="filter.from"
+                    :language="bg"
+                    input-class="form-control"
+                    :monday-first="true"
+                  ></datepicker>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">до:</label>
+                  <datepicker
+                    v-model="filter.to"
+                    :language="bg"
+                    input-class="form-control"
+                    :monday-first="true"
+                  ></datepicker>
+                </div>
+                <div class="col-sm-12">
+                  <label class="control-label">Служител:</label>
+                  <multiselect
+                    v-model="filter.user"
+                    placeholder="Търсене и избор на служител..."
+                    track-by="id"
+                    label="text"
+                    :options="users"
+                  ></multiselect>
+                </div>
+                <div class="col-sm-12">
+                  <label class="control-label">Четец:</label>
+                  <multiselect
+                    v-model="filter.reader"
+                    placeholder="Избор на четец..."
+                    track-by="id"
+                    label="text"
+                    :options="readers"
+                  ></multiselect>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="panel panel-bordered" v-if="loading">
-        <div class="panel-body text-center">
-          <p class="lead">Зареждане...</p>
-        </div>
-      </div>
-      <div class="panel panel-bordered" v-if="!loading">
-        <div class="panel-body" v-if="!results.length">
-          <p class="lead">Няма открити резултати.</p>
-        </div>
-        <div class="panel-heading" v-if="results.length">
-          <button type="button" class="btn btn-success" @click="getResultsCsv()">
-            <i class="icon voyager-file-text"></i>
-            Свали като CSV
-          </button>
-          <button type="button" class="btn btn-warning" @click="getResultsExcel()">
-            <i class="icon voyager-file-text"></i>
-            Свали като Excel
-          </button>
-          <button type="button" class="btn btn-warning" @click="getResultsPdf()">
-            <i class="icon voyager-file-text"></i>
-            Свали като PDF
-          </button>
-        </div>
-        <div class="panel-body" v-if="results.length">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Служител</th>
-                <th>От дата</th>
-                <th>До дата</th>
-                <th>Часове</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="result in results" :key="result.user_id">
-                <td>{{ result.user.name }}</td>
-                <td>{{ result.from }}</td>
-                <td>{{ result.to }}</td>
-                <td>{{ (result.seconds / 60 / 60).toFixed(2) }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="col-sm-8">
+          <div class="panel panel-bordered" v-if="loading">
+            <div class="panel-body text-center">
+              <p class="lead">Зареждане...</p>
+            </div>
+          </div>
+          <div v-if="!loading && results.length">
+            <button type="button" class="btn btn-success" @click="getResultsCsv()">
+              <i class="icon voyager-file-text"></i>
+              Свали като CSV
+            </button>
+            <button type="button" class="btn btn-warning" @click="getResultsExcel()">
+              <i class="icon voyager-file-text"></i>
+              Свали като Excel
+            </button>
+            <button type="button" class="btn btn-warning" @click="getResultsPdf()">
+              <i class="icon voyager-file-text"></i>
+              Свали като PDF
+            </button>
+          </div>
+          <div class="panel panel-bordered" v-if="!loading">
+            <div class="panel-body" v-if="!results.length">
+              <p class="lead">Няма открити резултати.</p>
+            </div>
+            <div class="panel-body" v-if="results.length">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Служител</th>
+                    <th>От дата</th>
+                    <th>До дата</th>
+                    <th>Часове</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="result in results" :key="result.user_id">
+                    <td>{{ result.user.name }}</td>
+                    <td>{{ result.from }}</td>
+                    <td>{{ result.to }}</td>
+                    <td>{{ (result.seconds / 60 / 60).toFixed(2) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -106,7 +112,7 @@ export default {
         from: new Date(),
         to: new Date(),
         user: null,
-        reader: null,
+        reader: null
       },
       users: [],
       readers: [],

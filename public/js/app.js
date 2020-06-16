@@ -2115,8 +2115,30 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-clock2 */ "./node_modules/vue-clock2/dist/vue-clock.min.js");
-/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_clock2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-clock2 */ "./node_modules/vue-clock2/dist/vue-clock.min.js");
+/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_clock2__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2150,7 +2172,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["lastLogs"],
   components: {
-    Clock: vue_clock2__WEBPACK_IMPORTED_MODULE_0___default.a
+    Clock: vue_clock2__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   mounted: function mounted() {
     setInterval(this.updateTimestamp, 1000);
@@ -2160,22 +2182,35 @@ __webpack_require__.r(__webpack_exports__);
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
     this.lastParsed = JSON.parse(this.lastLogs);
+    this.getReaders();
   },
   data: function data() {
     return {
       newLogs: [],
       lastParsed: [],
       newRequests: [],
-      timestamp: null
+      timestamp: null,
+      readers: [],
+      selectedReader: null
     };
   },
   computed: {
     logs: function logs() {
+      var _this = this;
+
       if (!this.lastParsed || !this.lastParsed.length) {
         return this.newLogs;
       }
 
-      return this.newLogs.concat(this.lastParsed);
+      var logs = this.newLogs.concat(this.lastParsed);
+
+      if (this.selectedReader) {
+        logs = logs.filter(function (l) {
+          return l.reader_id == _this.selectedReader.id;
+        });
+      }
+
+      return logs;
     },
     liveTime: function liveTime() {
       if (!this.timestamp) return;
@@ -2187,6 +2222,36 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getReaders: function getReaders() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var url, res, readers;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                url = "/logs/relation?type=log_belongsto_reader_relationship";
+                _context.next = 3;
+                return fetch(url);
+
+              case 3:
+                res = _context.sent;
+                _context.next = 6;
+                return res.json();
+
+              case 6:
+                readers = _context.sent;
+                _this2.readers = readers.results;
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     updateTimestamp: function updateTimestamp() {
       this.timestamp = window.moment();
     },
@@ -2254,6 +2319,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52931,7 +53002,34 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-7" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm-6" },
+          [
+            _c("label", { staticClass: "control-label" }, [_vm._v("Четец:")]),
+            _vm._v(" "),
+            _c("multiselect", {
+              attrs: {
+                placeholder: "Избор на четец...",
+                "track-by": "id",
+                label: "text",
+                options: _vm.readers
+              },
+              model: {
+                value: _vm.selectedReader,
+                callback: function($$v) {
+                  _vm.selectedReader = $$v
+                },
+                expression: "selectedReader"
+              }
+            })
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -52995,9 +53093,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h1", { staticClass: "page-title" }, [
-      _c("i", { staticClass: "voyager-eye" }),
-      _vm._v("\n      Монитор на записите в реално време\n    ")
+    return _c("div", { staticClass: "col-sm-6" }, [
+      _c("h1", { staticClass: "page-title" }, [
+        _c("i", { staticClass: "voyager-eye" }),
+        _vm._v("\n          Монитор на записите в реално време\n        ")
+      ])
     ])
   }
 ]
@@ -53026,218 +53126,228 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "page-content" }, [
-      _c("div", { staticClass: "panel panel-bordered" }, [
-        _c("div", { staticClass: "panel-body filters" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-sm-2" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Период от:")
-                ]),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "panel panel-bordered" }, [
+            _c("div", { staticClass: "panel-body filters" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-sm-6" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("Период от:")
+                    ]),
+                    _vm._v(" "),
+                    _c("datepicker", {
+                      attrs: {
+                        language: _vm.bg,
+                        "input-class": "form-control",
+                        "monday-first": true
+                      },
+                      model: {
+                        value: _vm.filter.from,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "from", $$v)
+                        },
+                        expression: "filter.from"
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("datepicker", {
-                  attrs: {
-                    language: _vm.bg,
-                    "input-class": "form-control",
-                    "monday-first": true
-                  },
-                  model: {
-                    value: _vm.filter.from,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "from", $$v)
-                    },
-                    expression: "filter.from"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-2" },
-              [
-                _c("label", { staticClass: "control-label" }, [_vm._v("до:")]),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-6" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("до:")
+                    ]),
+                    _vm._v(" "),
+                    _c("datepicker", {
+                      attrs: {
+                        language: _vm.bg,
+                        "input-class": "form-control",
+                        "monday-first": true
+                      },
+                      model: {
+                        value: _vm.filter.to,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "to", $$v)
+                        },
+                        expression: "filter.to"
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("datepicker", {
-                  attrs: {
-                    language: _vm.bg,
-                    "input-class": "form-control",
-                    "monday-first": true
-                  },
-                  model: {
-                    value: _vm.filter.to,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "to", $$v)
-                    },
-                    expression: "filter.to"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-4" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Служител:")
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-12" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("Служител:")
+                    ]),
+                    _vm._v(" "),
+                    _c("multiselect", {
+                      attrs: {
+                        placeholder: "Търсене и избор на служител...",
+                        "track-by": "id",
+                        label: "text",
+                        options: _vm.users
+                      },
+                      model: {
+                        value: _vm.filter.user,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "user", $$v)
+                        },
+                        expression: "filter.user"
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("multiselect", {
-                  attrs: {
-                    placeholder: "Търсене и избор на служител...",
-                    "track-by": "id",
-                    label: "text",
-                    options: _vm.users
-                  },
-                  model: {
-                    value: _vm.filter.user,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "user", $$v)
-                    },
-                    expression: "filter.user"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-4" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Четец:")
-                ]),
-                _vm._v(" "),
-                _c("multiselect", {
-                  attrs: {
-                    placeholder: "Избор на четец...",
-                    "track-by": "id",
-                    label: "text",
-                    options: _vm.readers
-                  },
-                  model: {
-                    value: _vm.filter.reader,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "reader", $$v)
-                    },
-                    expression: "filter.reader"
-                  }
-                })
-              ],
-              1
-            )
+                _c(
+                  "div",
+                  { staticClass: "col-sm-12" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("Четец:")
+                    ]),
+                    _vm._v(" "),
+                    _c("multiselect", {
+                      attrs: {
+                        placeholder: "Избор на четец...",
+                        "track-by": "id",
+                        label: "text",
+                        options: _vm.readers
+                      },
+                      model: {
+                        value: _vm.filter.reader,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "reader", $$v)
+                        },
+                        expression: "filter.reader"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _vm.loading
-        ? _c("div", { staticClass: "panel panel-bordered" }, [_vm._m(1)])
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.loading
-        ? _c("div", { staticClass: "panel panel-bordered" }, [
-            !_vm.results.length
-              ? _c("div", { staticClass: "panel-body" }, [
-                  _c("p", { staticClass: "lead" }, [
-                    _vm._v("Няма открити резултати.")
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.results.length
-              ? _c("div", { staticClass: "panel-heading" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.getResultsCsv()
-                        }
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-8" }, [
+          _vm.loading
+            ? _c("div", { staticClass: "panel panel-bordered" }, [_vm._m(1)])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.loading && _vm.results.length
+            ? _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getResultsCsv()
                       }
-                    },
-                    [
-                      _c("i", { staticClass: "icon voyager-file-text" }),
-                      _vm._v("\n          Свали като CSV\n        ")
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.getResultsExcel()
-                        }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "icon voyager-file-text" }),
+                    _vm._v("\n            Свали като CSV\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getResultsExcel()
                       }
-                    },
-                    [
-                      _c("i", { staticClass: "icon voyager-file-text" }),
-                      _vm._v("\n          Свали като Excel\n        ")
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-warning",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.getResultsPdf()
-                        }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "icon voyager-file-text" }),
+                    _vm._v("\n            Свали като Excel\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getResultsPdf()
                       }
-                    },
-                    [
-                      _c("i", { staticClass: "icon voyager-file-text" }),
-                      _vm._v("\n          Свали като PDF\n        ")
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.results.length
-              ? _c("div", { staticClass: "panel-body" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table table-striped table-hover" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "icon voyager-file-text" }),
+                    _vm._v("\n            Свали като PDF\n          ")
+                  ]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.loading
+            ? _c("div", { staticClass: "panel panel-bordered" }, [
+                !_vm.results.length
+                  ? _c("div", { staticClass: "panel-body" }, [
+                      _c("p", { staticClass: "lead" }, [
+                        _vm._v("Няма открити резултати.")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.results.length
+                  ? _c("div", { staticClass: "panel-body" }, [
                       _c(
-                        "tbody",
-                        _vm._l(_vm.results, function(result) {
-                          return _c("tr", { key: result.user_id }, [
-                            _c("td", [_vm._v(_vm._s(result.user.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(result.from))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(result.to))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s((result.seconds / 60 / 60).toFixed(2))
-                              )
-                            ])
-                          ])
-                        }),
-                        0
+                        "table",
+                        { staticClass: "table table-striped table-hover" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.results, function(result) {
+                              return _c("tr", { key: result.user_id }, [
+                                _c("td", [_vm._v(_vm._s(result.user.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(result.from))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(result.to))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      (result.seconds / 60 / 60).toFixed(2)
+                                    )
+                                  )
+                                ])
+                              ])
+                            }),
+                            0
+                          )
+                        ]
                       )
-                    ]
-                  )
-                ])
-              : _vm._e()
-          ])
-        : _vm._e()
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ])
+      ])
     ])
   ])
 }
