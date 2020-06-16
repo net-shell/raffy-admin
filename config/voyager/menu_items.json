@@ -68,9 +68,9 @@
         "icon_class": "voyager-tools",
         "color": "#000000",
         "parent_id": null,
-        "order": 5,
+        "order": 6,
         "created_at": "2020-05-10 22:07:09",
-        "updated_at": "2020-05-25 08:40:28",
+        "updated_at": "2020-06-16 00:56:20",
         "route": null,
         "parameters": ""
     },
@@ -197,15 +197,15 @@
     {
         "id": 14,
         "menu_id": 1,
-        "title": "\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f",
+        "title": "\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435",
         "url": "",
         "target": "_self",
         "icon_class": "voyager-settings",
         "color": "#000000",
         "parent_id": null,
-        "order": 4,
+        "order": 5,
         "created_at": "2020-05-10 22:47:25",
-        "updated_at": "2020-05-25 08:40:28",
+        "updated_at": "2020-06-16 00:56:20",
         "route": null,
         "parameters": ""
     },
@@ -268,5 +268,20 @@
         "updated_at": "2020-05-25 08:40:25",
         "route": null,
         "parameters": ""
+    },
+    {
+        "id": 19,
+        "menu_id": 1,
+        "title": "\u0413\u0440\u0435\u0448\u043a\u0438",
+        "url": "",
+        "target": "_self",
+        "icon_class": "voyager-warning",
+        "color": null,
+        "parent_id": null,
+        "order": 4,
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-16 00:56:20",
+        "route": "voyager.errors.index",
+        "parameters": null
     }
 ]

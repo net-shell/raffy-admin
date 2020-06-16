@@ -2040,6 +2040,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["log"],
   data: function data() {
@@ -2080,7 +2084,8 @@ __webpack_require__.r(__webpack_exports__);
     duration: function duration() {
       if (!this.momentExited) return;
       var diff = this.momentExited.diff(this.momentCreated);
-      return moment.utc(moment.duration(diff).asMilliseconds()).format("HH:mm");
+      var duration = moment.duration(diff);
+      return parseInt(duration.asHours()) + ":" + parseInt(duration.asMinutes()) % 60;
     }
   },
   methods: {
@@ -2337,6 +2342,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2345,15 +2360,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       filter: {
         from: new Date(),
         to: new Date(),
-        user: null
+        user: null,
+        reader: null
       },
       users: [],
+      readers: [],
       results: [],
       loading: true
     };
   },
   created: function created() {
     this.getUsers();
+    this.getReaders();
     this.getResults();
   },
   watch: {
@@ -2395,8 +2413,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    getResults: function getResults() {
+    getReaders: function getReaders() {
       var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var url, res, readers;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = "/logs/relation?type=log_belongsto_reader_relationship";
+                _context2.next = 3;
+                return fetch(url);
+
+              case 3:
+                res = _context2.sent;
+                _context2.next = 6;
+                return res.json();
+
+              case 6:
+                readers = _context2.sent;
+                _this2.readers = readers.results;
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getResults: function getResults() {
+      var _this3 = this;
 
       this.loading = true;
       var url = "/report-json";
@@ -2405,11 +2453,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           "Content-type": "application/json"
         }
       }).then(function (response) {
-        _this2.results = response.data;
+        _this3.results = response.data;
       }, function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this2.loading = false;
+        return _this3.loading = false;
       });
     },
     getResultsExcel: function getResultsExcel() {
@@ -52792,8 +52840,18 @@ var render = function() {
                           _vm._v(
                             "\n              " +
                               _vm._s(_vm.log.user.section.name) +
-                              "\n            "
-                          )
+                              "\n              "
+                          ),
+                          _c("span", { staticClass: "text-warning" }, [
+                            _c("span", {
+                              staticClass: "icon voyager-location"
+                            }),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.log.reader.name) +
+                                "\n              "
+                            )
+                          ])
                         ])
                       : _vm._e()
                   ]),
@@ -52973,7 +53031,7 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c(
               "div",
-              { staticClass: "col-sm-3" },
+              { staticClass: "col-sm-2" },
               [
                 _c("label", { staticClass: "control-label" }, [
                   _vm._v("Период от:")
@@ -52999,7 +53057,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-sm-3" },
+              { staticClass: "col-sm-2" },
               [
                 _c("label", { staticClass: "control-label" }, [_vm._v("до:")]),
                 _vm._v(" "),
@@ -53023,7 +53081,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-sm-6" },
+              { staticClass: "col-sm-4" },
               [
                 _c("label", { staticClass: "control-label" }, [
                   _vm._v("Служител:")
@@ -53042,6 +53100,33 @@ var render = function() {
                       _vm.$set(_vm.filter, "user", $$v)
                     },
                     expression: "filter.user"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm-4" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Четец:")
+                ]),
+                _vm._v(" "),
+                _c("multiselect", {
+                  attrs: {
+                    placeholder: "Избор на четец...",
+                    "track-by": "id",
+                    label: "text",
+                    options: _vm.readers
+                  },
+                  model: {
+                    value: _vm.filter.reader,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filter, "reader", $$v)
+                    },
+                    expression: "filter.reader"
                   }
                 })
               ],

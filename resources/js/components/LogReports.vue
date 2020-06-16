@@ -7,7 +7,7 @@
       <div class="panel panel-bordered">
         <div class="panel-body filters">
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <label class="control-label">Период от:</label>
               <datepicker
                 v-model="filter.from"
@@ -16,7 +16,7 @@
                 :monday-first="true"
               ></datepicker>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <label class="control-label">до:</label>
               <datepicker
                 v-model="filter.to"
@@ -25,7 +25,7 @@
                 :monday-first="true"
               ></datepicker>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <label class="control-label">Служител:</label>
               <multiselect
                 v-model="filter.user"
@@ -33,6 +33,16 @@
                 track-by="id"
                 label="text"
                 :options="users"
+              ></multiselect>
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label">Четец:</label>
+              <multiselect
+                v-model="filter.reader"
+                placeholder="Избор на четец..."
+                track-by="id"
+                label="text"
+                :options="readers"
               ></multiselect>
             </div>
           </div>
@@ -95,15 +105,18 @@ export default {
       filter: {
         from: new Date(),
         to: new Date(),
-        user: null
+        user: null,
+        reader: null,
       },
       users: [],
+      readers: [],
       results: [],
       loading: true
     };
   },
   created() {
     this.getUsers();
+    this.getReaders();
     this.getResults();
   },
   watch: {
@@ -120,6 +133,12 @@ export default {
       const res = await fetch(url);
       const users = await res.json();
       this.users = users.results;
+    },
+    async getReaders() {
+      let url = "/logs/relation?type=log_belongsto_reader_relationship";
+      const res = await fetch(url);
+      const readers = await res.json();
+      this.readers = readers.results;
     },
     getResults() {
       this.loading = true;

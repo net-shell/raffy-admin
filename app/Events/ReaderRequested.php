@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use App\Error;
 
 class ReaderRequested implements ShouldBroadcastNow
 {
@@ -24,6 +25,12 @@ class ReaderRequested implements ShouldBroadcastNow
     public function __construct($readerId)
     {
         $this->readerId = $readerId;
+
+        // Store error
+        $error = new Error();
+        $error->type = 'Четец';
+        $error->message = 'Непознат четец "' . $readerId . '".';
+        $error->save();
     }
 
     /**

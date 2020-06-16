@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Log;
+use App\Error;
 use App\Reader;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
@@ -28,6 +28,12 @@ class TagRequested implements ShouldBroadcastNow
     {
         $this->tagId = $tagId;
         $this->reader = $reader;
+
+        // Store error
+        $error = new Error();
+        $error->type = 'Карта';
+        $error->message = 'Непозната карта "' . $tagId . '" от четец "' . $reader->name . '".';
+        $error->save();
     }
 
     /**

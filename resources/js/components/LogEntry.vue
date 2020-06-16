@@ -12,6 +12,10 @@
               <p class="text-uppercase" v-if="log.user.section">
                 <span class="icon voyager-company"></span>
                 {{ log.user.section.name }}
+                <span class="text-warning">
+                    <span class="icon voyager-location"></span>
+                    {{ log.reader.name }}
+                </span>
               </p>
             </div>
             <div class="row condensed timestamps">
@@ -80,7 +84,8 @@ export default {
     duration() {
       if(!this.momentExited) return;
       let diff = this.momentExited.diff(this.momentCreated);
-      return moment.utc(moment.duration(diff).asMilliseconds()).format("HH:mm");
+      let duration = moment.duration(diff);
+      return parseInt(duration.asHours()) + ":" + (parseInt(duration.asMinutes()) % 60);
     },
   },
   methods: {

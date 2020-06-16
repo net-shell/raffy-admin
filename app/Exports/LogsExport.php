@@ -36,6 +36,9 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
         if($this->filter['user']) {
             $stats->where('user_id', $this->filter['user']);
         }
+        if($this->filter['reader']) {
+            $stats->where('reader_id', $this->filter['reader']);
+        }
         $stats = $stats->groupBy('user_id')->get();
         foreach($stats as &$stat) {
             $stat->user = User::find($stat->user_id);

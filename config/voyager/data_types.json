@@ -82,7 +82,7 @@
         "server_side": 0,
         "details": "{\"order_column\":\"order\",\"order_display_column\":\"name\",\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
         "created_at": "2020-05-10 22:43:25",
-        "updated_at": "2020-05-11 12:55:23"
+        "updated_at": "2020-06-13 14:58:49"
     },
     {
         "id": 7,
@@ -117,5 +117,22 @@
         "details": "{\"order_column\":\"name\",\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
         "created_at": "2020-05-11 19:23:56",
         "updated_at": "2020-05-11 19:28:42"
+    },
+    {
+        "id": 9,
+        "name": "errors",
+        "slug": "errors",
+        "display_name_singular": "\u0413\u0440\u0435\u0448\u043a\u0430",
+        "display_name_plural": "\u0413\u0440\u0435\u0448\u043a\u0438",
+        "icon": "voyager-warning",
+        "model_name": "App\\Error",
+        "policy_name": null,
+        "controller": null,
+        "description": null,
+        "generate_permissions": 1,
+        "server_side": 1,
+        "details": "{\"order_column\":\"created_at\",\"order_display_column\":\"created_at\",\"order_direction\":\"desc\",\"default_search_key\":\"message\"}",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
     }
 ]

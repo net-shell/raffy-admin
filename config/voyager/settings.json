@@ -118,5 +118,25 @@
         "type": "text",
         "order": 7,
         "group": "Site"
+    },
+    {
+        "id": 13,
+        "key": "site.open_time",
+        "display_name": "\u0412\u0440\u0435\u043c\u0435 \u0437\u0430 \u043e\u0442\u043a\u043b\u044e\u0447\u0432\u0430\u043d\u0435",
+        "value": "4",
+        "details": null,
+        "type": "text",
+        "order": 8,
+        "group": "Site"
+    },
+    {
+        "id": 14,
+        "key": "site.overwrite_time",
+        "display_name": "\u0422\u043e\u043b\u0435\u0440\u0430\u043d\u0441 \u0437\u0430 \u043d\u0435\u0443\u0441\u043f\u0435\u0448\u0435\u043d \u0432\u0445\u043e\u0434",
+        "value": "2",
+        "details": null,
+        "type": "text",
+        "order": 9,
+        "group": "Site"
     }
 ]

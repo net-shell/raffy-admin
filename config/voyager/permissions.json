@@ -320,5 +320,40 @@
         "table_name": "sections",
         "created_at": "2020-05-11 19:23:56",
         "updated_at": "2020-05-11 19:23:56"
+    },
+    {
+        "id": 47,
+        "key": "browse_errors",
+        "table_name": "errors",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
+    },
+    {
+        "id": 48,
+        "key": "read_errors",
+        "table_name": "errors",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
+    },
+    {
+        "id": 49,
+        "key": "edit_errors",
+        "table_name": "errors",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
+    },
+    {
+        "id": 50,
+        "key": "add_errors",
+        "table_name": "errors",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
+    },
+    {
+        "id": 51,
+        "key": "delete_errors",
+        "table_name": "errors",
+        "created_at": "2020-06-13 14:27:45",
+        "updated_at": "2020-06-13 14:27:45"
     }
 ]

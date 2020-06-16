@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 use App\Log;
 use App\Tag;
 use App\Reader;
-use App\User;
+use App\Error;
 use App\Events\TagLogged;
 use App\Events\TagRequested;
 use App\Events\ReaderRequested;
@@ -34,43 +34,65 @@ class ReaderController extends BaseController
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
         if (!$reader) {
+            broadcast(new ReaderRequested($readerId));
             return response()->json(['error' => 404, 'message' => 'Reader not registered.'], 404);
         }
 
         $tagId = base64_decode($request->input('id'));
         $tag = Tag::whereTag($tagId)->first();
         if (!$tag) {
+            // Broadcast event
             broadcast(new TagRequested($tagId, $reader));
             return response()->json(['status' => 'Requested'], 404);
         }
 
-        $log = Log::where('user_id', $tag->user_id)
+        $overwrite = setting('site.overwrite_time');
+
+        $logQuery = Log::where('user_id', $tag->user_id)
             ->where('reader_id', $reader->id)
             ->where('tag_id', $tag->id)
-            ->whereRaw('DATE(created_at) = CURDATE()')
-            ->orderBy('created_at', 'desc')
-            ->first();
-        
-        if($log && !$log->exited_at) {
-            $log->exited_at = Carbon::now();
+            ->whereRaw('DATE(created_at) <= CURDATE()')
+            ->orderBy('created_at', 'desc');
+
+        $log = $logQuery->first();
+        $lastAttemptTime = Carbon::now()->subMinutes($overwrite);
+        $lastAttempt = $logQuery->where('created_at', '>=', $lastAttemptTime)->first();
+
+        if($lastAttempt) {
+            $log = $lastAttempt;
+            $log->created_at = Carbon::now();
             $log->save();
         } else {
-            $log = Log::create([
-                'user_id' => $tag->user_id,
-                'reader_id' => $reader->id,
-                'tag_id' => $tag->id,
-            ]);
+            if($log && !$log->exited_at) {
+                $log->exited_at = Carbon::now();
+                $log->save();
+            } else {
+                $log = Log::create([
+                    'user_id' => $tag->user_id,
+                    'reader_id' => $reader->id,
+                    'tag_id' => $tag->id,
+                ]);
+            }
         }
 
-        $log->load('user');
-        $log->load('reader');
-        $log->load('tag');
+        $log->load(['user', 'reader', 'tag']);
 
         if ($log) {
             broadcast(new TagLogged($log));
-            return $log->toJson();
+            return [
+                'log' => $log,
+                'action' => [
+                    'type' => 'OPEN',
+                    'time' => setting('site.open_time')
+                ]
+            ];
         }
 
+        // Store error
+        $error = new Error();
+        $error->type = 'Сканиране';
+        $error->message = 'Грешка при сканиране на карта "' . $tagId . '" от четец "' . $readerId . '".';
+        $error->save();
         return 'Error while logging.';
     }
 }
