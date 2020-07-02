@@ -22,7 +22,7 @@ class ReaderController extends BaseController
         $reader = Reader::whereMac($readerId)->first();
         if (!$reader) {
             broadcast(new ReaderRequested($readerId));
-            return response()->json(['error' => 404, 'message' => 'Reader not registered.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Reader not registered.'], 404);
         }
 
         broadcast(new ReaderStarted($reader));
@@ -35,7 +35,7 @@ class ReaderController extends BaseController
         $reader = Reader::whereMac($readerId)->first();
         if (!$reader) {
             broadcast(new ReaderRequested($readerId));
-            return response()->json(['error' => 404, 'message' => 'Reader not registered.'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Reader not registered.'], 404);
         }
 
         $tagId = base64_decode($request->input('id'));
@@ -43,7 +43,7 @@ class ReaderController extends BaseController
         if (!$tag) {
             // Broadcast event
             broadcast(new TagRequested($tagId, $reader));
-            return response()->json(['status' => 'Requested'], 404);
+            return response()->json(['status' => 'requested'], 404);
         }
 
         $overwrite = setting('site.overwrite_time');
@@ -52,7 +52,8 @@ class ReaderController extends BaseController
             ->where('reader_id', $reader->id)
             ->where('tag_id', $tag->id)
             ->whereRaw('DATE(created_at) <= CURDATE()')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')
+            ->limit(1);
 
         $log = $logQuery->first();
         $lastAttemptTime = Carbon::now()->subMinutes($overwrite);
@@ -80,9 +81,11 @@ class ReaderController extends BaseController
         if ($log) {
             broadcast(new TagLogged($log));
             return [
+                'status' => 'success',
                 'log' => $log,
                 'action' => [
                     'type' => 'OPEN',
+                    'is_exit' => $log->exited_at ? 1 : 0,
                     'time' => setting('site.open_time')
                 ]
             ];
