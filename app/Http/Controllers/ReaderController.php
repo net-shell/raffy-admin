@@ -59,7 +59,7 @@ class ReaderController extends BaseController
         $lastAttemptTime = Carbon::now()->subMinutes($overwrite);
         $lastAttempt = $logQuery->where('created_at', '>=', $lastAttemptTime)->first();
 
-        if($lastAttempt) {
+        if($lastAttempt && $overwrite > 0) {
             $log = $lastAttempt;
             $log->created_at = Carbon::now();
             $log->save();
