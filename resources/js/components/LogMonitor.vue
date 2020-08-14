@@ -1,22 +1,12 @@
 <template>
   <div class="row">
     <div class="col-md-7">
-      <div class="row">
-        <div class="col-sm-6">
-          <h1 class="page-title">
-            <i class="voyager-eye"></i>
-            Монитор на записите в реално време
-          </h1>
-        </div>
-        <div class="col-sm-6">
-            <label class="control-label">Четец:</label>
-            <multiselect
-            v-model="selectedReader"
-            placeholder="Избор на четец..."
-            track-by="id"
-            label="text"
-            :options="readers"
-            ></multiselect>
+      <div class="panel panel-bordered">
+        <div class="panel-body">
+          <div class="branding" :style="'color: ' + color">
+            <img class="logo" :src="logo" />
+            {{ brand }}
+          </div>
         </div>
       </div>
       <div class="page-content containter-fluid">
@@ -37,6 +27,16 @@
           <clock size="300px"></clock>
         </div>
       </div>
+      <div>
+        <label class="control-label">Четец:</label>
+        <multiselect
+          v-model="selectedReader"
+          placeholder="Избор на четец..."
+          track-by="id"
+          label="text"
+          :options="readers"
+        ></multiselect>
+      </div>
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@
 <script>
 import Clock from "vue-clock2";
 export default {
-  props: ["lastLogs"],
+  props: ["lastLogs", "logo", "color", "brand"],
   components: { Clock },
   mounted() {
     setInterval(this.updateTimestamp, 1000);
@@ -53,6 +53,8 @@ export default {
   created() {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
+    this.$on("log-added", this.playLogAudio);
+    this.$on("log-updated", this.playLogAudio);
     this.lastParsed = JSON.parse(this.lastLogs);
     this.getReaders();
   },
@@ -72,8 +74,8 @@ export default {
         return this.newLogs;
       }
       let logs = this.newLogs.concat(this.lastParsed);
-      if(this.selectedReader) {
-          logs = logs.filter(l => l.reader_id == this.selectedReader.id);
+      if (this.selectedReader) {
+        logs = logs.filter((l) => l.reader_id == this.selectedReader.id);
       }
       return logs;
     },
@@ -84,7 +86,7 @@ export default {
     liveDate() {
       if (!this.timestamp) return;
       return this.timestamp.format("dddd L");
-    }
+    },
   },
   methods: {
     async getReaders() {
@@ -97,33 +99,45 @@ export default {
       this.timestamp = window.moment();
     },
     onEntryLogged(log) {
-      if (this.logs.filter(l => l.id == log.id).length > 0) {
+      if (this.logs.filter((l) => l.id == log.id).length > 0) {
         // Update existing log
-        if (this.newLogs.filter(l => l.id == log.id).length > 0) {
-          let i = this.newLogs.findIndex(l => l.id == log.id);
+        if (this.newLogs.filter((l) => l.id == log.id).length > 0) {
+          let i = this.newLogs.findIndex((l) => l.id == log.id);
           this.newLogs.splice(i, 1);
           this.newLogs.unshift(log);
-        } else if (this.lastParsed.filter(l => l.id == log.id).length > 0) {
-          let i = this.lastParsed.findIndex(l => l.id == log.id);
+        } else if (this.lastParsed.filter((l) => l.id == log.id).length > 0) {
+          let i = this.lastParsed.findIndex((l) => l.id == log.id);
           this.lastParsed.splice(i, 1);
           this.lastParsed.unshift(log);
         }
+        this.$emit('log-updated', log);
       } else {
-        // Add to new logs
+          // Add to new logs
         this.newLogs.unshift(log);
+        this.$emit('log-added', log);
       }
     },
     onTagRequested(tagId, reader) {
-      this.newRequests = this.newRequests.filter(r => r.tagId != tagId);
+      this.newRequests = this.newRequests.filter((r) => r.tagId != tagId);
       this.newRequests.unshift({
         id: window.moment().format("X"),
         tagId: tagId,
         reader: reader,
         creation_time: window.moment().format("HH:mm:ss"),
-        creation_date: window.moment().format("dddd L")
+        creation_date: window.moment().format("dddd L"),
       });
+    },
+    playLogAudio(log) {
+        let sound = log.exited_at ? 'close_sound' : 'open_sound';
+        this.playAudio(sound);
+    },
+    playAudio(name) {
+        let el = document.getElementById('audio_' + name);
+        if(!el) return;
+        el.currentTime = 0;
+        el.play();
     }
-  }
+  },
 };
 </script>
 
@@ -132,5 +146,17 @@ export default {
   font-size: 8em;
   margin: 0;
   overflow: hidden;
+}
+
+.branding {
+  font-size: 9em;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.branding .logo {
+  width: 1em;
+  height: 1em;
 }
 </style>

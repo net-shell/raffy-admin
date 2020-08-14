@@ -3,37 +3,36 @@
     <div class="panel panel-bordered">
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-3 no-margin">
-            <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
+          <div class="col-sm-3 no-margin text-right">
+            <div class="img-square">
+              <img class="img-responsive" :src="'/storage/' + log.user.avatar" />
+            </div>
           </div>
           <div class="col-sm-9 no-padding no-margin details">
             <div>
               <h3 class="name">{{ log.user.name }}</h3>
               <p class="text-uppercase" v-if="log.user.section">
-                <span class="icon voyager-company"></span>
-                {{ log.user.section.name }}
-                <span class="text-warning">
-                    <span class="icon voyager-location"></span>
-                    {{ log.reader.name }}
+                <span>
+                  <span class="icon voyager-location"></span>
+                  {{ log.reader.name }}
                 </span>
+                <span class="icon voyager-company"></span>
+                отдел
+                {{ log.user.section.name }}
               </p>
             </div>
             <div class="row condensed timestamps">
-              <div class="col-xs-5 time-entry">
+              <div class="col-xs-6 time-entry">
                 <p class="lead highlighted">ВХОД</p>
                 <p>{{ entryDiff }}</p>
                 <p class="lead">{{ entryTime }}</p>
                 <p>{{ entryDate }}</p>
               </div>
-              <div class="col-xs-5 time-exit" v-if="momentExited">
+              <div class="col-xs-6 time-exit attention-zoom" v-if="momentExited">
                 <p class="lead highlighted">ИЗХОД</p>
                 <p>{{ exitDiff }}</p>
                 <p class="lead">{{ exitTime }}</p>
                 <p>{{ exitDate }}</p>
-              </div>
-              <div class="col-xs-2 time-duration" v-if="duration">
-                <p class="lead highlighted">ЧАСОВЕ</p>
-                <p class="lead">{{ duration }}</p>
               </div>
             </div>
           </div>
@@ -49,7 +48,7 @@ export default {
   data() {
     return {
       momentCreated: null,
-      momentExited: null
+      momentExited: null,
     };
   },
   mounted() {
@@ -82,10 +81,14 @@ export default {
       return this.momentExited.format("dddd L");
     },
     duration() {
-      if(!this.momentExited) return;
+      if (!this.momentExited) return;
       let diff = this.momentExited.diff(this.momentCreated);
       let duration = moment.duration(diff);
-      return parseInt(duration.asHours()) + ":" + (parseInt(duration.asMinutes()) % 60);
+      return (
+        parseInt(duration.asHours()) +
+        ":" +
+        (parseInt(duration.asMinutes()) % 60)
+      );
     },
   },
   methods: {
@@ -94,16 +97,16 @@ export default {
       this.momentExited = this.log.exited_at
         ? window.moment(this.log.exited_at)
         : null;
-    }
+    },
   },
   watch: {
     log: {
       deep: true,
       handler() {
         this.updateMoments();
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
@@ -116,12 +119,14 @@ export default {
   margin: 0 15px 0 0;
 }
 
-.log-entry .img-responsive {
-  max-height: 200px;
+.log-entry .img-square {
+  object-fit: cover;
+  height: 212px;
 }
 
 .log-entry .name {
   margin: 0.5em 0;
+  color: #000;
 }
 
 .log-entry .timestamps p {
@@ -133,10 +138,15 @@ export default {
 }
 
 .log-entry .time-entry {
-  color: green;
+  color: red;
 }
 
 .log-entry .time-exit {
   color: blue;
+}
+
+.log-entry .time-entry > .lead,
+.log-entry .time-exit > .lead {
+  font-weight: bold;
 }
 </style>

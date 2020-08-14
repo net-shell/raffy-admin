@@ -2043,7 +2043,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["log"],
   data: function data() {
@@ -2170,7 +2169,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["lastLogs"],
+  props: ["lastLogs", "logo", "color", "brand"],
   components: {
     Clock: vue_clock2__WEBPACK_IMPORTED_MODULE_1___default.a
   },
@@ -2181,6 +2180,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
+    this.$on("log-added", this.playLogAudio);
+    this.$on("log-updated", this.playLogAudio);
     this.lastParsed = JSON.parse(this.lastLogs);
     this.getReaders();
   },
@@ -2278,9 +2279,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           this.lastParsed.splice(_i, 1);
           this.lastParsed.unshift(log);
         }
+
+        this.$emit('log-updated', log);
       } else {
         // Add to new logs
         this.newLogs.unshift(log);
+        this.$emit('log-added', log);
       }
     },
     onTagRequested: function onTagRequested(tagId, reader) {
@@ -2294,6 +2298,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         creation_time: window.moment().format("HH:mm:ss"),
         creation_date: window.moment().format("dddd L")
       });
+    },
+    playLogAudio: function playLogAudio(log) {
+      var sound = log.exited_at ? 'close_sound' : 'open_sound';
+      this.playAudio(sound);
+    },
+    playAudio: function playAudio(name) {
+      var el = document.getElementById('audio_' + name);
+      if (!el) return;
+      el.currentTime = 0;
+      el.play();
     }
   }
 });
@@ -5116,7 +5130,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.log-entry .panel-body[data-v-e693040e] {\n  padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-responsive[data-v-e693040e] {\n  max-height: 200px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0.5em 0;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n  margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n  border-bottom: 1px solid #666;\n}\n.log-entry .time-entry[data-v-e693040e] {\n  color: green;\n}\n.log-entry .time-exit[data-v-e693040e] {\n  color: blue;\n}\n", ""]);
+exports.push([module.i, "\n.log-entry .panel-body[data-v-e693040e] {\n  padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-square[data-v-e693040e] {\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 212px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0.5em 0;\n  color: #000;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n  margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n  border-bottom: 1px solid #666;\n}\n.log-entry .time-entry[data-v-e693040e] {\n  color: red;\n}\n.log-entry .time-exit[data-v-e693040e] {\n  color: blue;\n}\n.log-entry .time-entry > .lead[data-v-e693040e],\n.log-entry .time-exit > .lead[data-v-e693040e] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -5135,7 +5149,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.big-clock h1[data-v-1a0c3f21] {\n  font-size: 8em;\n  margin: 0;\n  overflow: hidden;\n}\n", ""]);
+exports.push([module.i, "\n.big-clock h1[data-v-1a0c3f21] {\n  font-size: 8em;\n  margin: 0;\n  overflow: hidden;\n}\n.branding[data-v-1a0c3f21] {\n  font-size: 9em;\n  text-transform: uppercase;\n  font-weight: normal;\n  line-height: 1;\n}\n.branding .logo[data-v-1a0c3f21] {\n  width: 1em;\n  height: 1em;\n}\n", ""]);
 
 // exports
 
@@ -52889,11 +52903,13 @@ var render = function() {
         _c("div", { staticClass: "panel panel-bordered" }, [
           _c("div", { staticClass: "panel-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-3 no-margin" }, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  attrs: { src: "/storage/" + _vm.log.user.avatar }
-                })
+              _c("div", { staticClass: "col-sm-3 no-margin text-right" }, [
+                _c("div", { staticClass: "img-square" }, [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    attrs: { src: "/storage/" + _vm.log.user.avatar }
+                  })
+                ])
               ]),
               _vm._v(" "),
               _c(
@@ -52907,28 +52923,29 @@ var render = function() {
                     _vm._v(" "),
                     _vm.log.user.section
                       ? _c("p", { staticClass: "text-uppercase" }, [
-                          _c("span", { staticClass: "icon voyager-company" }),
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(_vm.log.user.section.name) +
-                              "\n              "
-                          ),
-                          _c("span", { staticClass: "text-warning" }, [
+                          _c("span", [
                             _c("span", {
                               staticClass: "icon voyager-location"
                             }),
                             _vm._v(
-                              "\n                  " +
+                              "\n                " +
                                 _vm._s(_vm.log.reader.name) +
                                 "\n              "
                             )
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "icon voyager-company" }),
+                          _vm._v(
+                            "\n              отдел\n              " +
+                              _vm._s(_vm.log.user.section.name) +
+                              "\n            "
+                          )
                         ])
                       : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row condensed timestamps" }, [
-                    _c("div", { staticClass: "col-xs-5 time-entry" }, [
+                    _c("div", { staticClass: "col-xs-6 time-entry" }, [
                       _c("p", { staticClass: "lead highlighted" }, [
                         _vm._v("ВХОД")
                       ]),
@@ -52943,31 +52960,23 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _vm.momentExited
-                      ? _c("div", { staticClass: "col-xs-5 time-exit" }, [
-                          _c("p", { staticClass: "lead highlighted" }, [
-                            _vm._v("ИЗХОД")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.exitDiff))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "lead" }, [
-                            _vm._v(_vm._s(_vm.exitTime))
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.exitDate))])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.duration
-                      ? _c("div", { staticClass: "col-xs-2 time-duration" }, [
-                          _c("p", { staticClass: "lead highlighted" }, [
-                            _vm._v("ЧАСОВЕ")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "lead" }, [
-                            _vm._v(_vm._s(_vm.duration))
-                          ])
-                        ])
+                      ? _c(
+                          "div",
+                          { staticClass: "col-xs-6 time-exit attention-zoom" },
+                          [
+                            _c("p", { staticClass: "lead highlighted" }, [
+                              _vm._v("ИЗХОД")
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(_vm.exitDiff))]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "lead" }, [
+                              _vm._v(_vm._s(_vm.exitTime))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(_vm.exitDate))])
+                          ]
+                        )
                       : _vm._e()
                   ])
                 ]
@@ -53002,33 +53011,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-7" }, [
-      _c("div", { staticClass: "row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-sm-6" },
-          [
-            _c("label", { staticClass: "control-label" }, [_vm._v("Четец:")]),
-            _vm._v(" "),
-            _c("multiselect", {
-              attrs: {
-                placeholder: "Избор на четец...",
-                "track-by": "id",
-                label: "text",
-                options: _vm.readers
-              },
-              model: {
-                value: _vm.selectedReader,
-                callback: function($$v) {
-                  _vm.selectedReader = $$v
-                },
-                expression: "selectedReader"
-              }
-            })
-          ],
-          1
-        )
+      _c("div", { staticClass: "panel panel-bordered" }, [
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "branding", style: "color: " + _vm.color }, [
+            _c("img", { staticClass: "logo", attrs: { src: _vm.logo } }),
+            _vm._v("\n          " + _vm._s(_vm.brand) + "\n        ")
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -53082,25 +53071,37 @@ var render = function() {
             ],
             1
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c("label", { staticClass: "control-label" }, [_vm._v("Четец:")]),
+            _vm._v(" "),
+            _c("multiselect", {
+              attrs: {
+                placeholder: "Избор на четец...",
+                "track-by": "id",
+                label: "text",
+                options: _vm.readers
+              },
+              model: {
+                value: _vm.selectedReader,
+                callback: function($$v) {
+                  _vm.selectedReader = $$v
+                },
+                expression: "selectedReader"
+              }
+            })
+          ],
+          1
+        )
       ],
       1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-6" }, [
-      _c("h1", { staticClass: "page-title" }, [
-        _c("i", { staticClass: "voyager-eye" }),
-        _vm._v("\n          Монитор на записите в реално време\n        ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
