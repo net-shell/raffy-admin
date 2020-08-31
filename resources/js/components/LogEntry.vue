@@ -142,7 +142,7 @@ export default {
 }
 
 .log-entry .time-exit {
-  color: blue;
+  color: #04f;
 }
 
 .log-entry .time-entry > .lead,

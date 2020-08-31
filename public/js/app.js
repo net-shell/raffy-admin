@@ -5130,7 +5130,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.log-entry .panel-body[data-v-e693040e] {\n  padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-square[data-v-e693040e] {\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 212px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0.5em 0;\n  color: #000;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n  margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n  border-bottom: 1px solid #666;\n}\n.log-entry .time-entry[data-v-e693040e] {\n  color: red;\n}\n.log-entry .time-exit[data-v-e693040e] {\n  color: blue;\n}\n.log-entry .time-entry > .lead[data-v-e693040e],\n.log-entry .time-exit > .lead[data-v-e693040e] {\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.log-entry .panel-body[data-v-e693040e] {\n  padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-square[data-v-e693040e] {\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 212px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0.5em 0;\n  color: #000;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n  margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n  border-bottom: 1px solid #666;\n}\n.log-entry .time-entry[data-v-e693040e] {\n  color: red;\n}\n.log-entry .time-exit[data-v-e693040e] {\n  color: #04f;\n}\n.log-entry .time-entry > .lead[data-v-e693040e],\n.log-entry .time-exit > .lead[data-v-e693040e] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 

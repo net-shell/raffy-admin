@@ -20,11 +20,18 @@
                 <div class="dimmer"></div>
                 <div class="panel-content">
                     <img src="{{ $user_avatar }}" class="avatar" alt="{{ Auth::user()->name }} avatar">
+                    <form action="{{ route('voyager.logout') }}" method="POST" style="clear: left;">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-danger" title="@lang('voyager::generic.logout')">
+                            <b class="icon voyager-power"></b>
+                        </button>
+                    </form>
                     <h4>{{ ucwords(Auth::user()->name) }}</h4>
                     <p>{{ Auth::user()->email }}</p>
 
                     <a href="{{ route('voyager.profile') }}" class="btn btn-primary">{{ __('voyager::generic.profile') }}</a>
                     <div style="clear:both"></div>
+
                 </div>
             </div>
 
