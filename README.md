@@ -36,6 +36,8 @@ Edit `laravel-echo-server.json` and set Redis password.
 
 `php artisan voyager:import -y`
 
+Note: There is a known issue with recent versions of voyager-config and the import command seems to be missing. You can import the dump.sql if migrations can't be run.
+
 ## Running
 
 1. Start Docker services
@@ -45,6 +47,6 @@ DOMAIN=raffy.local docker-compose up -d
 
 2. **Test in browser!**
 
-Go to [http://raffy.admin](http://raffy.admin) in your web browser.
+Go to [http://raffy.local](http://raffy.local) in your web browser.
 
 You should see the login screen (or maybe an error).
