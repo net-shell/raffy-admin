@@ -1,5 +1,5 @@
 {
-	"authHost": "http://raffy-admin",
+	"authHost": "http://www/",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -10,7 +10,9 @@
 	"database": "redis",
 	"databaseConfig": {
 		"redis": {
-			"password": "ZTjoYZuO87X/iDbR27kgeCzL8c9HERtQwRpaHu6rgphgOljDsNUznkp0C3zE/vIKVl9AECPnQZQfC6JS"
+            "host": "redis",
+            "port": "6379",
+            "db": "0"
 		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
@@ -18,7 +20,7 @@
 	},
 	"devMode": true,
 	"host": null,
-	"port": "6001",
+	"port": "80",
 	"protocol": "http",
 	"socketio": {},
 	"secureOptions": 67108864,

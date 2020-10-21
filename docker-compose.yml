@@ -1,0 +1,84 @@
+version: '3'
+
+networks: 
+    app-net: {}
+
+services:
+    web:
+        image: 5ndn/nginx:1.11
+        ports:
+            - 80:80
+        volumes:
+            - .:/usr/share/nginx/html
+            - .docker/nginx/default.conf:/etc/nginx/conf.d/vhost.conf
+        depends_on:
+            - php
+            - mysql
+        networks:
+            - app-net
+    php:
+        build: .docker/php/
+        volumes:
+            - .:/app
+            - .:/usr/share/nginx/html
+        ports:
+            - 9000:9000
+        links:
+            - mysql
+            - redis
+            - memcache
+        networks:
+            - app-net
+    mysql:
+        image: mariadb:latest
+        ports:
+            - 3306:3306
+        volumes:
+            - .docker/mysql/data:/var/lib/mysql
+            - .docker/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - app-net
+    echo:
+        image: oanhnn/laravel-echo-server:latest
+        depends_on:
+            - redis
+        ports:
+            - 6001:6001
+        volumes:
+            - .:/usr/src/app
+        links:
+            - redis
+            - web
+        restart: unless-stopped
+        environment:
+            LARAVEL_ECHO_SERVER_AUTH_HOST: http://web
+            LARAVEL_ECHO_SERVER_DEBUG: 'true'
+            LARAVEL_ECHO_SERVER_DB: redis
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            REDIS_PREFIX: echo_
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+            REDIS_DB: 0
+        networks:
+            - app-net
+    redis:
+        image: redis:3.2
+        restart: unless-stopped
+        volumes:
+            - .docker/redis/data:/data
+        command: redis-server --bind 0.0.0.0 --requirepass ${REDIS_PASSWORD}
+        networks:
+            - app-net
+        environment: 
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+    memcache:
+        image: memcached:1.4
+        ports:
+            - 11211:11211
+        networks:
+            - app-net
