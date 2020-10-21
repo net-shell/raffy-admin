@@ -3,7 +3,7 @@
     <div class="col-sm-12">
       <h3>Четци</h3>
     </div>
-    <div class="col-sm-6" v-for="reader in readers" :key="reader.id">
+    <div class="col-sm-12" v-for="reader in readers" :key="reader.id">
       <div class="panel panel-bordered">
         <div class="panel-body">
           <h4>{{ reader.name }}</h4>

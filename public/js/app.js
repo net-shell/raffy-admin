@@ -2641,6 +2641,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["stats", "updated"],
@@ -2650,9 +2654,17 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     lastUpdated: function lastUpdated() {
       return window.moment(this.updated).fromNow();
+    },
+    diskPercent: function diskPercent() {
+      return this.stats.hdd_used / this.stats.hdd_total * 100;
     }
   },
-  mounted: function mounted() {}
+  methods: {
+    getColor: function getColor(p) {
+      if (p < 25) return 'green';else if (p < 50) return 'yellow';else if (p < 75) return 'orange';
+      return 'red';
+    }
+  }
 });
 
 /***/ }),
@@ -54793,7 +54805,7 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _vm._l(_vm.readers, function(reader) {
-        return _c("div", { key: reader.id, staticClass: "col-sm-6" }, [
+        return _c("div", { key: reader.id, staticClass: "col-sm-12" }, [
           _c("div", { staticClass: "panel panel-bordered" }, [
             _c(
               "div",
@@ -54848,7 +54860,10 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-sm-12" }, [
       _vm.lastUpdated
-        ? _c("p", [_vm._v("Последна активност: " + _vm._s(_vm.lastUpdated))])
+        ? _c("p", [
+            _vm._v("\n      Последна активност:\n      "),
+            _c("b", [_vm._v(_vm._s(_vm.lastUpdated))])
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.stats ? _c("p", [_vm._v(_vm._s(_vm.stats.platform))]) : _vm._e()
@@ -54857,12 +54872,15 @@ var render = function() {
     _vm.stats && _vm.stats.cpu
       ? _c(
           "div",
-          { staticClass: "col-sm-6" },
+          { staticClass: "col-sm-4" },
           [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("CPU")]),
-            _vm._v(" "),
             _c("pie-chart", {
-              attrs: { percent: +_vm.stats.cpu, label: _vm.stats.cpu + "%" }
+              attrs: {
+                percent: +_vm.stats.cpu,
+                label: _vm.stats.cpu + "%",
+                "label-small": "CPU",
+                color: _vm.getColor(_vm.stats.cpu)
+              }
             })
           ],
           1
@@ -54872,12 +54890,33 @@ var render = function() {
     _vm.stats && _vm.stats.ram
       ? _c(
           "div",
-          { staticClass: "col-sm-6" },
+          { staticClass: "col-sm-4" },
           [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("RAM")]),
-            _vm._v(" "),
             _c("pie-chart", {
-              attrs: { percent: +_vm.stats.ram, label: _vm.stats.ram + "%" }
+              attrs: {
+                percent: +_vm.stats.ram,
+                label: _vm.stats.ram + "%",
+                "label-small": "RAM",
+                color: _vm.getColor(_vm.stats.ram)
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.stats && _vm.stats.hdd_used
+      ? _c(
+          "div",
+          { staticClass: "col-sm-4" },
+          [
+            _c("pie-chart", {
+              attrs: {
+                percent: _vm.diskPercent,
+                label: _vm.stats.hdd_used + "/" + _vm.stats.hdd_total + "GB",
+                "label-small": "HDD",
+                color: _vm.getColor(_vm.diskPercent)
+              }
             })
           ],
           1
