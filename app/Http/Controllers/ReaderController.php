@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ReaderStarted;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,6 +11,7 @@ use App\Reader;
 use App\Error;
 use App\Events\TagLogged;
 use App\Events\TagRequested;
+use App\Events\ReaderStarted;
 use App\Events\ReaderRequested;
 
 class ReaderController extends BaseController
@@ -24,6 +24,10 @@ class ReaderController extends BaseController
             broadcast(new ReaderRequested($readerId));
             return response()->json(['status' => 'error', 'message' => 'Reader not registered.'], 404);
         }
+        
+        $reader->stats = $request->all();
+        $reader->touch();
+        $reader->save();
 
         broadcast(new ReaderStarted($reader));
         return $reader->toJson();

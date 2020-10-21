@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Reader;
+use App\Http\Resources\Reader as ReaderResource;
 
 Voyager::routes();
 
@@ -15,4 +17,10 @@ Route::post('report-pdf', 'ReportController@reportPdf')->middleware('admin.user'
 Route::group(['prefix' => '/iot'], function() {
     Route::post('log-tag', 'ReaderController@logTag');
     Route::post('start-reader', 'ReaderController@startReader');
+});
+
+Route::group(['prefix' => '/api'], function() {
+    Route::get('/reader', function () {
+        return new ReaderResource(Reader::all());
+    });
 });

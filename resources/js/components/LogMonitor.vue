@@ -3,9 +3,9 @@
     <div class="col-md-7">
       <div class="panel panel-bordered">
         <div class="panel-body">
-          <div class="branding" :style="'color: ' + color">
+          <div class="branding">
             <img class="logo" :src="logo" />
-            {{ brand }}
+            Система за контрол на достъпа
           </div>
         </div>
       </div>
@@ -27,16 +27,7 @@
           <clock size="300px"></clock>
         </div>
       </div>
-      <div>
-        <label class="control-label">Четец:</label>
-        <multiselect
-          v-model="selectedReader"
-          placeholder="Избор на четец..."
-          track-by="id"
-          label="text"
-          :options="readers"
-        ></multiselect>
-      </div>
+      <reader-monitor></reader-monitor>
     </div>
   </div>
 </template>
@@ -56,7 +47,6 @@ export default {
     this.$on("log-added", this.playLogAudio);
     this.$on("log-updated", this.playLogAudio);
     this.lastParsed = JSON.parse(this.lastLogs);
-    this.getReaders();
   },
   data() {
     return {
@@ -89,12 +79,6 @@ export default {
     },
   },
   methods: {
-    async getReaders() {
-      let url = "/logs/relation?type=log_belongsto_reader_relationship";
-      const res = await fetch(url);
-      const readers = await res.json();
-      this.readers = readers.results;
-    },
     updateTimestamp() {
       this.timestamp = window.moment();
     },
@@ -149,14 +133,14 @@ export default {
 }
 
 .branding {
-  font-size: 9em;
+  font-size: 2em;
   text-transform: uppercase;
   font-weight: normal;
   line-height: 1;
 }
 
 .branding .logo {
-  width: 1em;
-  height: 1em;
+  width: auto;
+  height: 2em;
 }
 </style>
