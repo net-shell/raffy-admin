@@ -5,16 +5,11 @@ WORKDIR /usr/share/nginx/html
 # Install PDO
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Install GD, ZIP
-RUN apt-get update -y && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
-    libfreetype6-dev libonig-dev
-RUN apt-get update && \
-    apt-get install -y \
-        zlib1g-dev
+# Install GD, ZIP and EXIF
+RUN apt-get update -y && apt-get install -y -qq --force-yes libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
+    libfreetype6-dev libonig-dev supervisor zlib1g-dev cron
 RUN apt-get install -y libzip-dev
-RUN docker-php-ext-install zip
-RUN docker-php-ext-install gd
-RUN docker-php-ext-install exif
+RUN docker-php-ext-install zip gd exif
 
 # Install Redis
 RUN pecl install -o -f redis \
@@ -24,5 +19,15 @@ RUN pecl install -o -f redis \
 # Install Composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer --version
+
+
+# Copy cron file to the cron.d directory
+COPY cron.txt /etc/cron.d/app-cron
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/app-cron
+
+# Apply cron job
+RUN crontab /etc/cron.d/app-cron
 
 #RUN composer run-script install-tasks

@@ -21,6 +21,6 @@ Route::group(['prefix' => '/iot'], function() {
 
 Route::group(['prefix' => '/api'], function() {
     Route::get('/reader', function () {
-        return new ReaderResource(Reader::all());
+        return new ReaderResource(Reader::orderBy('order')->get());
     });
 });

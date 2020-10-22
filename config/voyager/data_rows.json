@@ -823,5 +823,20 @@
         "delete": 0,
         "details": "{}",
         "order": 5
+    },
+    {
+        "id": 57,
+        "data_type_id": 6,
+        "field": "stats",
+        "type": "code_editor",
+        "display_name": "Stats",
+        "required": 0,
+        "browse": 0,
+        "read": 1,
+        "edit": 1,
+        "add": 1,
+        "delete": 1,
+        "details": "{}",
+        "order": 7
     }
 ]

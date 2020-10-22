@@ -13,8 +13,8 @@
         "generate_permissions": 1,
         "server_side": 0,
         "details": "{\"order_column\":\"name\",\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
-        "created_at": "2020-05-10 22:07:09",
-        "updated_at": "2020-05-15 09:13:38"
+        "created_at": "2020-05-10 19:07:09",
+        "updated_at": "2020-05-15 06:13:38"
     },
     {
         "id": 2,
@@ -30,8 +30,8 @@
         "generate_permissions": 1,
         "server_side": 0,
         "details": null,
-        "created_at": "2020-05-10 22:07:09",
-        "updated_at": "2020-05-10 22:07:09"
+        "created_at": "2020-05-10 19:07:09",
+        "updated_at": "2020-05-10 19:07:09"
     },
     {
         "id": 3,
@@ -47,8 +47,8 @@
         "generate_permissions": 1,
         "server_side": 0,
         "details": null,
-        "created_at": "2020-05-10 22:07:09",
-        "updated_at": "2020-05-10 22:07:09"
+        "created_at": "2020-05-10 19:07:09",
+        "updated_at": "2020-05-10 19:07:09"
     },
     {
         "id": 5,
@@ -64,8 +64,8 @@
         "generate_permissions": 1,
         "server_side": 1,
         "details": "{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}",
-        "created_at": "2020-05-10 22:21:26",
-        "updated_at": "2020-05-25 09:10:25"
+        "created_at": "2020-05-10 19:21:26",
+        "updated_at": "2020-05-25 06:10:25"
     },
     {
         "id": 6,
@@ -81,8 +81,8 @@
         "generate_permissions": 1,
         "server_side": 0,
         "details": "{\"order_column\":\"order\",\"order_display_column\":\"name\",\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
-        "created_at": "2020-05-10 22:43:25",
-        "updated_at": "2020-06-13 14:58:49"
+        "created_at": "2020-05-10 19:43:25",
+        "updated_at": "2020-10-22 08:29:57"
     },
     {
         "id": 7,
@@ -98,8 +98,8 @@
         "generate_permissions": 1,
         "server_side": 1,
         "details": "{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}",
-        "created_at": "2020-05-11 00:11:18",
-        "updated_at": "2020-05-11 11:49:56"
+        "created_at": "2020-05-10 21:11:18",
+        "updated_at": "2020-05-11 08:49:56"
     },
     {
         "id": 8,
@@ -115,8 +115,8 @@
         "generate_permissions": 1,
         "server_side": 0,
         "details": "{\"order_column\":\"name\",\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"name\",\"scope\":null}",
-        "created_at": "2020-05-11 19:23:56",
-        "updated_at": "2020-05-11 19:28:42"
+        "created_at": "2020-05-11 16:23:56",
+        "updated_at": "2020-05-11 16:28:42"
     },
     {
         "id": 9,
@@ -132,7 +132,7 @@
         "generate_permissions": 1,
         "server_side": 1,
         "details": "{\"order_column\":\"created_at\",\"order_display_column\":\"created_at\",\"order_direction\":\"desc\",\"default_search_key\":\"message\"}",
-        "created_at": "2020-06-13 14:27:45",
-        "updated_at": "2020-06-13 14:27:45"
+        "created_at": "2020-06-13 11:27:45",
+        "updated_at": "2020-06-13 11:27:45"
     }
 ]

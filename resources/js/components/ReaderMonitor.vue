@@ -1,13 +1,24 @@
 <template>
   <div class="row">
-    <div class="col-sm-12">
-      <h3>Четци</h3>
-    </div>
-    <div class="col-sm-12" v-for="reader in readers" :key="reader.id">
+    <div class="col-sm-12" id="reader-monitor" v-for="reader in readers" :key="reader.id">
       <div class="panel panel-bordered">
-        <div class="panel-body">
-          <h4>{{ reader.name }}</h4>
-          <stats-chart :stats="reader.stats" :updated="reader.updated_at"></stats-chart>
+        <div class="panel-heading">
+          <p class="lead reader-name">
+            <a
+              role="button"
+              data-toggle="collapse"
+              :href="'#reader-' + reader.id"
+              data-parent="#reader-monitor"
+            >
+              <span class="icon voyager-location"></span>
+              {{ reader.name }}
+            </a>
+          </p>
+        </div>
+        <div :id="'reader-' + reader.id" class="panel-collapse collapse" :class="reader.stats ? 'in' : ''">
+          <div class="panel-body">
+            <stats-chart :stats="reader.stats" :updated="reader.updated_at"></stats-chart>
+          </div>
         </div>
       </div>
     </div>
@@ -16,11 +27,16 @@
 
 <script>
 export default {
-  mounted() {},
-  created() {
+  mounted() {
     this.$root.$on("reader-started", this.onReaderStarted);
+  },
+  created() {
     this.getReaders();
-    setInterval(this.getReaders, 60000);
+    let me = this;
+    setInterval(function() {
+      console.log("regular update");
+      me.getReaders();
+    }, 18000);
   },
   data() {
     return {
@@ -43,4 +59,13 @@ export default {
 </script>
 
 <style scoped>
+.reader-name {
+  margin: 0;
+  line-height: 2;
+}
+
+.reader-name a {
+  display: block;
+  text-align: left;
+}
 </style>

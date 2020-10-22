@@ -27,7 +27,11 @@
           <clock size="300px"></clock>
         </div>
       </div>
-      <reader-monitor></reader-monitor>
+      <div class="panel panel-bordered">
+        <div class="panel-body">
+          <reader-monitor></reader-monitor>
+        </div>
+      </div>
     </div>
   </div>
 </template>
