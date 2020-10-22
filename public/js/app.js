@@ -2555,25 +2555,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.$root.$on("reader-started", this.onReaderStarted);
@@ -2675,21 +2656,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["stats", "updated"],
+  props: ["reader"],
   components: {
     "pie-chart": vue_pie_chart_src_PieChart_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
+    stats: function stats() {
+      return this.reader.stats;
+    },
     lastUpdated: function lastUpdated() {
-      return window.moment(this.updated).fromNow();
+      var moment = window.moment(this.reader.updated_at);
+      return moment.fromNow() + ' - ' + moment.format('lll');
     },
     diskPercent: function diskPercent() {
       return this.stats.hdd_used / this.stats.hdd_total * 100;
     },
     diskLabel: function diskLabel() {
-      return this.stats.hdd_used + ' от ' + this.stats.hdd_total + ' GB';
+      return this.stats.hdd_used + " от " + this.stats.hdd_total + " GB";
     }
   },
   methods: {
@@ -5322,25 +5342,6 @@ exports.push([module.i, "\n.filters[data-v-a381cdf4] {\n  padding: 20px;\n  over
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.reader-name[data-v-69fee33c] {\n  margin: 0;\n  line-height: 2;\n}\n.reader-name a[data-v-69fee33c] {\n  display: block;\n  text-align: left;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StatsChart.vue?vue&type=style&index=0&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StatsChart.vue?vue&type=style&index=0&lang=css& ***!
@@ -5353,7 +5354,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.pie {\n  transition: stroke 1s ease-in-out;\n}\n", ""]);
+exports.push([module.i, "\n.pie {\n  transition: stroke 1s ease-in-out;\n}\n.reader-name {\n  margin: 0;\n  padding: .5em;\n}\n.reader-name a {\n  display: block;\n}\n.activity {\n  font-size: .5em;\n  line-height: 1;\n  margin: 0;\n}\n", ""]);
 
 // exports
 
@@ -53525,36 +53526,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StatsChart.vue?vue&type=style&index=0&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StatsChart.vue?vue&type=style&index=0&lang=css& ***!
@@ -54942,52 +54913,8 @@ var render = function() {
           staticClass: "col-sm-12",
           attrs: { id: "reader-monitor" }
         },
-        [
-          _c("div", { staticClass: "panel panel-bordered" }, [
-            _c("div", { staticClass: "panel-heading" }, [
-              _c("p", { staticClass: "lead reader-name" }, [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      role: "button",
-                      "data-toggle": "collapse",
-                      href: "#reader-" + reader.id,
-                      "data-parent": "#reader-monitor"
-                    }
-                  },
-                  [
-                    _c("span", { staticClass: "icon voyager-location" }),
-                    _vm._v(
-                      "\n            " + _vm._s(reader.name) + "\n          "
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "panel-collapse collapse",
-                class: reader.stats ? "in" : "",
-                attrs: { id: "reader-" + reader.id }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "panel-body" },
-                  [
-                    _c("stats-chart", {
-                      attrs: { stats: reader.stats, updated: reader.updated_at }
-                    })
-                  ],
-                  1
-                )
-              ]
-            )
-          ])
-        ]
+        [_c("stats-chart", { attrs: { reader: reader } })],
+        1
       )
     }),
     0
@@ -55015,84 +54942,124 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-sm-12" }, [
-      _vm.lastUpdated
-        ? _c("p", [
-            _c("span", { staticClass: "icon voyager-alarm-clock" }),
-            _vm._v("\n      Последна активност:\n      "),
-            _c("b", [_vm._v(_vm._s(_vm.lastUpdated))])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.stats
-        ? _c("p", [
-            _c("span", { staticClass: "icon voyager-laptop" }),
-            _vm._v("\n      " + _vm._s(_vm.stats.platform) + "\n    ")
-          ])
-        : _vm._e()
+  return _c("div", { staticClass: "panel panel-bordered" }, [
+    _c("div", { staticClass: "panel-heading" }, [
+      _c("p", { staticClass: "lead reader-name" }, [
+        _c(
+          "a",
+          {
+            attrs: {
+              role: "button",
+              "data-toggle": "collapse",
+              href: "#reader-" + _vm.reader.id,
+              "data-parent": "#reader-monitor"
+            }
+          },
+          [
+            _c("p", [
+              _c("span", { staticClass: "icon voyager-location" }),
+              _vm._v("\n          " + _vm._s(_vm.reader.name) + "\n        ")
+            ]),
+            _vm._v(" "),
+            _vm.lastUpdated
+              ? _c("p", { staticClass: "activity" }, [
+                  _c("span", { staticClass: "icon voyager-alarm-clock" }),
+                  _vm._v("\n          Последна активност:\n          "),
+                  _c("b", [_vm._v(_vm._s(_vm.lastUpdated))])
+                ])
+              : _vm._e()
+          ]
+        )
+      ])
     ]),
     _vm._v(" "),
-    _vm.stats && _vm.stats.cpu
-      ? _c(
-          "div",
-          { staticClass: "col-sm-4" },
-          [
-            _c("pie-chart", {
-              staticClass: "pie",
-              attrs: {
-                percent: +_vm.stats.cpu,
-                "label-small": "процесор",
-                color: _vm.getColor(_vm.stats.cpu)
-              }
-            })
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.stats && _vm.stats.ram
-      ? _c(
-          "div",
-          { staticClass: "col-sm-4" },
-          [
-            _c("pie-chart", {
-              staticClass: "pie",
-              attrs: {
-                percent: +_vm.stats.ram,
-                "label-small": "RAM",
-                color: _vm.getColor(_vm.stats.ram)
-              }
-            })
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.stats && _vm.stats.hdd_used
-      ? _c(
-          "div",
-          { staticClass: "col-sm-4" },
-          [
-            _c("pie-chart", {
-              staticClass: "pie",
-              attrs: {
-                percent: _vm.diskPercent,
-                label: _vm.diskLabel,
-                "label-small": "диск",
-                color: _vm.getColor(_vm.diskPercent)
-              }
-            })
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    !_vm.stats
-      ? _c("div", { staticClass: "col-sm-12" }, [
-          _c("i", [_vm._v("Няма данни от този четец.")])
+    _c(
+      "div",
+      {
+        staticClass: "panel-collapse collapse",
+        class: _vm.reader.stats ? "in" : "",
+        attrs: { id: "reader-" + _vm.reader.id }
+      },
+      [
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-12" }, [
+              _vm.stats
+                ? _c("p", [
+                    _c("span", { staticClass: "icon voyager-laptop" }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.stats.platform) +
+                        "\n          "
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm.stats && _vm.stats.cpu
+              ? _c(
+                  "div",
+                  { staticClass: "col-sm-4" },
+                  [
+                    _c("pie-chart", {
+                      staticClass: "pie",
+                      attrs: {
+                        percent: +_vm.stats.cpu,
+                        "label-small": "процесор",
+                        color: _vm.getColor(_vm.stats.cpu)
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.stats && _vm.stats.ram
+              ? _c(
+                  "div",
+                  { staticClass: "col-sm-4" },
+                  [
+                    _c("pie-chart", {
+                      staticClass: "pie",
+                      attrs: {
+                        percent: +_vm.stats.ram,
+                        "label-small": "RAM",
+                        color: _vm.getColor(_vm.stats.ram)
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.stats && _vm.stats.hdd_used
+              ? _c(
+                  "div",
+                  { staticClass: "col-sm-4" },
+                  [
+                    _c("pie-chart", {
+                      staticClass: "pie",
+                      attrs: {
+                        percent: _vm.diskPercent,
+                        label: _vm.diskLabel,
+                        "label-small": "диск",
+                        color: _vm.getColor(_vm.diskPercent)
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.stats
+              ? _c("div", { staticClass: "col-sm-12" }, [
+                  _c("i", [_vm._v("Няма данни от този четец.")])
+                ])
+              : _vm._e()
+          ])
         ])
-      : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -71608,9 +71575,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReaderMonitor_vue_vue_type_template_id_69fee33c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReaderMonitor.vue?vue&type=template&id=69fee33c&scoped=true& */ "./resources/js/components/ReaderMonitor.vue?vue&type=template&id=69fee33c&scoped=true&");
 /* harmony import */ var _ReaderMonitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReaderMonitor.vue?vue&type=script&lang=js& */ "./resources/js/components/ReaderMonitor.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& */ "./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -71618,7 +71583,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _ReaderMonitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ReaderMonitor_vue_vue_type_template_id_69fee33c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ReaderMonitor_vue_vue_type_template_id_69fee33c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -71647,22 +71612,6 @@ component.options.__file = "resources/js/components/ReaderMonitor.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ReaderMonitor.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReaderMonitor.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&":
-/*!************************************************************************************************************!*\
-  !*** ./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& ***!
-  \************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReaderMonitor.vue?vue&type=style&index=0&id=69fee33c&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReaderMonitor_vue_vue_type_style_index_0_id_69fee33c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
