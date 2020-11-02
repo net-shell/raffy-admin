@@ -54488,7 +54488,7 @@ var render = function() {
         _c("div", { staticClass: "panel panel-bordered" }, [
           _c("div", { staticClass: "panel-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-1 no-margin text-right" }, [
+              _c("div", { staticClass: "col-sm-2 no-margin text-right" }, [
                 _vm.log.user
                   ? _c("div", { staticClass: "img-square" }, [
                       _c("img", {
@@ -54535,7 +54535,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-sm-7 no-padding no-margin details" },
+                { staticClass: "col-sm-6 no-padding no-margin details" },
                 [
                   _c("div", { staticClass: "row condensed timestamps" }, [
                     _c("div", { staticClass: "col-xs-6 time-entry" }, [

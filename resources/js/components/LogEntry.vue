@@ -3,7 +3,7 @@
         <div class="panel panel-bordered">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-1 no-margin text-right">
+                    <div class="col-sm-2 no-margin text-right">
                         <div class="img-square" v-if="log.user">
                             <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
                         </div>
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-7 no-padding no-margin details">
+                    <div class="col-sm-6 no-padding no-margin details">
                         <div class="row condensed timestamps">
                             <div class="col-xs-6 time-entry">
                                 <p class="lead highlighted">ВХОД</p>
