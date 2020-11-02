@@ -2043,6 +2043,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["log"],
   data: function data() {
@@ -2114,8 +2116,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-clock2 */ "./node_modules/vue-clock2/dist/vue-clock.min.js");
-/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_clock2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-clock2 */ "./node_modules/vue-clock2/dist/vue-clock.min.js");
+/* harmony import */ var vue_clock2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_clock2__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2156,40 +2172,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["lastLogs", "logo", "color", "brand"],
+  props: ["logo", "color", "brand"],
   components: {
-    Clock: vue_clock2__WEBPACK_IMPORTED_MODULE_0___default.a
+    Clock: vue_clock2__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   mounted: function mounted() {
-    setInterval(this.updateTimestamp, 1000);
-    this.updateTimestamp();
+    this.$nextTick(function () {
+      window.addEventListener('scroll', this.infiniteScroll);
+      setInterval(this.updateTimestamp, 1000);
+      this.updateTimestamp();
+      this.loadMore();
+    });
   },
   created: function created() {
     this.$root.$on("tag-logged", this.onEntryLogged);
     this.$root.$on("tag-requested", this.onTagRequested);
     this.$on("log-added", this.playLogAudio);
     this.$on("log-updated", this.playLogAudio);
-    this.lastParsed = JSON.parse(this.lastLogs);
   },
   data: function data() {
     return {
       newLogs: [],
-      lastParsed: [],
       newRequests: [],
       timestamp: null,
       readers: [],
-      selectedReader: null
+      selectedReader: null,
+      loadingLogs: false
     };
   },
   computed: {
     logs: function logs() {
       var _this = this;
 
-      if (!this.lastParsed || !this.lastParsed.length) {
-        return this.newLogs;
-      }
-
-      var logs = this.newLogs.concat(this.lastParsed);
+      var logs = this.newLogs;
 
       if (this.selectedReader) {
         logs = logs.filter(function (l) {
@@ -2223,17 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
           var i = this.newLogs.findIndex(function (l) {
             return l.id == log.id;
           });
-          this.newLogs.splice(i, 1);
-          this.newLogs.unshift(log);
-        } else if (this.lastParsed.filter(function (l) {
-          return l.id == log.id;
-        }).length > 0) {
-          var _i = this.lastParsed.findIndex(function (l) {
-            return l.id == log.id;
-          });
-
-          this.lastParsed.splice(_i, 1);
-          this.lastParsed.unshift(log);
+          this.newLogs.splice(i, 1, log);
         }
 
         this.$emit('log-updated', log);
@@ -2264,6 +2269,40 @@ __webpack_require__.r(__webpack_exports__);
       if (!el) return;
       el.currentTime = 0;
       el.play();
+    },
+    loadMore: function loadMore() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var url, res, response, logs;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.loadingLogs = true;
+                url = "/api/logs?skip=" + _this2.newLogs.length;
+                _context.next = 4;
+                return fetch(url);
+
+              case 4:
+                res = _context.sent;
+                _context.next = 7;
+                return res.json();
+
+              case 7:
+                response = _context.sent;
+                logs = response.data;
+                console.log(logs);
+                _this2.newLogs = _this2.newLogs.concat(logs);
+                _this2.loadingLogs = false;
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -2555,6 +2594,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.$root.$on("reader-started", this.onReaderStarted);
@@ -2582,7 +2627,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                url = "/api/reader";
+                url = "/api/readers";
                 _context.next = 3;
                 return fetch(url);
 
@@ -2601,6 +2646,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    emitLast: function emitLast() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var url, res, log;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = "/api/emit-last";
+                _context2.next = 3;
+                return fetch(url);
+
+              case 3:
+                res = _context2.sent;
+                _context2.next = 6;
+                return res.json();
+
+              case 6:
+                log = _context2.sent;
+                console.log('EMITTED', log);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     onReaderStarted: function onReaderStarted(reader) {
@@ -2622,8 +2695,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_pie_chart_src_PieChart_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-pie-chart/src/PieChart.vue */ "./node_modules/vue-pie-chart/src/PieChart.vue");
-//
-//
 //
 //
 //
@@ -5297,7 +5368,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.log-entry .panel-body[data-v-e693040e] {\n  padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n  margin: 0 15px 0 0;\n}\n.log-entry .img-square[data-v-e693040e] {\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 212px;\n}\n.log-entry .name[data-v-e693040e] {\n  margin: 0.5em 0;\n  color: #000;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n  margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n  border-bottom: 1px solid #666;\n}\n.log-entry .time-entry[data-v-e693040e] {\n  color: red;\n}\n.log-entry .time-exit[data-v-e693040e] {\n  color: #04f;\n}\n.log-entry .time-entry > .lead[data-v-e693040e],\n.log-entry .time-exit > .lead[data-v-e693040e] {\n  font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.log-entry > .panel[data-v-e693040e] {\n    margin-bottom: 1em;\n}\n.log-entry > .panel[data-v-e693040e]:hover {\n    background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(222, 222, 222) 100%);\n    color: #000;\n}\n.log-entry .panel-body[data-v-e693040e] {\n    padding: 0;\n}\n.log-entry .row.condensed[data-v-e693040e] {\n    margin: 0 15px 0 0;\n}\n.log-entry .img-square[data-v-e693040e] {\n    -o-object-fit: cover;\n       object-fit: cover;\n    -o-object-position: center;\n       object-position: center;\n    width: 100px;\n    height: 100px;\n}\n.log-entry .name[data-v-e693040e] {\n    margin: 0.5em 0;\n    color: #000;\n}\n.log-entry .timestamps p[data-v-e693040e] {\n    margin: 0;\n}\n.log-entry .highlighted[data-v-e693040e] {\n    border-bottom: 1px solid #fff;\n}\n.log-entry .time-entry[data-v-e693040e] {\n    color: red;\n}\n.log-entry .time-exit[data-v-e693040e] {\n    color: #04f;\n}\n.log-entry .time-entry > .lead[data-v-e693040e],\n.log-entry .time-exit > .lead[data-v-e693040e] {\n    font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -5316,7 +5387,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.big-clock h1[data-v-1a0c3f21] {\n  font-size: 8em;\n  margin: 0;\n  overflow: hidden;\n}\n.branding[data-v-1a0c3f21] {\n  font-size: 2em;\n  text-transform: uppercase;\n  font-weight: normal;\n  line-height: 1;\n}\n.branding .logo[data-v-1a0c3f21] {\n  width: auto;\n  height: 2em;\n}\n", ""]);
+exports.push([module.i, "\n.big-clock h1[data-v-1a0c3f21] {\n    font-size: 8em;\n    margin: 0;\n    overflow: hidden;\n}\n.branding[data-v-1a0c3f21] {\n    font-size: 2em;\n    text-transform: uppercase;\n    font-weight: normal;\n    line-height: 1;\n}\n.branding .logo[data-v-1a0c3f21] {\n    width: auto;\n    height: 2em;\n}\n", ""]);
 
 // exports
 
@@ -5354,7 +5425,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.pie {\n  transition: stroke 1s ease-in-out;\n}\n.reader-name {\n  margin: 0;\n  padding: .5em;\n}\n.reader-name a {\n  display: block;\n}\n.activity {\n  font-size: .5em;\n  line-height: 1;\n  margin: 0;\n}\n", ""]);
+exports.push([module.i, "\n.pie {\n    transition: stroke 1s ease-in-out;\n}\n.reader-name {\n    margin: 0;\n    padding: .5em;\n}\n.reader-name a {\n    display: block;\n    font-weight: bold;\n}\n.activity {\n    font-size: .8em;\n    line-height: 1;\n    margin: 0;\n}\n", ""]);
 
 // exports
 
@@ -54417,47 +54488,55 @@ var render = function() {
         _c("div", { staticClass: "panel panel-bordered" }, [
           _c("div", { staticClass: "panel-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-3 no-margin text-right" }, [
-                _c("div", { staticClass: "img-square" }, [
-                  _c("img", {
-                    staticClass: "img-responsive",
-                    attrs: { src: "/storage/" + _vm.log.user.avatar }
-                  })
-                ])
+              _c("div", { staticClass: "col-sm-1 no-margin text-right" }, [
+                _vm.log.user
+                  ? _c("div", { staticClass: "img-square" }, [
+                      _c("img", {
+                        staticClass: "img-responsive",
+                        attrs: { src: "/storage/" + _vm.log.user.avatar }
+                      })
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-sm-9 no-padding no-margin details" },
+                { staticClass: "col-sm-4 no-padding no-margin details" },
                 [
-                  _c("div", [
-                    _c("h3", { staticClass: "name" }, [
-                      _vm._v(_vm._s(_vm.log.user.name))
-                    ]),
-                    _vm._v(" "),
-                    _vm.log.user.section
-                      ? _c("p", { staticClass: "text-uppercase" }, [
-                          _c("span", [
-                            _c("span", {
-                              staticClass: "icon voyager-location"
-                            }),
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.log.reader.name) +
-                                "\n              "
-                            )
-                          ]),
-                          _vm._v(" "),
+                  _vm.log.user
+                    ? _c("h3", { staticClass: "name" }, [
+                        _vm._v(_vm._s(_vm.log.user.name))
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.log.user && _vm.log.user.section
+                    ? _c("div", { staticClass: "text-uppercase" }, [
+                        _c("div", [
+                          _c("span", { staticClass: "icon voyager-location" }),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.log.reader.name) +
+                              "\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
                           _c("span", { staticClass: "icon voyager-company" }),
                           _vm._v(
-                            "\n              отдел\n              " +
+                            "\n                            отдел\n                            " +
                               _vm._s(_vm.log.user.section.name) +
-                              "\n            "
+                              "\n                        "
                           )
                         ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
+                      ])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-sm-7 no-padding no-margin details" },
+                [
                   _c("div", { staticClass: "row condensed timestamps" }, [
                     _c("div", { staticClass: "col-xs-6 time-entry" }, [
                       _c("p", { staticClass: "lead highlighted" }, [
@@ -54524,12 +54603,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-7" }, [
+    _c("div", { staticClass: "col-md-10" }, [
       _c("div", { staticClass: "panel panel-bordered" }, [
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "branding" }, [
             _c("img", { staticClass: "logo", attrs: { src: _vm.logo } }),
-            _vm._v("\n          Система за контрол на достъпа\n        ")
+            _vm._v(
+              "\n                    Система за контрол на достъпа\n                "
+            )
           ])
         ])
       ]),
@@ -54560,7 +54641,29 @@ var render = function() {
               ],
               1
             )
-          })
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-center" }, [
+            _c(
+              "a",
+              {
+                ref: "loadmore",
+                staticClass: "btn",
+                class: _vm.loadingLogs ? "btn-disabled" : "btn-success",
+                on: {
+                  click: function($event) {
+                    return _vm.loadMore()
+                  }
+                }
+              },
+              [
+                _c("span", { staticClass: "icon voyager-refresh" }),
+                _vm._v(
+                  "\n                    Показване на по-стари\n                "
+                )
+              ]
+            )
+          ])
         ],
         2
       )
@@ -54568,7 +54671,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "live-clock big-clock col-md-5 text-center" },
+      { staticClass: "live-clock big-clock col-md-2 text-center" },
       [
         _c("notifications", { attrs: { group: "reader" } }),
         _vm._v(" "),
@@ -54577,11 +54680,11 @@ var render = function() {
             "div",
             { staticClass: "panel-body" },
             [
-              _c("h1", [_vm._v(_vm._s(_vm.liveTime))]),
+              _c("h2", [_vm._v(_vm._s(_vm.liveTime))]),
               _vm._v(" "),
               _c("h3", [_vm._v(_vm._s(_vm.liveDate))]),
               _vm._v(" "),
-              _c("clock", { attrs: { size: "300px" } })
+              _c("clock", { attrs: { size: "200px" } })
             ],
             1
           )
@@ -54902,23 +55005,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    _vm._l(_vm.readers, function(reader) {
-      return _c(
-        "div",
-        {
-          key: reader.id,
-          staticClass: "col-sm-12",
-          attrs: { id: "reader-monitor" }
-        },
-        [_c("stats-chart", { attrs: { reader: reader } })],
-        1
-      )
-    }),
-    0
-  )
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-sm-12" }, [
+      _c("h3", [_vm._v("Четци")]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.emitLast } }, [_vm._v("Emit Last Log")])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-sm-12", attrs: { id: "reader-monitor" } },
+      _vm._l(_vm.readers, function(reader) {
+        return _c(
+          "div",
+          { key: reader.id },
+          [_c("stats-chart", { attrs: { reader: reader } })],
+          1
+        )
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54944,7 +55051,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "panel panel-bordered" }, [
     _c("div", { staticClass: "panel-heading" }, [
-      _c("p", { staticClass: "lead reader-name" }, [
+      _c("p", { staticClass: "reader-name" }, [
         _c(
           "a",
           {
@@ -54956,16 +55063,23 @@ var render = function() {
             }
           },
           [
-            _c("p", [
+            _c("div", [
               _c("span", { staticClass: "icon voyager-location" }),
-              _vm._v("\n          " + _vm._s(_vm.reader.name) + "\n        ")
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.reader.name) +
+                  "\n                "
+              )
             ]),
             _vm._v(" "),
             _vm.lastUpdated
-              ? _c("p", { staticClass: "activity" }, [
+              ? _c("div", { staticClass: "activity" }, [
                   _c("span", { staticClass: "icon voyager-alarm-clock" }),
-                  _vm._v("\n          Последна активност:\n          "),
-                  _c("b", [_vm._v(_vm._s(_vm.lastUpdated))])
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.lastUpdated) +
+                      "\n                "
+                  )
                 ])
               : _vm._e()
           ]
@@ -54977,7 +55091,6 @@ var render = function() {
       "div",
       {
         staticClass: "panel-collapse collapse",
-        class: _vm.reader.stats ? "in" : "",
         attrs: { id: "reader-" + _vm.reader.id }
       },
       [
@@ -54985,12 +55098,12 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-sm-12" }, [
               _vm.stats
-                ? _c("p", [
+                ? _c("p", { staticClass: "platform" }, [
                     _c("span", { staticClass: "icon voyager-laptop" }),
                     _vm._v(
-                      "\n            " +
+                      "\n                        " +
                         _vm._s(_vm.stats.platform) +
-                        "\n          "
+                        "\n                    "
                     )
                   ])
                 : _vm._e()
@@ -54999,7 +55112,7 @@ var render = function() {
             _vm.stats && _vm.stats.cpu
               ? _c(
                   "div",
-                  { staticClass: "col-sm-4" },
+                  { staticClass: "col-sm-12" },
                   [
                     _c("pie-chart", {
                       staticClass: "pie",
@@ -55017,7 +55130,7 @@ var render = function() {
             _vm.stats && _vm.stats.ram
               ? _c(
                   "div",
-                  { staticClass: "col-sm-4" },
+                  { staticClass: "col-sm-6" },
                   [
                     _c("pie-chart", {
                       staticClass: "pie",
@@ -55035,7 +55148,7 @@ var render = function() {
             _vm.stats && _vm.stats.hdd_used
               ? _c(
                   "div",
-                  { staticClass: "col-sm-4" },
+                  { staticClass: "col-sm-6" },
                   [
                     _c("pie-chart", {
                       staticClass: "pie",

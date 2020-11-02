@@ -16,6 +16,13 @@ use App\Events\ReaderRequested;
 
 class ReaderController extends BaseController
 {
+    public function emitLast()
+    {
+        $log = Log::latest('created_at')->first();
+        broadcast(new TagLogged($log));
+        return($log->toArray());
+    }
+
     public function startReader(Request $request)
     {
         $readerId = base64_decode($request->input('reader'));
@@ -61,7 +68,10 @@ class ReaderController extends BaseController
 
         $log = $logQuery->first();
         $lastAttemptTime = Carbon::now()->subMinutes($overwrite);
-        $lastAttempt = $logQuery->where('created_at', '>=', $lastAttemptTime)->first();
+        $lastAttempt = $logQuery->where(function($q) use ($lastAttemptTime) {
+            $q->where('created_at', '>=', $lastAttemptTime)
+                ->orWhere('exited_at', '>=', $lastAttemptTime);
+        })->first();
 
         if($lastAttempt && $overwrite > 0) {
             $log = $lastAttempt;

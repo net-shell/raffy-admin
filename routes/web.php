@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Reader;
+use App\Log;
 use App\Http\Resources\Reader as ReaderResource;
+use App\Http\Resources\Log as LogResource;
 
 Voyager::routes();
 
@@ -20,7 +22,12 @@ Route::group(['prefix' => '/iot'], function() {
 });
 
 Route::group(['prefix' => '/api'], function() {
-    Route::get('/reader', function () {
+    Route::get('/readers', function () {
         return new ReaderResource(Reader::orderBy('order')->get());
     });
+    Route::get('/logs', function (\Illuminate\Http\Request $request) {
+        $skip = (int)$request->input('skip', 0);
+        return new LogResource(Log::latest()->limit(5)->skip($skip)->get());
+    });
+    Route::get('/emit-last', 'ReaderController@emitLast');
 });

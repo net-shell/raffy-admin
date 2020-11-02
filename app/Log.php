@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     protected $fillable = ['user_id', 'reader_id', 'tag_id'];
-
     public $timestamps = false;
+    protected $with = ['user', 'reader', 'tag'];
 
-    
+
     public static function boot()
     {
         parent::boot();
