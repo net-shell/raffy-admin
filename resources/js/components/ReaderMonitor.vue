@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Четци</h3>
-            <button @click="emitLast">Emit Last Log</button>
+            <button @click="emitLast" class="hidden">Emit Last Log</button>
         </div>
         <div class="col-sm-12" id="reader-monitor">
             <div v-for="reader in readers" :key="reader.id">

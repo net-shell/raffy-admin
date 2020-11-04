@@ -72,6 +72,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
 ?>
 
 <div class="app-container">
+    <nav class="navbar navbar-top hidden"></nav>
     <div class="fadetoblack visible-xs"></div>
     <div class="row content-container">
         @include('voyager::dashboard.sidebar')

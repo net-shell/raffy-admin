@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     <h2>{{ liveTime }}</h2>
                     <h3>{{ liveDate }}</h3>
-                    <clock size="200px"></clock>
+                    <clock size="50"></clock>
                 </div>
             </div>
             <div class="panel panel-bordered">
@@ -50,7 +50,6 @@
         components: {Clock},
         mounted() {
             this.$nextTick(function () {
-                window.addEventListener('scroll', this.infiniteScroll);
                 setInterval(this.updateTimestamp, 1000);
                 this.updateTimestamp();
                 this.loadMore();
@@ -133,7 +132,6 @@
                 const res = await fetch(url);
                 const response = await res.json();
                 const logs = response.data;
-                console.log(logs)
                 this.newLogs = this.newLogs.concat(logs);
                 this.loadingLogs = false;
             },

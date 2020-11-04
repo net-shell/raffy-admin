@@ -3,13 +3,15 @@
         <div class="panel panel-bordered">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-sm-2 no-margin text-right">
+                    <div class="col-sm-1 no-margin text-right">
                         <div class="img-square" v-if="log.user">
                             <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
                         </div>
                     </div>
-                    <div class="col-sm-4 no-padding no-margin details">
+                    <div class="col-sm-3 no-padding no-margin details">
                         <h3 class="name" v-if="log.user">{{ log.user.name }}</h3>
+                    </div>
+                    <div class="col-sm-2 no-padding no-margin details">
                         <div class="text-uppercase" v-if="log.user && log.user.section">
                             <div>
                                 <span class="icon voyager-location"></span>
@@ -24,15 +26,19 @@
                     </div>
                     <div class="col-sm-6 no-padding no-margin details">
                         <div class="row condensed timestamps">
-                            <div class="col-xs-6 time-entry">
+                            <div class="col-xs-3 time-entry">
                                 <p class="lead highlighted">ВХОД</p>
                                 <p>{{ entryDiff }}</p>
+                            </div>
+                            <div class="col-xs-3 time-entry">
                                 <p class="lead">{{ entryTime }}</p>
                                 <p>{{ entryDate }}</p>
                             </div>
-                            <div class="col-xs-6 time-exit attention-zoom" v-if="momentExited">
+                            <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
                                 <p class="lead highlighted">ИЗХОД</p>
                                 <p>{{ exitDiff }}</p>
+                            </div>
+                            <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
                                 <p class="lead">{{ exitTime }}</p>
                                 <p>{{ exitDate }}</p>
                             </div>
@@ -113,6 +119,10 @@
 </script>
 
 <style scoped>
+    .log-entry .row {
+        margin: 0 5px;
+    }
+
     .log-entry > .panel {
         margin-bottom: 1em;
     }
@@ -133,8 +143,8 @@
     .log-entry .img-square {
         object-fit: cover;
         object-position: center;
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
     }
 
     .log-entry .name {

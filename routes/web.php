@@ -8,13 +8,17 @@ use App\Http\Resources\Log as LogResource;
 
 Voyager::routes();
 
-Route::get('monitor', 'MonitorController@index')->middleware('admin.user');
+Route::group(['middleware' => 'admin.user'], function() {
+    Route::get('monitor', 'MonitorController@index');
 
-Route::get('report', 'ReportController@index')->middleware('admin.user');
-Route::post('report-json', 'ReportController@reportJson')->middleware('admin.user');
-Route::post('report-excel', 'ReportController@reportExcel')->middleware('admin.user');
-Route::post('report-csv', 'ReportController@reportCsv')->middleware('admin.user');
-Route::post('report-pdf', 'ReportController@reportPdf')->middleware('admin.user');
+    Route::get('report', 'ReportController@index');
+    Route::post('report-json', 'ReportController@reportJson');
+    Route::post('report-excel', 'ReportController@reportExcel');
+    Route::post('report-csv', 'ReportController@reportCsv');
+    Route::post('report-pdf', 'ReportController@reportPdf');
+
+    Route::get('register', 'RegisterController@index');
+});
 
 Route::group(['prefix' => '/iot'], function() {
     Route::post('log-tag', 'ReaderController@logTag');
@@ -27,7 +31,7 @@ Route::group(['prefix' => '/api'], function() {
     });
     Route::get('/logs', function (\Illuminate\Http\Request $request) {
         $skip = (int)$request->input('skip', 0);
-        return new LogResource(Log::latest()->limit(5)->skip($skip)->get());
+        return new LogResource(Log::latest()->limit(30)->skip($skip)->get());
     });
     Route::get('/emit-last', 'ReaderController@emitLast');
 });

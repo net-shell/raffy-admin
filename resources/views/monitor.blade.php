@@ -1,7 +1,7 @@
 @extends('voyager::master')
 
 @section('content')
-    <div id="app" class="container-fluid">
+    <div id="app">
     @foreach(['open_sound', 'close_sound'] as $soundName)
         <?php $sound = json_decode(Voyager::setting('site.' . $soundName)); ?>
         @if($sound && !empty($sound))
