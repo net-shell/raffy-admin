@@ -1,1 +1,1 @@
-* * * * * php /usr/share/nginx/html/artisan queue:work --daemon --queue=do-work --sleep=3 --tries=3
+* * * * * php /usr/share/nginx/html/artisan queue:work --daemon --queue=do-work --sleep=3 --tries=3 > /usr/share/nginx/cron.log

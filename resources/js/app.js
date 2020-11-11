@@ -8,6 +8,7 @@ import Datepicker from 'vuejs-datepicker';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 if (document.getElementById('app')) {
+    console.log('loading ')
     window.io = require('socket.io-client');
     window.moment = require('moment');
     window.moment.locale('bg');
