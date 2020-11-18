@@ -34,4 +34,8 @@ Route::group(['prefix' => '/api'], function() {
         return new LogResource(Log::latest()->limit(30)->skip($skip)->get());
     });
     Route::get('/emit-last', 'ReaderController@emitLast');
+    Route::get('/workers', function() {
+        $results = \App\User::all();
+        return compact('results');
+    });
 });

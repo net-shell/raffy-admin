@@ -2485,24 +2485,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     filter: {
       deep: true,
       handler: function handler() {
-        if (this.loading) return;
         this.getResults();
       }
     }
   },
   computed: {
     users: function users() {
-      var _this = this;
-
       if (!this.filter.section || !this.filter.section.id) return this.allUsers;
-      return this.allUsers.reduce(function (u) {
-        return u.section_id == _this.filter.section.id;
+      var sid = this.filter.section.id;
+      var users = this.allUsers.filter(function (u) {
+        return u.section_id == sid;
       });
+      return users || [];
     }
   },
   methods: {
     getUsers: function getUsers() {
-      var _this2 = this;
+      var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var url, res, users;
@@ -2510,7 +2509,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                url = "/logs/relation?type=log_belongsto_user_relationship";
+                url = "/api/workers";
                 _context.next = 3;
                 return fetch(url);
 
@@ -2521,7 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 users = _context.sent;
-                _this2.allUsers = users.results;
+                _this.allUsers = users.results;
 
               case 8:
               case "end":
@@ -2532,7 +2531,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getReaders: function getReaders() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var url, res, readers;
@@ -2551,7 +2550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 readers = _context2.sent;
-                _this3.readers = readers.results;
+                _this2.readers = readers.results;
 
               case 8:
               case "end":
@@ -2562,7 +2561,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getSections: function getSections() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var url, res, sections;
@@ -2581,7 +2580,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 sections = _context3.sent;
-                _this4.sections = sections.results;
+                _this3.sections = sections.results;
 
               case 8:
               case "end":
@@ -2592,7 +2591,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getResults: function getResults() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.loading = true;
       var url = "/report-json";
@@ -2601,12 +2600,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           "Content-type": "application/json"
         }
       }).then(function (response) {
-        _this5.results = response.data.data;
-        _this5.headings = response.data.headings;
+        var results = response.data.data;
+        _this4.results = results[Object.keys(results)[0]];
+        _this4.headings = response.data.headings;
       }, function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this5.loading = false;
+        return _this4.loading = false;
       });
     },
     getResultsExcel: function getResultsExcel() {
@@ -2635,7 +2635,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getHoursFromS: function getHoursFromS(seconds) {
       if (seconds == 0) return 0;
-      return (seconds / 3600).toFixed(2);
+      var h = Math.floor(seconds / 3600);
+      var m = Math.floor(seconds % 3600 / 60);
+      return h + ":" + m;
     }
   }
 });
@@ -5599,7 +5601,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.filters[data-v-a381cdf4] {\n    padding: 20px;\n    overflow: visible;\n}\n.filters .row > div[data-v-a381cdf4] {\n    margin: 0;\n}\n.report-table[data-v-a381cdf4] {\n    overflow-x: scroll;\n    padding: .5em;\n}\n.report-table .badge[data-v-a381cdf4] {\n    font-weight: bold;\n    font-size: 1em;\n    color: #fffddd;\n}\n", ""]);
+exports.push([module.i, "\n.filters[data-v-a381cdf4] {\n    padding: 20px;\n    overflow: visible;\n}\n.filters .row > div[data-v-a381cdf4] {\n    margin: 0;\n}\n.report-table[data-v-a381cdf4] {\n    overflow-x: scroll;\n    padding: .5em;\n}\n.report-table .badge[data-v-a381cdf4] {\n    font-weight: bold;\n    font-size: 1em;\n    background-color: #fffddd;\n    color: #000;\n}\n", ""]);
 
 // exports
 
@@ -55031,7 +55033,7 @@ var render = function() {
                       attrs: {
                         placeholder: "Търсене и избор на служител...",
                         "track-by": "id",
-                        label: "text",
+                        label: "name",
                         options: _vm.users,
                         multiple: true
                       },
@@ -55175,29 +55177,33 @@ var render = function() {
                               { key: result[0] },
                               _vm._l(result, function(seconds, s) {
                                 return _c("td", [
-                                  s == 0
+                                  seconds === 0
                                     ? _c("div", [
-                                        _c("span", { staticClass: "badge" }, [
-                                          _vm._v(_vm._s(seconds))
-                                        ])
+                                        _vm._v(
+                                          "\n                                        " +
+                                            _vm._s(seconds) +
+                                            "\n                                    "
+                                        )
                                       ])
                                     : _vm._e(),
                                   _vm._v(" "),
-                                  s > 0
+                                  seconds !== 0
                                     ? _c("div", [
-                                        s < result.length - 1
-                                          ? _c("span", [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(
-                                                    _vm.getHoursFromS(seconds)
-                                                  ) +
-                                                  "\n                                        "
-                                              )
-                                            ])
+                                        s == 0
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "badge" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                            " +
+                                                    _vm._s(seconds) +
+                                                    "\n                                        "
+                                                )
+                                              ]
+                                            )
                                           : _vm._e(),
                                         _vm._v(" "),
-                                        s == result.length - 1
+                                        s > 0
                                           ? _c(
                                               "span",
                                               { staticClass: "badge" },

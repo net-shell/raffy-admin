@@ -45,7 +45,7 @@
                                         v-model="filter.users"
                                         placeholder="Търсене и избор на служител..."
                                         track-by="id"
-                                        label="text"
+                                        label="name"
                                         :options="users"
                                         :multiple="true"
                                     ></multiselect>
@@ -98,14 +98,14 @@
                                 <tbody>
                                 <tr v-for="result in results" :key="result[0]">
                                     <td v-for="seconds, s in result">
-                                        <div v-if="s == 0">
-                                            <span class="badge">{{ seconds }}</span>
+                                        <div v-if="seconds === 0">
+                                            {{ seconds }}
                                         </div>
-                                        <div v-if="s > 0">
-                                            <span v-if="s < result.length - 1">
-                                                {{ getHoursFromS(seconds) }}
+                                        <div v-if="seconds !== 0">
+                                            <span class="badge" v-if="s == 0">
+                                                {{ seconds }}
                                             </span>
-                                            <span class="badge" v-if="s == result.length - 1">
+                                            <span class="badge" v-if="s > 0">
                                                 {{ getHoursFromS(seconds) }}
                                             </span>
                                         </div>
@@ -153,21 +153,22 @@
             filter: {
                 deep: true,
                 handler() {
-                    if(this.loading) return;
                     this.getResults();
                 }
-            }
+            },
         },
         computed: {
             users() {
-                if(!this.filter.section || !this.filter.section.id)
+                if (!this.filter.section || !this.filter.section.id)
                     return this.allUsers;
-                return this.allUsers.reduce(u => u.section_id == this.filter.section.id);
+                let sid = this.filter.section.id;
+                let users = this.allUsers.filter(u => u.section_id == sid);
+                return users || [];
             },
         },
         methods: {
             async getUsers() {
-                let url = "/logs/relation?type=log_belongsto_user_relationship";
+                let url = "/api/workers";
                 const res = await fetch(url);
                 const users = await res.json();
                 this.allUsers = users.results;
@@ -193,7 +194,8 @@
                     })
                     .then(
                         response => {
-                            this.results = response.data.data;
+                            let results = response.data.data;
+                            this.results = results[Object.keys(results)[0]];
                             this.headings = response.data.headings;
                         },
                         error => {
@@ -230,8 +232,10 @@
                 return moment(date).format("dddd DD MMMM YYYY");
             },
             getHoursFromS(seconds) {
-                if(seconds == 0) return 0;
-                return (seconds / 3600).toFixed(2);
+                if (seconds == 0) return 0;
+                let h = Math.floor(seconds / 3600);
+                let m = Math.floor(seconds % 3600 / 60);
+                return h + ":" + m;
             },
         }
     };
@@ -255,6 +259,7 @@
     .report-table .badge {
         font-weight: bold;
         font-size: 1em;
-        color: #fffddd;
+        background-color: #fffddd;
+        color: #000;
     }
 </style>

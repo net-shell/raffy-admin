@@ -87,7 +87,7 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
         $report = array_map(function($r) {
            return array_values($r);
         }, $report);
-        return array_values($report);
+        return collect(array_values($report));
     }
 
     /**
@@ -96,12 +96,10 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
     public function map($item): array
     {
         $tsFrom = new Carbon($this->filter['from']);
-        $vals = [$item->user->name];
-        for($d=0; $d<$this->getDuration(); $d++) {
-            $tsCurrent = $tsFrom->copy()->addDays($d);
-            $vals[] = $tsCurrent->toFormattedDateString();
+        $vals = [$item[0]];
+        for($d=0; $d<=$this->getDuration(); $d++) {;
+            $vals[] = round(($item[$d + 1] / 3600), 2);
         }
-        $vals[] = round(($item->seconds / 3600), 2);
         return $vals;
     }
 
