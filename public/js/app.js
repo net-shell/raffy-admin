@@ -2494,9 +2494,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     users: function users() {
       var _this = this;
 
-      if (!this.filter.section) return this.allUsers;
+      if (!this.filter.section || !this.filter.section.id) return this.allUsers;
       return this.allUsers.reduce(function (u) {
-        return u.section_id == _this.filter.section;
+        return u.section_id == _this.filter.section.id;
       });
     }
   },

@@ -160,9 +160,9 @@
         },
         computed: {
             users() {
-                if(!this.filter.section)
+                if(!this.filter.section || !this.filter.section.id)
                     return this.allUsers;
-                return this.allUsers.reduce(u => u.section_id == this.filter.section);
+                return this.allUsers.reduce(u => u.section_id == this.filter.section.id);
             },
         },
         methods: {
