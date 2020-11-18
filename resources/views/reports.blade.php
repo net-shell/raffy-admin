@@ -2,6 +2,6 @@
 
 @section('content')
 <div id="app" class="container-fluid">
-    <log-reports></log-reports>
+    <log-reports filename="{{ $filename }}"></log-reports>
 </div>
 @stop

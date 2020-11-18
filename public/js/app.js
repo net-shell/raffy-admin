@@ -2455,8 +2455,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['filename'],
   data: function data() {
     return {
       bg: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_1__["bg"],
@@ -5601,7 +5633,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.filters[data-v-a381cdf4] {\n    padding: 20px;\n    overflow: visible;\n}\n.filters .row > div[data-v-a381cdf4] {\n    margin: 0;\n}\n.report-table[data-v-a381cdf4] {\n    overflow-x: scroll;\n    padding: .5em;\n}\n.report-table .badge[data-v-a381cdf4] {\n    font-weight: bold;\n    font-size: 1em;\n    background-color: #fffddd;\n    color: #000;\n}\n", ""]);
+exports.push([module.i, "\n[data-v-a381cdf4] .form-control[readonly] {\n    background-color: #fff;\n}\n[data-v-a381cdf4] b {\n    font-weight: bold;\n}\n.filters[data-v-a381cdf4] {\n    padding: 20px;\n    overflow: visible;\n}\n.filters .row > div[data-v-a381cdf4] {\n    margin: 0 0 .5em 0;\n}\n.panel-dense[data-v-a381cdf4] {\n    padding: .5em;\n}\n.report-table[data-v-a381cdf4] {\n    overflow-x: scroll;\n}\n.report-table .badge[data-v-a381cdf4] {\n    font-weight: bold;\n    font-size: 1em;\n    background-color: #fffddd;\n    color: #000;\n}\n.so-big[data-v-a381cdf4] {\n    font-size: 1.6em;\n    vertical-align: middle;\n}\n.so-big.alert[data-v-a381cdf4] {\n    padding: .5em;\n    margin-bottom: 1em;\n    font-size: 1.2em;\n    text-align: center;\n}\n.so-big .icon[data-v-a381cdf4] {\n    font-size: 2em;\n    vertical-align: middle;\n    line-height: 1;\n}\n", ""]);
 
 // exports
 
@@ -54939,7 +54971,9 @@ var render = function() {
         _c("div", { staticClass: "col-sm-4" }, [
           _c("div", { staticClass: "panel panel-bordered" }, [
             _c("div", { staticClass: "panel-body filters" }, [
-              _c("div", { staticClass: "row" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "row bg-info" }, [
                 _c(
                   "div",
                   { staticClass: "col-sm-6" },
@@ -54992,8 +55026,10 @@ var render = function() {
                     })
                   ],
                   1
-                ),
-                _vm._v(" "),
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
                   { staticClass: "col-sm-12" },
@@ -55004,7 +55040,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("multiselect", {
                       attrs: {
-                        placeholder: "Търсене и избор на отдел...",
+                        placeholder: "Филтриране по отдел...",
                         "track-by": "id",
                         label: "text",
                         options: _vm.sections
@@ -55019,19 +55055,21 @@ var render = function() {
                     })
                   ],
                   1
-                ),
-                _vm._v(" "),
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
                   { staticClass: "col-sm-12" },
                   [
                     _c("label", { staticClass: "control-label" }, [
-                      _vm._v("Служител:")
+                      _vm._v("Служители:")
                     ]),
                     _vm._v(" "),
                     _c("multiselect", {
                       attrs: {
-                        placeholder: "Търсене и избор на служител...",
+                        placeholder: "Филтриране по служители...",
                         "track-by": "id",
                         label: "name",
                         options: _vm.users,
@@ -55047,8 +55085,10 @@ var render = function() {
                     })
                   ],
                   1
-                ),
-                _vm._v(" "),
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
                   { staticClass: "col-sm-12" },
@@ -55059,7 +55099,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("multiselect", {
                       attrs: {
-                        placeholder: "Избор на четец...",
+                        placeholder: "Филтриране по четец...",
                         "track-by": "id",
                         label: "text",
                         options: _vm.readers
@@ -55082,69 +55122,97 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-8" }, [
           _vm.loading
-            ? _c("div", { staticClass: "panel panel-bordered" }, [_vm._m(1)])
+            ? _c("div", { staticClass: "panel panel-bordered" }, [_vm._m(2)])
             : _vm._e(),
           _vm._v(" "),
           !_vm.loading && _vm.results.length
-            ? _c("div", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.getResultsCsv()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon voyager-file-text" }),
-                    _vm._v(
-                      "\n                        Свали като CSV\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.getResultsExcel()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon voyager-file-text" }),
-                    _vm._v(
-                      "\n                        Свали като Excel\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.getResultsPdf()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "icon voyager-file-text" }),
-                    _vm._v(
-                      "\n                        Свали като PDF\n                    "
-                    )
-                  ]
-                )
+            ? _c("div", { staticClass: "panel panel-bordered" }, [
+                _c("div", { staticClass: "panel-body panel-dense" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form form-horizontal text-center" },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getResultsCsv()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon voyager-download" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.filename) +
+                              "\n                                "
+                          ),
+                          _c("b", [_vm._v(".CSV")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getResultsExcel()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon voyager-download" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.filename) +
+                              "\n                                "
+                          ),
+                          _c("b", [_vm._v(".XLSX")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.getResultsPdf()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "icon voyager-download" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.filename) +
+                              "\n                                "
+                          ),
+                          _c("b", [_vm._v(".PDF")])
+                        ]
+                      )
+                    ]
+                  )
+                ])
               ])
             : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "alert alert-info so-big" }, [
+            _c("i", { staticClass: "icon voyager-info-circled" }),
+            _vm._v(
+              "\n                    Показване на резултати за\n                    "
+            ),
+            _c("b", [_vm._v(_vm._s(_vm.results.length))]),
+            _vm._v("\n                    служители:\n                ")
+          ]),
           _vm._v(" "),
           !_vm.loading
             ? _c("div", { staticClass: "panel panel-bordered" }, [
@@ -55157,78 +55225,84 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.results.length
-                  ? _c("div", { staticClass: "panel-body report-table" }, [
-                      _c("table", { staticClass: "table table-hover" }, [
-                        _c("thead", [
-                          _c(
-                            "tr",
-                            _vm._l(_vm.headings, function(title) {
-                              return _c("th", [_vm._v(_vm._s(title))])
-                            }),
-                            0
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.results, function(result) {
-                            return _c(
+                  ? _c(
+                      "div",
+                      { staticClass: "panel-body panel-dense report-table" },
+                      [
+                        _c("table", { staticClass: "table table-hover" }, [
+                          _c("thead", [
+                            _c(
                               "tr",
-                              { key: result[0] },
-                              _vm._l(result, function(seconds, s) {
-                                return _c("td", [
-                                  seconds === 0
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(seconds) +
-                                            "\n                                    "
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  seconds !== 0
-                                    ? _c("div", [
-                                        s == 0
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "badge" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                            " +
-                                                    _vm._s(seconds) +
-                                                    "\n                                        "
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        s > 0
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "badge" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                            " +
-                                                    _vm._s(
-                                                      _vm.getHoursFromS(seconds)
-                                                    ) +
-                                                    "\n                                        "
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ])
-                                    : _vm._e()
-                                ])
+                              _vm._l(_vm.headings, function(title) {
+                                return _c("th", [_vm._v(_vm._s(title))])
                               }),
                               0
                             )
-                          }),
-                          0
-                        )
-                      ])
-                    ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.results, function(result) {
+                              return _c(
+                                "tr",
+                                { key: result[0] },
+                                _vm._l(result, function(seconds, s) {
+                                  return _c("td", [
+                                    seconds === 0
+                                      ? _c("div", [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(seconds) +
+                                              "\n                                    "
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    seconds !== 0
+                                      ? _c("div", [
+                                          s == 0
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "badge" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                            " +
+                                                      _vm._s(seconds) +
+                                                      "\n                                        "
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          s > 0
+                                            ? _c(
+                                                "span",
+                                                { staticClass: "badge" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                            " +
+                                                      _vm._s(
+                                                        _vm.getHoursFromS(
+                                                          seconds
+                                                        )
+                                                      ) +
+                                                      "\n                                        "
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                }),
+                                0
+                              )
+                            }),
+                            0
+                          )
+                        ])
+                      ]
+                    )
                   : _vm._e()
               ])
             : _vm._e()
@@ -55251,8 +55325,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("label", { staticClass: "control-label so-big" }, [
+          _c("i", { staticClass: "icon text-info voyager-search" }),
+          _vm._v(
+            "\n                                    Филтри\n                                "
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "panel-body text-center" }, [
       _c("p", { staticClass: "lead" }, [_vm._v("Зареждане...")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "control-label so-big" }, [
+      _c("i", { staticClass: "icon text-success voyager-book-download" }),
+      _vm._v(
+        "\n                                Запазване на отчета като файл:\n                            "
+      )
     ])
   }
 ]

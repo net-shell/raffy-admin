@@ -9,6 +9,14 @@
                     <div class="panel panel-bordered">
                         <div class="panel-body filters">
                             <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label so-big">
+                                        <i class="icon text-info voyager-search"></i>
+                                        Филтри
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row bg-info">
                                 <div class="col-sm-6">
                                     <label class="control-label">Период от:</label>
                                     <datepicker
@@ -29,32 +37,38 @@
                                         :format="dateFormat"
                                     ></datepicker>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Отдел:</label>
                                     <multiselect
                                         v-model="filter.section"
-                                        placeholder="Търсене и избор на отдел..."
+                                        placeholder="Филтриране по отдел..."
                                         track-by="id"
                                         label="text"
                                         :options="sections"
                                     ></multiselect>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
-                                    <label class="control-label">Служител:</label>
+                                    <label class="control-label">Служители:</label>
                                     <multiselect
                                         v-model="filter.users"
-                                        placeholder="Търсене и избор на служител..."
+                                        placeholder="Филтриране по служители..."
                                         track-by="id"
                                         label="name"
                                         :options="users"
                                         :multiple="true"
                                     ></multiselect>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Четец:</label>
                                     <multiselect
                                         v-model="filter.reader"
-                                        placeholder="Избор на четец..."
+                                        placeholder="Филтриране по четец..."
                                         track-by="id"
                                         label="text"
                                         :options="readers"
@@ -70,25 +84,42 @@
                             <p class="lead">Зареждане...</p>
                         </div>
                     </div>
-                    <div v-if="!loading && results.length">
-                        <button type="button" class="btn btn-success" @click="getResultsCsv()">
-                            <i class="icon voyager-file-text"></i>
-                            Свали като CSV
-                        </button>
-                        <button type="button" class="btn btn-warning" @click="getResultsExcel()">
-                            <i class="icon voyager-file-text"></i>
-                            Свали като Excel
-                        </button>
-                        <button type="button" class="btn btn-warning" @click="getResultsPdf()">
-                            <i class="icon voyager-file-text"></i>
-                            Свали като PDF
-                        </button>
+                    <div class="panel panel-bordered" v-if="!loading && results.length">
+                        <div class="panel-body panel-dense">
+                            <div class="form form-horizontal text-center">
+                                <label class="control-label so-big">
+                                    <i class="icon text-success voyager-book-download"></i>
+                                    Запазване на отчета като файл:
+                                </label>
+                                <button type="button" class="btn btn-success" @click="getResultsCsv()">
+                                    <i class="icon voyager-download"></i>
+                                    {{ filename }}
+                                    <b>.CSV</b>
+                                </button>
+                                <button type="button" class="btn btn-default" @click="getResultsExcel()">
+                                    <i class="icon voyager-download"></i>
+                                    {{ filename }}
+                                    <b>.XLSX</b>
+                                </button>
+                                <button type="button" class="btn btn-default" @click="getResultsPdf()">
+                                    <i class="icon voyager-download"></i>
+                                    {{ filename }}
+                                    <b>.PDF</b>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info so-big">
+                        <i class="icon voyager-info-circled"></i>
+                        Показване на резултати за
+                        <b>{{ results.length }}</b>
+                        служители:
                     </div>
                     <div class="panel panel-bordered" v-if="!loading">
                         <div class="panel-body" v-if="!results.length">
                             <p class="lead">Няма открити резултати.</p>
                         </div>
-                        <div class="panel-body report-table" v-if="results.length">
+                        <div class="panel-body panel-dense report-table" v-if="results.length">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -125,6 +156,7 @@
     import {bg} from "vuejs-datepicker/dist/locale";
 
     export default {
+        props: ['filename'],
         data() {
             return {
                 bg: bg,
@@ -242,18 +274,29 @@
 </script>
 
 <style scoped>
+    /deep/ .form-control[readonly] {
+        background-color: #fff;
+    }
+
+    /deep/ b {
+        font-weight: bold;
+    }
+
     .filters {
         padding: 20px;
         overflow: visible;
     }
 
     .filters .row > div {
-        margin: 0;
+        margin: 0 0 .5em 0;
+    }
+
+    .panel-dense {
+        padding: .5em;
     }
 
     .report-table {
         overflow-x: scroll;
-        padding: .5em;
     }
 
     .report-table .badge {
@@ -261,5 +304,23 @@
         font-size: 1em;
         background-color: #fffddd;
         color: #000;
+    }
+
+    .so-big {
+        font-size: 1.6em;
+        vertical-align: middle;
+    }
+
+    .so-big.alert {
+        padding: .5em;
+        margin-bottom: 1em;
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    .so-big .icon {
+        font-size: 2em;
+        vertical-align: middle;
+        line-height: 1;
     }
 </style>

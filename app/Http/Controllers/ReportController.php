@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Exports\LogsExport;
-use Excel;
+use \Maatwebsite\Excel\Excel;
 
 class ReportController extends BaseController
 {
     public $filter;
 
     private $export;
+    private $filename = 'otchet';
 
     public function __construct(Request $request)
     {
@@ -20,7 +21,7 @@ class ReportController extends BaseController
     }
 
     public function index(Request $request) {
-        return view('reports');
+        return view('reports', ['filename' => $this->filename]);
     }
 
     public function reportJson(Request $request) {
@@ -31,14 +32,16 @@ class ReportController extends BaseController
     }
 
     public function reportExcel(Request $request) {
-        return Excel::download($this->export, 'report.xls', \Maatwebsite\Excel\Excel::XLS);
+        return \Excel::download($this->export, $this->filename . '.xlsx', Excel::XLSX);
     }
 
     public function reportCsv(Request $request) {
-        return Excel::download($this->export, 'report.csv');
+        return \Excel::download($this->export, $this->filename . '.csv', Excel::CSV, [
+            'Content-Type' => 'text/csv',
+        ]);
     }
 
     public function reportPdf(Request $request) {
-        return Excel::download($this->export, 'report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return \Excel::download($this->export, $this->filename . '.pdf', Excel::MPDF);
     }
 }
