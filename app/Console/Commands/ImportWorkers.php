@@ -41,6 +41,11 @@ class ImportWorkers extends Command
     {
         $csvFile = $this->argument('csv');
         $csv = array_map('str_getcsv', file($csvFile));
+        $lines = count($csv);
+        if(!$this->confirm("Do you wish to import $lines workers?")) {
+            echo "Aborted.\n";
+            return;
+        }
         foreach ($csv as $line) {
             $section = Section::whereName($line[1])->first();
             $user = new User();
@@ -52,7 +57,7 @@ class ImportWorkers extends Command
             }
             $user->save();
         }
-        echo count($csv) . ' workers added.';
+        echo "$lines workers added.\n";
         return 0;
     }
 
