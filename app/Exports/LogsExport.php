@@ -26,15 +26,22 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
     {
         $tsFrom = new Carbon($this->filter['from']);
         $usersFiltered = $this->filter['users'];
+        $section = $this->filter['section'];
+        if(!$usersFiltered && $section && $section['id']) {
+            $usersFiltered = User::query()
+                ->select(['id', 'name'])
+                ->whereSectionId($section['id'])
+                ->get()->toArray();
+        }
         if(!$usersFiltered || count($usersFiltered) == 0) {
             $usersFiltered = User::query()
-                ->select(['id', 'name AS text'])
+                ->select(['id', 'name'])
                 ->get()->toArray();
         }
         $report = [];
         $totals = [];
         foreach ($usersFiltered as $user) {
-            $report[$user['id']] = [$user['text']];
+            $report[$user['id']] = [$user['name']];
             $totals[$user['id']] = 0;
         }
 
