@@ -52,6 +52,14 @@ if (document.getElementById('app')) {
         window.Echo.private(`App.Log`)
             .listen('TagLogged', (e) => {
                 window.vm.$root.$emit('tag-logged', e.log);
+                console.log('LOGGED', e.log)
+                Vue.notify({
+                    group: 'users',
+                    type: 'success',
+                    duration: 5000,
+                    title: "Засечена е карта",
+                    text: e.log.user.name
+                });
             });
 
         window.Echo.private(`App.Tag`)
@@ -62,18 +70,16 @@ if (document.getElementById('app')) {
         window.Echo.private(`App.Reader`)
             .listen('ReaderStarted', (e) => {
                 window.vm.$root.$emit('reader-started', e.reader);
-                console.log('STARTED', e.reader)
                 Vue.notify({
-                    group: 'reader',
-                    type: 'success',
+                    group: 'users',
+                    type: 'info',
                     duration: 10000,
-                    title: "Стартиран е четец",
+                    title: "Получени са данни от четец",
                     text: e.reader.name
                 });
             })
             .listen('ReaderRequested', (e) => {
                 window.vm.$root.$emit('reader-requested', e.readerId);
-                console.log('REQUESTED', e.readerId)
                 Vue.notify({
                     group: 'reader',
                     type: 'danger',

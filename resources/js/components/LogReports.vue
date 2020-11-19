@@ -83,37 +83,41 @@
                                 Зареждане...
                             </p>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" style="width: 92%"></div>
+                                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar"
+                                     style="width: 92%"></div>
                             </div>
                         </div>
                     </div>
                     <div class="panel panel-bordered" v-if="!loading">
                         <div class="panel-body heading-row">
-                              <div class="row">
-                                  <div class="col-sm-3">
-                                      <p class="so-big">
-                                          <i class="icon text-success voyager-logbook"></i>
-                                          Отчет
-                                      </p>
-                                  </div>
-                                  <div class="col-sm-9">
-                                      <p class="text-right so-big">
-                                          <i class="icon voyager-info-circled"></i>
-                                          <small>
-                                              Показване на
-                                              <b>{{ results.length }}</b>
-                                              служители
-                                          </small>
-                                          <button class="btn btn-circle" :class="!simpleView ? 'btn-success' : 'btn-default'" v-on:click="toggleSimpleView" type="button">
-                                              <i class="icon voyager-search"></i>
-                                              <i class="icon voyager-dot-3"></i>
-                                          </button>
-                                          <button class="btn btn-circle btn-default" v-on:click="getResults" type="button">
-                                              <i class="icon voyager-refresh"></i>
-                                          </button>
-                                      </p>
-                                  </div>
-                              </div>
+                            <notifications group="users"/>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="so-big">
+                                        <i class="icon text-success voyager-logbook"></i>
+                                        Отчет
+                                    </p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-right so-big">
+                                        <small>
+                                            Показване на
+                                            <b>{{ results.length }}</b>
+                                            служители
+                                        </small>
+                                        <button class="btn btn-circle"
+                                                :class="!simpleView ? 'btn-success' : 'btn-default'"
+                                                v-on:click="toggleSimpleView" type="button">
+                                            <i class="icon voyager-search"></i>
+                                            <i class="icon voyager-dot-3"></i>
+                                        </button>
+                                        <button class="btn btn-circle btn-default" v-on:click="getResults"
+                                                type="button">
+                                            <i class="icon voyager-refresh"></i>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="panel panel-bordered" v-if="!loading && results.length">
@@ -150,7 +154,7 @@
                                          class="ag-theme-alpine"
                                          :columnDefs="columnDefs"
                                          :rowData="results"
-                                        v-if="!simpleView">
+                                         v-if="!simpleView">
                             </ag-grid-vue>
                             <table v-if="simpleView" class="table table-hover">
                                 <thead>
@@ -185,7 +189,7 @@
 
     export default {
         props: ['filename'],
-        components: { AgGridVue },
+        components: {AgGridVue},
         data() {
             return {
                 bg: bg,
@@ -229,7 +233,7 @@
             },
             columnDefs() {
                 let defs = [];
-                for(let h in this.headings) {
+                for (let h in this.headings) {
                     defs.push({
                         headerName: this.headings[h],
                         field: h,

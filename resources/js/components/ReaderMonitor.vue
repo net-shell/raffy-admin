@@ -21,9 +21,8 @@
             this.getReaders();
             let me = this;
             setInterval(function () {
-                console.log("regular update");
                 me.getReaders();
-            }, 18000);
+            }, 30000);
         },
         data() {
             return {

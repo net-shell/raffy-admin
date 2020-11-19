@@ -25,7 +25,6 @@
             </div>
         </div>
         <div class="live-clock big-clock col-md-2 text-center">
-            <notifications group="reader"/>
             <div class="panel panel-bordered">
                 <div class="panel-body">
                     <h2>{{ liveTime }}</h2>
@@ -35,6 +34,7 @@
             </div>
             <div class="panel panel-bordered">
                 <div class="panel-body">
+                    <notifications group="users"/>
                     <reader-monitor></reader-monitor>
                 </div>
             </div>

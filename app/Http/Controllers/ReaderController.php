@@ -31,7 +31,7 @@ class ReaderController extends BaseController
             broadcast(new ReaderRequested($readerId));
             return response()->json(['status' => 'error', 'message' => 'Reader not registered.'], 404);
         }
-        
+
         $reader->stats = $request->all();
         $reader->touch();
         $reader->save();
@@ -75,7 +75,8 @@ class ReaderController extends BaseController
 
         if($lastAttempt && $overwrite > 0) {
             $log = $lastAttempt;
-            $log->created_at = Carbon::now();
+            $field = $log->exited_at ? 'exited_at' : 'created_at';
+            $log->{$field} = Carbon::now();
             $log->save();
         } else {
             if($log && !$log->exited_at) {
