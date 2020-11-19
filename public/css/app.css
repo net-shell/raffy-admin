@@ -8229,3 +8229,17 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   margin-bottom: 0 !important;
 }
 
+.navbar-corner {
+  left: auto;
+  right: 60px;
+  width: 60px;
+  min-width: 60px;
+}
+
+@media (max-width: 768px) {
+  .app-container .navbar-corner {
+    right: 0;
+    min-width: 60px;
+  }
+}
+
