@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Widgets\BaseDimmer;
 
-class LogsDimmer extends BaseDimmer
+class ReportsDimmer extends BaseDimmer
 {
     /**
      * The configuration array.
@@ -22,18 +22,17 @@ class LogsDimmer extends BaseDimmer
      */
     public function run()
     {
-        $count = \App\Log::count();
-        $string = trans_choice('voyager::dimmer.log', $count);
+        $string = trans('voyager::dimmer.report');
 
         return view('voyager::dimmer', array_merge($this->config, [
-            'icon'   => 'voyager-logbook',
-            'title'  => "{$count} {$string}",
-            'text'   => __('voyager::dimmer.log_text', ['count' => $count, 'string' => Str::lower($string)]),
+            'icon'   => 'voyager-book',
+            'title'  => $string,
+            'text'   => __('voyager::dimmer.reports_text', ['string' => Str::lower($string)]),
             'button' => [
-                'text' => __('voyager::dimmer.log_link_text'),
-                'link' => url('/monitor'),
+                'text' => __('voyager::dimmer.reports_link_text'),
+                'link' => url('/report'),
             ],
-            'image' => voyager_asset('images/widget-backgrounds/03.jpg'),
+            'image' => voyager_asset('images/widget-backgrounds/02.jpg'),
         ]));
     }
 
