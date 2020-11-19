@@ -1,31 +1,27 @@
 {
-	"authHost": "http://www/",
+	"authHost": "http://web",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
-			"appId": "489b0bf996875b18",
-			"key": "307448428ddc94d23d2db9de9bb2d089"
+			"appId": "76b12fc65823525d",
+			"key": "564b8eb8b96fc2df982b686a9f66a79f"
 		}
 	],
 	"database": "redis",
 	"databaseConfig": {
-		"redis": {
-            "host": "redis",
-            "port": "6379",
-            "db": "0"
-		},
+		"redis": {},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
 	},
 	"devMode": true,
 	"host": null,
-	"port": "80",
+	"port": "6001",
 	"protocol": "http",
 	"socketio": {},
 	"secureOptions": 67108864,
-	"sslCertPath": "/home/ash/ssl/raffy-admin.crt",
-	"sslKeyPath": "/home/ash/ssl/raffy-admin.key",
+	"sslCertPath": "",
+	"sslKeyPath": "",
 	"sslCertChainPath": "",
 	"sslPassphrase": "",
 	"subscribers": {

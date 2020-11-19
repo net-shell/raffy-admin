@@ -48,8 +48,6 @@ services:
             - app-net
     echo:
         image: oanhnn/laravel-echo-server:latest
-        depends_on:
-            - redis
         ports:
             - 6001:6001
         volumes:
@@ -57,7 +55,7 @@ services:
         links:
             - redis
             - web
-        restart: unless-stopped
+            - php
         environment:
             LARAVEL_ECHO_SERVER_AUTH_HOST: http://web
             LARAVEL_ECHO_SERVER_DEBUG: 'true'
