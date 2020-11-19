@@ -50,7 +50,7 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
         for($d=0; $d<$this->getDuration(); $d++) {
             $tsCurrent = $tsFrom->copy()->addDays($d);
             // Prepare report query for the current day
-            $stats = Log::selectRaw('user_id, DATE(created_at) as log_date, SUBSTR(SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, created_at, exited_at))), 0, 5) as timing')
+            $stats = Log::selectRaw('user_id, DATE(created_at) as log_date, SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, created_at, exited_at))) as timing')
                 ->with('user')
                 ->whereNotNull('exited_at');
             if ($this->filter['from']) {
@@ -72,7 +72,7 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
                     if($r['user_id'] != $uid) continue;
                     $timing = $r['timing'];
                     $report[$uid][$d + 2] = $timing;
-                    $numSec = strtotime("1970-01-01 $timing:00");
+                    $numSec = strtotime("1970-01-01 $timing");
                     if(!$numSec) continue;
                     $totals[$uid] += $numSec;
                 }
@@ -91,7 +91,7 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
         }
         // Add total
         foreach ($totals as $u => $total) {
-            $report[$u][] = date('H:i', $total);
+            $report[$u][] = date('H:i:s', $total);
         }
         // Strip off keys and return
         $report = array_map(function($r) {
@@ -105,12 +105,10 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
     */
     public function map($item): array
     {
-        $tsFrom = new Carbon($this->filter['from']);
-        $vals = [$item[0]];
-        for($d=0; $d<=$this->getDuration(); $d++) {;
-            $vals[] = round(($item[$d + 1] / 3600), 2);
+        foreach ($item as &$i) {
+            $i = substr($i, 0, 5);
         }
-        return $vals;
+        return $item;
     }
 
     public function headings(): array

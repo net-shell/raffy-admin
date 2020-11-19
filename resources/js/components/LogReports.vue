@@ -160,12 +160,12 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="result in results" :key="result[0]">
-                                    <td v-for="seconds in result">
-                                        <div v-if="seconds === 0">
-                                            {{ seconds }}
+                                    <td v-for="timing in result">
+                                        <div v-if="timing === 0">
+                                            {{ timing }}
                                         </div>
-                                        <div v-if="seconds !== 0">
-                                            <span class="badge">{{ seconds }}</span>
+                                        <div v-if="timing !== 0">
+                                            <span class="badge">{{ timing }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -268,8 +268,7 @@
                     })
                     .then(
                         response => {
-                            let results = response.data.data;
-                            this.results = results[Object.keys(results)[0]];
+                            this.results = response.data.data;
                             this.headings = response.data.headings;
                         },
                         error => {
