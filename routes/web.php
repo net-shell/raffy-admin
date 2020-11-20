@@ -31,7 +31,12 @@ Route::group(['prefix' => '/api'], function() {
     });
     Route::get('/logs', function (\Illuminate\Http\Request $request) {
         $skip = (int)$request->input('skip', 0);
-        return new LogResource(Log::latest()->limit(30)->skip($skip)->get());
+        return new LogResource(Log::latest()
+            ->limit(30)
+            ->skip($skip)
+            ->orderBy('exited_at', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get());
     });
     Route::get('/emit-last', 'ReaderController@emitLast');
     Route::get('/workers', function() {
