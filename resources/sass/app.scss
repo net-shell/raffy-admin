@@ -45,3 +45,10 @@
     width: 60px;
     min-width: 60px;
 }
+
+.navbar-pinned {
+    width: 60px;
+    min-width: 60px !important;
+    padding: 0 !important;
+    left: auto;
+}

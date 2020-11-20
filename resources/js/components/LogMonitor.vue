@@ -34,7 +34,7 @@
             </div>
             <div class="panel panel-bordered">
                 <div class="panel-body">
-                    <notifications group="users"/>
+                    <notify-area></notify-area>
                     <reader-monitor></reader-monitor>
                 </div>
             </div>

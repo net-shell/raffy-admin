@@ -72,17 +72,9 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
 ?>
 
 <div class="app-container">
-    <nav class="navbar navbar-default navbar-fixed-top navbar-top navbar-corner">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button class="hamburger btn-link">
-                    <span class="hamburger-inner"></span>
-                </button>
-            </div>
-        </div>
-    </nav>
     <div class="fadetoblack visible-xs"></div>
     <div class="row content-container">
+        @include('voyager::dashboard.navbar')
         @include('voyager::dashboard.sidebar')
         <script>
             (function(){

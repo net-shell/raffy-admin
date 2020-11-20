@@ -52,40 +52,46 @@ if (document.getElementById('app')) {
         window.Echo.private(`App.Log`)
             .listen('TagLogged', (e) => {
                 window.vm.$root.$emit('tag-logged', e.log);
-                console.log('LOGGED', e.log)
                 Vue.notify({
-                    group: 'users',
+                    group: 'app',
                     type: 'success',
                     duration: 5000,
-                    title: "Засечена е карта",
-                    text: e.log.user.name
+                    text: "Засечена е карта на: " + e.log.reader.name,
+                    title: e.log.user.name
                 });
             });
 
         window.Echo.private(`App.Tag`)
             .listen('TagRequested', (e) => {
                 window.vm.$root.$emit('tag-requested', e.tagId, e.reader);
+                Vue.notify({
+                    group: 'app',
+                    type: 'error',
+                    duration: 15000,
+                    text: "Непозната карта на: " + e.reader.name,
+                    title: e.tagId
+                });
             });
 
         window.Echo.private(`App.Reader`)
             .listen('ReaderStarted', (e) => {
                 window.vm.$root.$emit('reader-started', e.reader);
                 Vue.notify({
-                    group: 'users',
+                    group: 'sink',
                     type: 'info',
-                    duration: 10000,
-                    title: "Получени са данни от четец",
-                    text: e.reader.name
+                    duration: 5000,
+                    text: "Обновено състояние на четец",
+                    title: e.reader.name
                 });
             })
             .listen('ReaderRequested', (e) => {
                 window.vm.$root.$emit('reader-requested', e.readerId);
                 Vue.notify({
-                    group: 'reader',
+                    group: 'sink',
                     type: 'danger',
-                    duration: 10000,
-                    title: "Нова заявка за четец",
-                    text: e.readerId
+                    duration: 5000,
+                    text: "Нова заявка за четец",
+                    title: e.readerId
                 });
             });
     }

@@ -90,7 +90,7 @@
                     </div>
                     <div class="panel panel-bordered" v-if="!loading">
                         <div class="panel-body heading-row">
-                            <notifications group="users"/>
+                            <notify-area></notify-area>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <p class="so-big">
