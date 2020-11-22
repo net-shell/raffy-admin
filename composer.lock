@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0041e8c0069c0781f4c2404140c90f3",
+    "content-hash": "ce87ffc63a026f2046cb9c61a75c9ada",
     "packages": [
+        {
+            "name": "adityastic/voyager-config",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adityastic/voyager-config-exporter.git",
+                "reference": "dbd604d22d550d5f7969871b78204bce2e1eb4cc"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MadeByBob\\VoyagerConfig\\VoyagerConfigServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadeByBob\\VoyagerConfig\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aditya Gupta",
+                    "email": "adityaofficialgupta@gmail.com"
+                }
+            ],
+            "description": "Voyager configuration in config files",
+            "time": "2020-11-04T01:06:39+00:00"
+        },
         {
             "name": "arrilot/laravel-widgets",
             "version": "3.13.1",
@@ -2444,50 +2477,6 @@
                 }
             ],
             "time": "2020-11-13T10:37:36+00:00"
-        },
-        {
-            "name": "madebybob/voyager-config",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/madebybob/voyager-config.git",
-                "reference": "30bab89a5feab8739e2f55ffbe366f688b769ea6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/madebybob/voyager-config/zipball/30bab89a5feab8739e2f55ffbe366f688b769ea6",
-                "reference": "30bab89a5feab8739e2f55ffbe366f688b769ea6",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "MadeByBob\\VoyagerConfig\\VoyagerConfigServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "MadeByBob\\VoyagerConfig\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bob Mulder",
-                    "email": "info@madebybob.nl"
-                },
-                {
-                    "name": "Marlo Corridor",
-                    "email": "corridor.marlo@sofcode.xyz"
-                }
-            ],
-            "description": "Voyager configuration in config files",
-            "time": "2020-06-03T08:05:00+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -8783,7 +8772,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "madebybob/voyager-config": 20
+        "adityastic/voyager-config": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

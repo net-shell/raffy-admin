@@ -17,7 +17,7 @@
         "laravel/horizon": "^4.3",
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "^3.1",
-        "madebybob/voyager-config": "dev-master#30bab89a5feab8739e2f55ffbe366f688b769ea6",
+        "adityastic/voyager-config": "dev-master",
         "mpdf/mpdf": "^8.0",
         "tcg/voyager": "^1.4"
     },
@@ -77,6 +77,10 @@
         "hooks": {
             "type": "composer",
             "url": "https://larapack.io"
+        },
+        "adityastic": {
+            "type": "git",
+            "url": "https://github.com/adityastic/voyager-config-exporter.git"
         }
     }
 }
