@@ -1,8 +1,9 @@
 <template>
     <div>
         <div class="page-content">
+            <notify-area></notify-area>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-7">
                     <div class="panel panel-bordered">
                         <div class="panel-body filters">
                             <div class="row">
@@ -13,98 +14,86 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="row bg-info">
+                            <div class="row">
                                 <div class="col-sm-6">
-                                    <label class="control-label">Период от:</label>
-                                    <datepicker
-                                        v-model="filter.from"
-                                        :language="bg"
-                                        input-class="form-control"
-                                        :monday-first="true"
-                                        :format="dateFormat"
-                                    ></datepicker>
+                                    <div class="row bg-info" style="margin-top: .7em;">
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Период от:</label>
+                                            <datepicker
+                                                v-model="filter.from"
+                                                :language="bg"
+                                                input-class="form-control"
+                                                :monday-first="true"
+                                                :format="dateFormat"
+                                            ></datepicker>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="control-label">до:</label>
+                                            <datepicker
+                                                v-model="filter.to"
+                                                :language="bg"
+                                                input-class="form-control"
+                                                :monday-first="true"
+                                                :format="dateFormat"
+                                            ></datepicker>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Четец:</label>
+                                            <multiselect
+                                                v-model="filter.reader"
+                                                placeholder="Филтриране по четец..."
+                                                track-by="id"
+                                                label="text"
+                                                :options="readers"
+                                            ></multiselect>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="control-label">до:</label>
-                                    <datepicker
-                                        v-model="filter.to"
-                                        :language="bg"
-                                        input-class="form-control"
-                                        :monday-first="true"
-                                        :format="dateFormat"
-                                    ></datepicker>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="control-label">Отдел:</label>
-                                    <multiselect
-                                        v-model="filter.section"
-                                        placeholder="Филтриране по отдел..."
-                                        track-by="id"
-                                        label="text"
-                                        :options="sections"
-                                    ></multiselect>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="control-label">Служители:</label>
-                                    <multiselect
-                                        v-model="filter.users"
-                                        placeholder="Филтриране по служители..."
-                                        track-by="id"
-                                        label="name"
-                                        :options="users"
-                                        :multiple="true"
-                                    ></multiselect>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="control-label">Четец:</label>
-                                    <multiselect
-                                        v-model="filter.reader"
-                                        placeholder="Филтриране по четец..."
-                                        track-by="id"
-                                        label="text"
-                                        :options="readers"
-                                    ></multiselect>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Отдел:</label>
+                                            <multiselect
+                                                v-model="filter.section"
+                                                placeholder="Филтриране по отдел..."
+                                                track-by="id"
+                                                label="text"
+                                                :options="sections"
+                                            ></multiselect>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="control-label">Служители:</label>
+                                            <multiselect
+                                                v-model="filter.users"
+                                                placeholder="Филтриране по служители..."
+                                                track-by="id"
+                                                label="name"
+                                                :options="users"
+                                                :multiple="true"
+                                            ></multiselect>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8">
-                    <div class="alert alert-info so-big" v-if="loading">
-                        <div class="text-center">
-                            <p class="lead">
-                                <i class="icon voyager-refresh"></i>
-                                Зареждане...
-                            </p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar"
-                                     style="width: 92%"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm-5">
                     <div class="panel panel-bordered" v-if="!loading">
                         <div class="panel-body heading-row">
-                            <notify-area></notify-area>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <p class="so-big">
                                         <i class="icon text-success voyager-logbook"></i>
                                         Отчет
                                     </p>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-6">
                                     <p class="text-right so-big">
-                                        <small>
-                                            Показване на
-                                            <b>{{ results.length }}</b>
-                                            служители
-                                        </small>
                                         <button class="btn btn-circle"
                                                 :class="!simpleView ? 'btn-success' : 'btn-default'"
                                                 v-on:click="toggleSimpleView" type="button">
@@ -122,10 +111,9 @@
                     </div>
                     <div class="panel panel-bordered" v-if="!loading && results.length">
                         <div class="panel-body panel-dense">
-                            <div class="form form-horizontal text-center">
+                            <div class="form form-horizontal">
                                 <label class="control-label so-big">
                                     <i class="icon text-success voyager-book-download"></i>
-                                    Запазване като:
                                 </label>
                                 <button type="button" class="btn btn-success" @click="getResultsCsv()">
                                     <i class="icon voyager-download"></i>
@@ -145,11 +133,39 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" v-if="loading">
+                    <div class="alert alert-info so-big">
+                        <div class="text-center">
+                            <p class="lead">
+                                <i class="icon voyager-refresh"></i>
+                                Зареждане... Моля, изчакайте.
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar"
+                                     style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
                     <div class="panel panel-bordered" v-if="!loading">
                         <div class="panel-body" v-if="!results.length">
                             <p class="lead">Няма открити резултати.</p>
                         </div>
                         <div class="panel-body panel-dense report-table" v-if="results.length">
+                            <div class="row">
+                                <div class="col-sm-12 no-margin">
+                                    <p class="results-count bg-info text-center">
+                                        <i class="icon voyager-logbook"></i>
+                                        Показване на отчет за
+                                        <b>{{ results.length }}</b>
+                                        служители
+                                    </p>
+                                </div>
+                            </div>
                             <ag-grid-vue style="height: 500px;"
                                          class="ag-theme-alpine"
                                          :columnDefs="columnDefs"
@@ -369,5 +385,9 @@
         font-size: 2em;
         vertical-align: middle;
         line-height: 1;
+    }
+
+    .results-count {
+        margin: 0;
     }
 </style>

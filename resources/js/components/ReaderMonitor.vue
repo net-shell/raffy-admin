@@ -6,7 +6,7 @@
         </div>
         <div class="col-sm-12" id="reader-monitor">
             <div v-for="reader in readers" :key="reader.id">
-                <stats-chart :reader="reader"></stats-chart>
+                <stats-chart :reader="reader" :pie-stroke="2"></stats-chart>
             </div>
         </div>
     </div>
