@@ -39,9 +39,11 @@ class AutoExit extends Command
      */
     public function handle()
     {
+        $time = $this->ask('Choose exit time');
+        if(!$time) $time = '23:59:59';
         $logs = Log::whereNull('exited_at')->get();
         foreach ($logs as $log) {
-            $log->exited_at = (new Carbon($log->created_at))->format("Y-m-d 23:59:59");
+            $log->exited_at = (new Carbon($log->created_at))->format('Y-m-d ' . $time);
             $this->info("[$log->id] $log->created_at => $log->exited_at");
             $log->save();
         }
