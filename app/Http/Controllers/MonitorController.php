@@ -18,7 +18,7 @@ class MonitorController extends BaseController
         return new LogResource(Log::query()
             ->orderByRaw('CASE WHEN exited_at IS NULL THEN TIMESTAMP(DATE(created_at), "00:00:00") ELSE exited_at END DESC')
             //->orderBy('exited_at')
-            ->limit(50)
+            ->limit(40)
             ->skip($skip)
             ->get());
     }

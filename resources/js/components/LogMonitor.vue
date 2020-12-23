@@ -13,19 +13,27 @@
                 <div v-for="request in newRequests" :key="request.id">
                     <tag-request :request="request"></tag-request>
                 </div>
-                <div v-for="(log, l) in logs" :key="log.id">
-                    <p class="lead text-center day-name" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : ''">
-                        <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
-                        <span class="icon voyager-calendar"></span>
-                        {{ getDayName(log) }}
-                    </p>
-                    <log-entry ref="logs" :log="log"></log-entry>
+                <div class="log-items">
+                    <div class="log-item" v-for="(log, l) in logs" :key="log.id">
+                        <p class="day-name lead text-center" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : ''">
+                            <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
+                            <span class="icon voyager-calendar"></span>
+                            {{ getDayName(log) }}
+                        </p>
+                        <log-entry ref="logs" :log="log"></log-entry>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <a class="btn" ref="loadmore" @click="loadMore()" :class="loadingLogs ? 'btn-disabled' : 'btn-success'">
-                        <span class="icon voyager-refresh"></span>
-                        Показване на по-стари
-                    </a>
+                <div class="load-more">
+                    <div class="btn-group btn-group-lg btn-group-justified">
+                        <a class="btn btn-info" @click="scrollTop()" :disabled="!logs.length">
+                            <span class="icon voyager-double-up"></span>
+                            Върни се към най-новите
+                        </a>
+                        <a class="btn btn-success" ref="loadmore" @click="loadMore()" :disabled="loadingLogs">
+                            <span class="icon voyager-refresh"></span>
+                            Зареди по-стари записи
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,7 +42,15 @@
                 <div class="panel-body">
                     <h2>{{ liveTime }}</h2>
                     <h3>{{ liveDate }}</h3>
+
                     <clock size="50"></clock>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" v-model="showExited">
+                            Покажи излезлите служители
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="panel panel-bordered">
@@ -74,11 +90,15 @@
                 readers: [],
                 selectedReader: null,
                 loadingLogs: false,
+                showExited: true,
             };
         },
         computed: {
             logs() {
                 let logs = this.newLogs;
+                if (!this.showExited) {
+                    logs = logs.filter((l) => !l.exited_at);
+                }
                 if (this.selectedReader) {
                     logs = logs.filter((l) => l.reader_id == this.selectedReader.id);
                 }
@@ -94,6 +114,9 @@
             },
         },
         methods: {
+            scrollTop() {
+                window.scrollTo(0, 0);
+            },
             getDayName(log) {
                 return this.getLogTime(log).format('dddd, DD MMMM');
             },
@@ -175,7 +198,12 @@
         height: 2em;
     }
 
-    .day-name {
+    .load-more,
+    .log-item .day-name {
         padding: 2em 0 0 0;
+    }
+
+    .log-item:first-child .day-name {
+        padding: 0;
     }
 </style>
