@@ -15,7 +15,7 @@ class MonitorController extends BaseController
 
     public function logs(\Illuminate\Http\Request $request) {
         $skip = (int)$request->input('skip', 0);
-        return new LogResource(Log::latest()
+        return new LogResource(Log::query()
             ->limit(30)
             ->skip($skip)
             ->orderBy('exited_at', 'desc')
