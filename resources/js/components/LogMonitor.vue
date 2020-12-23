@@ -13,7 +13,12 @@
                 <div v-for="request in newRequests" :key="request.id">
                     <tag-request :request="request"></tag-request>
                 </div>
-                <div v-for="log in logs" :key="log.id">
+                <div v-for="(log, l) in logs" :key="log.id">
+                    <p class="lead text-center day-name" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : 'text-info'">
+                        <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
+                        <span class="icon voyager-calendar"></span>
+                        {{ getDayName(log) }}
+                    </p>
                     <log-entry ref="logs" :log="log"></log-entry>
                 </div>
                 <div class="text-center">
@@ -89,6 +94,18 @@
             },
         },
         methods: {
+            getDayName(log) {
+                return this.getLogTime(log).format('dddd, DD MMMM');
+            },
+            isToday(log) {
+                return this.getLogTime(log).isSame(new Date(), 'day');
+            },
+            isDayHeader(i) {
+                return i == 0 || this.getDayName(this.logs[i - 1]) != this.getDayName(this.logs[i])
+            },
+            getLogTime(log) {
+                return window.moment(log.exited_at || log.created_at);
+            },
             updateTimestamp() {
                 this.timestamp = window.moment();
             },
@@ -156,5 +173,9 @@
     .branding .logo {
         width: auto;
         height: 2em;
+    }
+
+    .day-name {
+        padding: 2em 0 0 0;
     }
 </style>
