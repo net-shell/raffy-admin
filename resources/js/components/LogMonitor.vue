@@ -14,7 +14,7 @@
                     <tag-request :request="request"></tag-request>
                 </div>
                 <div v-for="(log, l) in logs" :key="log.id">
-                    <p class="lead text-center day-name" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : 'text-info'">
+                    <p class="lead text-center day-name" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : ''">
                         <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
                         <span class="icon voyager-calendar"></span>
                         {{ getDayName(log) }}

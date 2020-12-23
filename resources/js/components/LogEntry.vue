@@ -5,7 +5,12 @@
                 <div class="row">
                     <div class="col-xs-2 col-sm-1 no-margin text-right">
                         <div class="img-square" v-if="log.user">
-                            <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
+                            <img class="img-responsive" :src="'/storage/' + log.user.avatar" :id="'avatar-' + log.user_id"/>
+                            <popover :title="log.user.name" :target="'#avatar-' + log.user_id" trigger="hover" placement="right">
+                                <template slot="popover">
+                                    <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
+                                </template>
+                            </popover>
                         </div>
                     </div>
                     <div class="col-xs-4 col-sm-3 no-padding no-margin details">
