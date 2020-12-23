@@ -27,7 +27,7 @@ class ReportController extends BaseController
     public function reportJson(Request $request) {
         $report = $this->export->collection()->toArray();
         foreach ($report as &$item) {
-            for($i=1; $i<count($item); $i++) {
+            for($i=1; $i<count($item)-1; $i++) {
                 if(!$item[$i]) continue;
                 $item[$i] = substr($item[$i], 0, 5);
             }
