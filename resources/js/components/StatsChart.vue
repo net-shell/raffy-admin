@@ -1,37 +1,23 @@
 <template>
     <div class="panel panel-bordered">
         <div class="panel-heading">
-            <p class="reader-name">
-                <a
-                    role="button"
-                    data-toggle="collapse"
-                    :href="'#reader-' + reader.id"
-                    data-parent="#reader-monitor"
-                >
-                    <div class="reader-title">
-                        <span class="icon voyager-location"></span>
-                        {{ reader.name }}
+            <a class="btn btn-block" role="button" @click="showDetails = !showDetails" :class="showDetails ? 'btn-primary' : 'btn-default'">
+                <div class="reader-title">
+                    <span class="icon voyager-location"></span>
+                    {{ reader.name }}
+                </div>
+                <div class="activity" v-if="reader.updated_at">
+                    <div class="activity-diff" v-tooltip.bottom="lastUpdatedDate">
+                        <span class="icon voyager-power"></span>
+                        {{ lastUpdatedDiff }}
                     </div>
-                    <div class="activity bg-metal" v-if="reader.updated_at">
-                        <div class="activity-diff">
-                            <span class="icon voyager-droplet"></span>
-                            {{ lastUpdatedDiff }}
-                        </div>
-                        <div class="activity-date text-muted">
-                            <span class="icon voyager-calendar"></span>
-                            {{ lastUpdatedDate }}
-                        </div>
-                    </div>
-                </a>
-            </p>
+                </div>
+            </a>
         </div>
-        <div
-            :id="'reader-' + reader.id"
-            class="panel-collapse collapse"
-        >
+        <collapse v-model="showDetails">
             <div class="panel-body">
-                <div class="row pies">
-                    <div class="col-sm-6" v-if="stats && stats.cpu_temp">
+                <div class="pies">
+                    <div v-if="stats && stats.cpu_temp">
                         <pie-chart
                             :percent="+stats.cpu_temp"
                             class="pie"
@@ -41,50 +27,44 @@
                             :stroke-width="pieStroke"
                         ></pie-chart>
                     </div>
-                    <div class="col-sm-6" v-if="stats && stats.ram">
-                        <pie-chart
-                            :percent="+stats.ram"
-                            class="pie"
-                            label-small="RAM"
-                            :color="getColor(stats.ram)"
-                            :stroke-width="pieStroke"
-                        ></pie-chart>
+                    <div v-if="stats && stats.ram">
+                        <label class="control-label">
+                            {{ stats.ram }}% RAM
+                        </label>
+                        <progress-bar v-model="+stats.ram" :type="getColor(+stats.ram)" striped active/>
                     </div>
-                    <div class="col-sm-6" v-if="stats && stats.cpu">
-                        <pie-chart
-                            :percent="+stats.cpu"
-                            class="pie"
-                            label-small="процесор"
-                            :color="getColor(stats.cpu)"
-                            :stroke-width="pieStroke"
-                        ></pie-chart>
+                    <div v-if="stats && stats.cpu">
+                        <label class="control-label">
+                            {{ stats.cpu }}% процесор
+                        </label>
+                        <progress-bar v-model="+stats.cpu" :label-text="stats.cpu + '% процесор'"
+                                      :type="getColor(+stats.cpu)" striped active/>
                     </div>
-                    <div class="col-sm-6" v-if="stats && stats.hdd_used">
-                        <pie-chart
-                            :percent="diskPercent"
-                            class="pie"
-                            :label="diskLabel"
-                            label-small="диск"
-                            :color="getColor(diskPercent)"
-                            :stroke-width="pieStroke"
-                        ></pie-chart>
+                    <div v-if="stats && stats.hdd_used">
+                        <label class="control-label">
+                            {{ diskLabel }} диск
+                        </label>
+                        <progress-bar v-model="diskPercent" :label-text="diskLabel" :type="getColor(diskPercent)"
+                                      striped active/>
                     </div>
-                    <div class="col-sm-12" v-if="!stats">
+                    <div v-if="!stats">
                         <i>Няма данни от този четец.</i>
                     </div>
                 </div>
-                <div class="col-sm-12 bg-metal" v-if="stats">
-                    <div class="row platform">
-                        <div class="col-sm-12">
-                            <p class="text-muted">
-                                <span class="icon voyager-laptop"></span>
-                                {{ stats.platform }}
-                            </p>
-                        </div>
+                <div class="bg-metal" v-if="stats">
+                    <div class="platform">
+                        <p class="text-muted">
+                            <span class="icon voyager-laptop"></span>
+                            {{ stats.platform }}
+                        </p>
                     </div>
                 </div>
+                <button type="button" class="btn btn-default btn-xs btn-block" @click="showDetails = false">
+                    <i class="icon voyager-double-up"></i>
+                    Скрий детайлите
+                </button>
             </div>
-        </div>
+        </collapse>
     </div>
 </template>
 
@@ -93,6 +73,11 @@
 
     export default {
         props: ["reader", "pie-stroke"],
+        data() {
+            return {
+                showDetails: false
+            };
+        },
         components: {
             "pie-chart": PieChart
         },
@@ -104,7 +89,7 @@
                 return window.moment(this.reader.updated_at).fromNow();
             },
             lastUpdatedDate() {
-                return window.moment(this.reader.updated_at).format('lll');
+                return window.moment(this.reader.updated_at).format('llll');
             },
             diskPercent() {
                 return (this.stats.hdd_used / this.stats.hdd_total) * 100;
@@ -118,10 +103,10 @@
         },
         methods: {
             getColor(p) {
-                if (p < 25) return "green";
-                else if (p < 50) return "yellow";
-                else if (p < 75) return "orange";
-                return "red";
+                if (p < 25) return "success";
+                else if (p < 50) return "info";
+                else if (p < 75) return "warning";
+                return "danger";
             },
             getTempColor(p) {
                 if (p < 60) return "green";
@@ -133,7 +118,15 @@
     };
 </script>
 
-<style>
+<style scoped>
+    .voyager .panel {
+        margin: 0;
+    }
+
+    .panel-heading .btn {
+        text-align: left;
+    }
+
     .pie {
         transition: stroke 1s ease-in-out;
     }
@@ -154,10 +147,6 @@
         padding: 0 .3em;
     }
 
-    .activity {
-        padding: 0 .5em;
-    }
-
     .activity,
     .platform {
         font-size: .8em;
@@ -166,12 +155,13 @@
     }
 
     .bg-metal {
-        background: rgb(238,238,238);
-        background: linear-gradient(0deg, rgba(238,238,238,1) 0%, rgba(255,255,255,1) 100%);
+        background: rgb(238, 238, 238);
+        background: linear-gradient(0deg, rgba(238, 238, 238, 1) 0%, rgba(255, 255, 255, 1) 100%);
     }
 
     .platform p {
         margin: 0;
+        line-height: 1;
     }
 
     .pies > div,

@@ -51,6 +51,17 @@ if (document.getElementById('app')) {
             }
         });
 
+        window.Echo.join(`Chat.Global`)
+            .here((users) => {
+                window.vm.$root.$emit('chat-joined', users);
+            })
+            .joining((user) => {
+                window.vm.$root.$emit('chat-joined', [user]);
+            })
+            .leaving((user) => {
+                window.vm.$root.$emit('chat-left', user);
+            });
+
         window.Echo.private(`App.Log`)
             .listen('TagLogged', (e) => {
                 window.vm.$root.$emit('tag-logged', e.log);

@@ -29,3 +29,12 @@ Broadcast::channel('App.Tag', function ($user) {
 Broadcast::channel('App.Reader', function ($user) {
     return true;
 });
+
+Broadcast::channel('Chat.Global', function ($user) {
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+        'section' => $user->section->name,
+        'avatar' => $user->avatar,
+    ];
+});

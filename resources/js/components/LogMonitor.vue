@@ -15,7 +15,8 @@
                 </div>
                 <div class="log-items">
                     <div class="log-item" v-for="(log, l) in logs" :key="log.id">
-                        <p class="day-name lead text-center" v-if="isDayHeader(l)" :class="isToday(log) ? 'text-success' : ''">
+                        <p class="day-name lead text-center" v-if="isDayHeader(l)"
+                           :class="isToday(log) ? 'text-success' : ''">
                             <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
                             <span class="icon voyager-calendar"></span>
                             {{ getDayName(log) }}
@@ -37,28 +38,58 @@
                 </div>
             </div>
         </div>
-        <div class="live-clock big-clock col-md-2 text-center">
-            <div class="panel panel-bordered">
-                <div class="panel-body">
-                    <h2>{{ liveTime }}</h2>
-                    <h3>{{ liveDate }}</h3>
+        <div class="col-md-2 text-center">
+            <affix>
+                <div class="panel panel-bordered">
+                    <div class="panel-body">
+                        <notify-area></notify-area>
 
-                    <clock size="50"></clock>
+                        <h2>{{ liveTime }}</h2>
+                        <h3>{{ liveDate }}</h3>
 
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" v-model="showExited">
-                            Покажи излезлите служители
-                        </label>
+                        <clock size="50"></clock>
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" v-model="showExited">
+                                Покажи излезлите служители
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-bordered">
-                <div class="panel-body">
-                    <notify-area></notify-area>
-                    <reader-monitor></reader-monitor>
+                <div class="panel panel-bordered">
+                    <div class="panel-heading" role="button" @click="showReaders = !showReaders">
+                        <h4 class="panel-title">
+                            <i class="icon voyager-location"></i>
+                            Четци
+                            <span class="badge badge-dark pull-right">
+                            {{ readersCount }}
+                        </span>
+                        </h4>
+                    </div>
+                    <collapse v-model="showReaders">
+                        <div class="panel-body">
+                            <reader-monitor @update-count="updateReadersCount"></reader-monitor>
+                        </div>
+                    </collapse>
                 </div>
-            </div>
+                <div class="panel panel-bordered">
+                    <div class="panel-heading" role="button" @click="showChat = !showChat">
+                        <h4 class="panel-title">
+                            <i class="icon voyager-people"></i>
+                            На линия сега
+                            <span class="badge badge-success pull-right">
+                            {{ chatCount }}
+                        </span>
+                        </h4>
+                    </div>
+                    <collapse v-model="showChat">
+                        <div class="panel-body">
+                            <live-chat @update-count="updateChatCount"></live-chat>
+                        </div>
+                    </collapse>
+                </div>
+            </affix>
         </div>
     </div>
 </template>
@@ -91,6 +122,10 @@
                 selectedReader: null,
                 loadingLogs: false,
                 showExited: true,
+                showReaders: true,
+                showChat: false,
+                readersCount: 0,
+                chatCount: 0,
             };
         },
         computed: {
@@ -114,6 +149,12 @@
             },
         },
         methods: {
+            updateReadersCount(count) {
+                this.readersCount = count;
+            },
+            updateChatCount(count) {
+                this.chatCount = count;
+            },
             scrollTop() {
                 window.scrollTo(0, 0);
             },
@@ -180,12 +221,6 @@
 </script>
 
 <style scoped>
-    .big-clock h1 {
-        font-size: 8em;
-        margin: 0;
-        overflow: hidden;
-    }
-
     .branding {
         font-size: 2em;
         text-transform: uppercase;
