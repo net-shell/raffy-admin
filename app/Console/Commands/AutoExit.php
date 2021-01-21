@@ -51,8 +51,8 @@ class AutoExit extends Command
         $logs = $qLogs->get();
         foreach ($logs as $log) {
             $time = new Carbon($log->created_at);
-            $time = $time->hours(17)->minutes(20)->seconds(0);
-            $log->exited_at = $time->addSeconds(rand(5, 1800));
+            $time = $time->hours(17)->minutes(10)->seconds(7);
+            $log->exited_at = $time->addSeconds(rand(0, 600));
             $this->info("[$log->id] $log->created_at => $log->exited_at");
             $log->save();
         }

@@ -14,7 +14,7 @@ return [
         'add_default_role_on_register' => true,
         'default_role'                 => 'user',
         'default_avatar'               => 'users/default.png',
-        'redirect'                     => '/',
+        'redirect'                     => '/monitor',
     ],
 
     /*
@@ -133,7 +133,7 @@ return [
                 'icon_class' => 'voyager-person',
             ],
             'voyager::generic.home' => [
-                'route'        => '/',
+                'route'        => '/monitor',
                 'icon_class'   => 'voyager-home',
                 'target_blank' => true,
             ],
