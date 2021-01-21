@@ -39,11 +39,20 @@ class AutoExit extends Command
      */
     public function handle()
     {
-        $time = $this->ask('Choose exit time');
-        if(!$time) $time = '23:59:59';
-        $logs = Log::whereNull('exited_at')->get();
+        $qLogs = Log::whereNull('exited_at');
+        $count = $qLogs->count();
+        if(!$count) {
+            $this->info('No entries without exit time found.');
+            return ;
+        }
+        if(!$this->confirm('Set randomized auto-exit for ' . $count . ' entries?')) {
+            return;
+        }
+        $logs = $qLogs->get();
         foreach ($logs as $log) {
-            $log->exited_at = (new Carbon($log->created_at))->format('Y-m-d ' . $time);
+            $time = new Carbon($log->created_at);
+            $time = $time->hours(17)->minutes(20)->seconds(0);
+            $log->exited_at = $time->addSeconds(rand(5, 1800));
             $this->info("[$log->id] $log->created_at => $log->exited_at");
             $log->save();
         }
