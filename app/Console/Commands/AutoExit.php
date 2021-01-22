@@ -45,7 +45,7 @@ class AutoExit extends Command
             $this->info('No entries without exit time found.');
             return ;
         }
-        if(!$this->confirm('Set randomized auto-exit for ' . $count . ' entries?')) {
+        if(!$this->confirm('Set randomized auto-exit for ' . $count . ' entries?', true)) {
             return;
         }
         $logs = $qLogs->get();
