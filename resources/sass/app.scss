@@ -52,3 +52,10 @@
     padding: 0 !important;
     left: auto;
 }
+
+.affix {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+}

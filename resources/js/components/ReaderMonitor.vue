@@ -1,6 +1,7 @@
 <template>
     <div>
         <div v-for="reader in readers" :key="reader.id">
+            <!--<button type="button" @click="emitLast">emit last</button>-->
             <stats-chart :reader="reader" :pie-stroke="2"></stats-chart>
         </div>
     </div>

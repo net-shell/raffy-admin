@@ -16,7 +16,7 @@ class MonitorController extends BaseController
     public function logs(\Illuminate\Http\Request $request) {
         $skip = (int)$request->input('skip', 0);
         return new LogResource(Log::query()
-            ->orderByRaw('CASE WHEN exited_at IS NULL THEN TIMESTAMP(DATE(created_at), "00:00:00") ELSE exited_at END DESC')
+            ->orderByRaw('CASE WHEN exited_at IS NULL THEN created_at ELSE exited_at END DESC')
             //->orderBy('exited_at')
             ->limit(40)
             ->skip($skip)

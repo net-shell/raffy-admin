@@ -18,7 +18,7 @@ class ReaderController extends BaseController
 {
     public function emitLast()
     {
-        $log = Log::latest('created_at')->first();
+        $log = Log::latest('created_at')->whereNull('exited_at')->first();
         broadcast(new TagLogged($log));
         return($log->toArray());
     }
