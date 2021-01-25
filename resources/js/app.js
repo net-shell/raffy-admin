@@ -68,7 +68,7 @@ if (document.getElementById('app')) {
                 Vue.notify({
                     group: 'app',
                     type: 'success',
-                    duration: 5000,
+                    duration: 15000,
                     text: "Засечена е карта на: " + e.log.reader.name,
                     title: e.log.user.name
                 });

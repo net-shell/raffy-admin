@@ -20,6 +20,7 @@ class ReaderController extends BaseController
     {
         $log = Log::latest('created_at')->whereNull('exited_at')->first();
         broadcast(new TagLogged($log));
+        broadcast(new ReaderStarted(Reader::latest('updated_at')->first()));
         return($log->toArray());
     }
 
