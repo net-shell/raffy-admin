@@ -28,16 +28,24 @@
         },
         methods: {
             usersJoined(users) {
+                let joinedUsers = users.map(u => u.name).join(', ');
                 for(let user of users) {
                     if(!this.usersOnline.find(u => u.id == user.id)) {
                         this.usersOnline.push(user);
                     }
                 }
+                Vue.notify({
+                    group: 'sink',
+                    type: 'success',
+                    duration: 5000,
+                    text: "На линия сега",
+                    title: joinedUsers
+                });
             },
             userLeft(user) {
                 this.usersOnline = this.usersOnline.filter(u => user.id != u.id);
                 Vue.notify({
-                    group: 'app',
+                    group: 'sink',
                     type: 'info',
                     duration: 5000,
                     text: "Вече не е на линия",
