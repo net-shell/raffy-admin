@@ -3,11 +3,10 @@
         <div class="panel panel-bordered">
             <div class="panel-heading" :class="showDetails ? 'active' : ''" @click="showDetails = !showDetails">
                     <div class="row">
-                        <div class="no-margin text-right"
-                             :class="showDetails ? 'col-xs-5 col-sm-2' : 'col-xs-2 col-sm-1'"
+                        <div class="no-margin text-right col-sm-1"
+                             :class="showDetails ? 'col-xs-3' : 'col-xs-2'"
                              style="padding-left: 0;">
                             <div class="img-square"
-                                 :class="showDetails ? 'active' : ''"
                                  v-if="log.user">
                                 <img class="img-responsive"
                                      :src="'/storage/' + log.user.avatar"
@@ -21,32 +20,9 @@
                                 </popover>-->
                             </div>
                         </div>
-                        <div class="col-xs-7 col-sm-6 no-padding no-margin details"
-                             :class="showDetails ? 'col-md-4' : 'col-md-5'">
+                        <div class="col-xs-9 col-sm-5 no-padding no-margin details">
                             <h3 class="name" v-if="log.user">{{ log.user.name }}</h3>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-5 no-padding no-margin details">
-                            <div class="row condensed timestamps">
-                                <div class="col-xs-3 time-entry">
-                                    <p class="lead highlighted">ВХОД</p>
-                                    <p>{{ entryDiff }}</p>
-                                </div>
-                                <div class="col-xs-3 time-entry">
-                                    <p class="lead">{{ entryTime }}</p>
-                                    <p>{{ entryDate }}</p>
-                                </div>
-                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
-                                    <p class="lead highlighted">ИЗХОД</p>
-                                    <p>{{ exitDiff }}</p>
-                                </div>
-                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
-                                    <p class="lead">{{ exitTime }}</p>
-                                    <p>{{ exitDate }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-10 no-margin no-padding details" v-if="showDetails">
-                            <div class="text-uppercase" v-if="log.user && log.user.section">
+                            <div class="text-uppercase" v-if="showDetails && log.user && log.user.section">
                                 <div class="text-info">
                                     <span class="icon voyager-company"></span>
                                     отдел
@@ -55,6 +31,26 @@
                                 <div>
                                     <span class="icon voyager-location"></span>
                                     {{ log.reader.name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 no-padding no-margin details">
+                            <div class="row condensed timestamps">
+                                <div class="col-xs-3 time-entry">
+                                    <p class="lead highlighted">ВХОД</p>
+                                    <p>{{ entryDiff }}</p>
+                                </div>
+                                <div class="col-xs-3 time-entry">
+                                    <p class="lead">{{ entryTime }}</p>
+                                    <p v-if="showDetails">{{ entryDate }}</p>
+                                </div>
+                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
+                                    <p class="lead highlighted">ИЗХОД</p>
+                                    <p>{{ exitDiff }}</p>
+                                </div>
+                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
+                                    <p class="lead">{{ exitTime }}</p>
+                                    <p v-if="showDetails">{{ exitDate }}</p>
                                 </div>
                             </div>
                         </div>
@@ -156,16 +152,18 @@
         margin: 0 15px 0 0;
     }
 
-    .log-entry .img-square {
+    .log-entry .panel-heading .img-square {
         object-fit: cover;
         object-position: center;
-        max-width: 70px;
-        width: 100%;
-        height: auto;
     }
 
-    .log-entry .img-square.active {
-        max-width: 100%;
+    .log-entry .panel-heading .img-square > img {
+        height: 50px;
+        width: auto;
+    }
+
+    .log-entry .panel-heading.active .img-square > img {
+        height: 100px;
     }
 
     .log-entry .name {
@@ -175,6 +173,7 @@
 
     .log-entry .timestamps p {
         margin: 0;
+        margin-right: 1em;
     }
 
     .log-entry .highlighted {
