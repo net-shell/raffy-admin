@@ -95,7 +95,10 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
             $hours = floor($minutes / 60);
             if($minutes > 0) {
                 $minutes -= $hours * 60;
+                $minutes = str_pad($minutes, 2, '0');
                 $report[$u][] = "$hours:$minutes";
+            } else {
+                $report[$u][] = 0;
             }
         }
         // Strip off keys and return
