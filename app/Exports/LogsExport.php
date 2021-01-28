@@ -91,7 +91,12 @@ class LogsExport implements FromCollection, WithMapping, WithHeadings
         }
         // Add total
         foreach ($totals as $u => $total) {
-            $report[$u][] = date('H:i:s', $total);
+            $minutes = round($total / 60);
+            $hours = floor($minutes / 60);
+            if($minutes > 0) {
+                $minutes -= $hours * 60;
+                $report[$u][] = "$hours:$minutes";
+            }
         }
         // Strip off keys and return
         $report = array_map(function($r) {
