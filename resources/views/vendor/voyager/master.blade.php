@@ -104,7 +104,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
         </script>
         <!-- Main Content -->
         <div class="container-fluid">
-            <div class="side-body no-padding">
+            <div class="side-body">
                 @yield('page_header')
                 <div id="voyager-notifications"></div>
                 @yield('content')
