@@ -59,3 +59,16 @@
     bottom: 0;
     overflow-y: auto;
 }
+
+.branding {
+    font-size: 2.3em;
+    text-transform: uppercase;
+    font-weight: normal;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.branding .logo {
+    width: auto;
+    height: 2em;
+}

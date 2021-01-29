@@ -5,34 +5,14 @@
                 <span class="hamburger-inner"></span>
             </button>
             @section('breadcrumbs')
-                <ol class="breadcrumb hidden-xs">
-                    @php
-                        $segments = array_filter(explode('/', str_replace(route('voyager.dashboard'), '', Request::url())));
-                        $url = route('voyager.dashboard');
-                    @endphp
-                    @if(count($segments) == 0)
-                        <li class="active"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</li>
-                    @else
-                        <li class="active">
-                            <a href="{{ route('voyager.dashboard')}}"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
-                        </li>
-                        @foreach ($segments as $segment)
-                            @php
-                                $url .= '/'.$segment;
-                            @endphp
-                            @if ($loop->last)
-                                <li>{{ ucfirst(urldecode($segment)) }}</li>
-                            @else
-                                <li>
-                                    <a href="{{ $url }}">{{ ucfirst(urldecode($segment)) }}</a>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endif
-                </ol>
+                <div class="branding">
+                    <img class="logo" :src="logo"/>
+                    Система за контрол на достъпа
+                </div>
             @show
         </div>
         <ul class="nav navbar-nav @if (__('voyager::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
+            <live-chat-dropdown></live-chat-dropdown>
             <li class="dropdown profile">
                 <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button"
                    aria-expanded="false"><img src="{{ $user_avatar }}" class="profile-img"> <span
@@ -76,3 +56,10 @@
         </ul>
     </div>
 </nav>
+<script>
+    import LiveChat from "../../../../js/components/LiveChat";
+    import LiveChatDropdown from "../../../../js/components/LiveChatDropdown";
+    export default {
+        components: {LiveChatDropdown, LiveChat}
+    }
+</script>

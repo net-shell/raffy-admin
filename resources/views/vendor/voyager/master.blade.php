@@ -73,7 +73,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
 
 <div class="app-container">
     <div class="fadetoblack visible-xs"></div>
-    <div class="row content-container">
+    <div id="app" class="row content-container">
         @include('voyager::dashboard.navbar')
         @include('voyager::dashboard.sidebar')
         <script>
@@ -107,7 +107,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
             <div class="side-body">
                 @yield('page_header')
                 <div id="voyager-notifications"></div>
-                @yield('content')
+                    @yield('content')
             </div>
         </div>
     </div>

@@ -1,14 +1,6 @@
 <template>
     <div class="row">
         <div class="col-md-10">
-            <div class="panel panel-bordered">
-                <div class="panel-body">
-                    <div class="branding">
-                        <img class="logo" :src="logo"/>
-                        Система за контрол на достъпа
-                    </div>
-                </div>
-            </div>
             <div class="page-content containter-fluid">
                 <div v-for="request in newRequests" :key="request.id">
                     <tag-request :request="request"></tag-request>
@@ -73,22 +65,6 @@
                         </div>
                     </collapse>
                 </div>
-                <div class="panel panel-bordered">
-                    <div class="panel-heading" role="button" @click="showChat = !showChat">
-                        <h4 class="panel-title">
-                            <i class="icon voyager-people"></i>
-                            На линия сега
-                            <span class="badge badge-success pull-right">
-                            {{ chatCount }}
-                        </span>
-                        </h4>
-                    </div>
-                    <collapse v-model="showChat">
-                        <div class="panel-body">
-                            <live-chat @update-count="updateChatCount"></live-chat>
-                        </div>
-                    </collapse>
-                </div>
             </affix>
         </div>
     </div>
@@ -125,7 +101,6 @@
                 showReaders: true,
                 showChat: false,
                 readersCount: 0,
-                chatCount: 0,
             };
         },
         computed: {
@@ -151,9 +126,6 @@
         methods: {
             updateReadersCount(count) {
                 this.readersCount = count;
-            },
-            updateChatCount(count) {
-                this.chatCount = count;
             },
             scrollTop() {
                 window.scrollTo(0, 0);
@@ -221,18 +193,6 @@
 </script>
 
 <style scoped>
-    .branding {
-        font-size: 2em;
-        text-transform: uppercase;
-        font-weight: normal;
-        line-height: 1;
-    }
-
-    .branding .logo {
-        width: auto;
-        height: 2em;
-    }
-
     .load-more,
     .log-item .day-name {
         padding: 2em 0 0 0;
