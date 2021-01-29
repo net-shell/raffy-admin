@@ -11,7 +11,6 @@
             @endif
         @endforeach
         <log-monitor
-            logo="{{ Voyager::image(Voyager::setting('admin.icon_image', '')) }}"
             color="#F51615"
             brand="{{ Voyager::setting('admin.title', 'RAFFY') }}">
         </log-monitor>

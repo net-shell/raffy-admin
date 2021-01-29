@@ -9,7 +9,7 @@ import * as uiv from 'uiv'
 
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-if (document.getElementById('app')) {
+if (document.getElementsByClassName('page-content').length == 0) {
     window.io = require('socket.io-client');
     window.moment = require('moment');
     window.moment.locale('bg');

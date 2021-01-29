@@ -6,8 +6,8 @@
             </button>
             @section('breadcrumbs')
                 <div class="branding">
-                    <img class="logo" :src="logo"/>
-                    Система за контрол на достъпа
+                    <img class="logo" src="{{ Voyager::image(Voyager::setting('admin.icon_image', '')) }}"/>
+                    Контрол на достъпа
                 </div>
             @show
         </div>
@@ -56,10 +56,3 @@
         </ul>
     </div>
 </nav>
-<script>
-    import LiveChat from "../../../../js/components/LiveChat";
-    import LiveChatDropdown from "../../../../js/components/LiveChatDropdown";
-    export default {
-        components: {LiveChatDropdown, LiveChat}
-    }
-</script>
