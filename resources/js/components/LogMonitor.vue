@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-sm-9 col-lg-10">
             <div class="page-content containter-fluid">
                 <div v-for="request in newRequests" :key="request.id">
                     <tag-request :request="request"></tag-request>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 text-center">
+        <div class="col-sm-3 col-lg-2 text-center">
             <affix>
                 <div class="panel panel-bordered">
                     <div class="panel-body">

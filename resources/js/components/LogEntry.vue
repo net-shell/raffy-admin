@@ -1,11 +1,11 @@
 <template>
     <div class="log-entry attention-zoom" v-if="log">
         <div class="panel panel-bordered">
-            <div class="panel-heading" :class="showDetails ? 'active' : ''" @click="showDetails = !showDetails">
+            <div class="panel-body" :class="showDetails ? 'active' : ''" @click="showDetails = !showDetails">
                     <div class="row">
-                        <div class="no-margin text-right col-sm-1"
-                             :class="showDetails ? 'col-xs-3' : 'col-xs-2'"
-                             style="padding-left: 0;">
+                        <div class="no-margin text-right col-sm-2 col-lg-1"
+                             style="padding-left: 0;"
+                             :class="showDetails ? 'col-xs-5' : 'col-xs-3'">
                             <div class="img-square"
                                  v-if="log.user">
                                 <img class="img-responsive"
@@ -20,7 +20,8 @@
                                 </popover>-->
                             </div>
                         </div>
-                        <div class="col-xs-9 col-sm-5 no-padding no-margin details">
+                        <div class="col-sm-4 no-padding no-margin details"
+                             :class="showDetails ? 'col-xs-7' : 'col-xs-9'">
                             <h3 class="name" v-if="log.user">{{ log.user.name }}</h3>
                             <div class="text-uppercase" v-if="showDetails && log.user && log.user.section">
                                 <div class="text-info">
@@ -35,22 +36,34 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 no-padding no-margin details">
-                            <div class="row condensed timestamps">
-                                <div class="col-xs-3 time-entry">
-                                    <p class="lead highlighted">ВХОД</p>
-                                    <p>{{ entryDiff }}</p>
+                            <div class="row condensed timestamps" style="margin: 0;">
+                                <div class="col-xs-6 time-entry">
+                                    <div class="row condensed" style="margin: 0;">
+                                        <div class="col-xs-6 time-entry">
+                                            <p class="lead highlighted">ВХОД</p>
+                                            <p>{{ entryDiff }}</p>
+                                        </div>
+                                        <div class="col-xs-6 time-entry">
+                                            <p class="lead">{{ entryTime }}</p>
+                                            <p>
+                                                <span v-show="showDetails">{{ entryDate }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-3 time-entry">
-                                    <p class="lead">{{ entryTime }}</p>
-                                    <p v-if="showDetails">{{ entryDate }}</p>
-                                </div>
-                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
-                                    <p class="lead highlighted">ИЗХОД</p>
-                                    <p>{{ exitDiff }}</p>
-                                </div>
-                                <div class="col-xs-3 time-exit attention-zoom" v-if="momentExited">
-                                    <p class="lead">{{ exitTime }}</p>
-                                    <p v-if="showDetails">{{ exitDate }}</p>
+                                <div class="col-xs-6 time-entry">
+                                    <div class="row condensed" style="margin: 0;">
+                                        <div class="col-xs-6 time-exit attention-zoom" v-if="momentExited">
+                                            <p class="lead highlighted">ИЗХОД</p>
+                                            <p>{{ exitDiff }}</p>
+                                        </div>
+                                        <div class="col-xs-3 6 time-exit attention-zoom" v-if="momentExited">
+                                            <p class="lead">{{ exitTime }}</p>
+                                            <p>
+                                                <span v-show="showDetails">{{ exitDate }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +152,7 @@
         margin-bottom: 1em;
     }
 
-    .log-entry > .panel-heading:hover {
+    .log-entry > .panel:hover {
         background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(222, 222, 222) 100%);
         color: #000;
     }
@@ -148,22 +161,28 @@
         padding: 0;
     }
 
+    .log-entry .panel-body.active {
+        background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(222, 222, 222) 100%);
+        color: #000;
+    }
+
     .log-entry .row.condensed {
         margin: 0 15px 0 0;
     }
 
-    .log-entry .panel-heading .img-square {
+    .log-entry .panel-body .img-square {
         object-fit: cover;
-        object-position: center;
+        object-position: center center;
     }
 
-    .log-entry .panel-heading .img-square > img {
+    .log-entry .panel-body .img-square {
         height: 50px;
-        width: auto;
+        width: 60px;
     }
 
-    .log-entry .panel-heading.active .img-square > img {
-        height: 100px;
+    .log-entry .panel-body.active .img-square {
+        height: 110px;
+        width: 110px;
     }
 
     .log-entry .name {
