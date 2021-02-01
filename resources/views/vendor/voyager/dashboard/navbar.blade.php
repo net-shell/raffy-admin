@@ -6,12 +6,15 @@
             </button>
             @section('breadcrumbs')
                 <div class="branding">
-                    <img class="logo" src="{{ Voyager::image(Voyager::setting('admin.icon_image', '')) }}"/>
-                    Контрол на достъпа
+                    <h2>
+                        <img class="logo" src="{{ Voyager::image(Voyager::setting('admin.icon_image', '')) }}"/>
+                        Контрол на достъпа
+                    </h2>
                 </div>
             @show
         </div>
         <ul class="nav navbar-nav @if (__('voyager::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
+            <readers-dropdown></readers-dropdown>
             <live-chat-dropdown></live-chat-dropdown>
             <li class="dropdown profile">
                 <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button"

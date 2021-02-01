@@ -3,6 +3,10 @@
 @import "../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
 
+.app-container {
+    background: #ddd;
+}
+
 .no-margin {
     margin: 0 !important;
 }

@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 no-padding no-margin details">
                             <div class="row condensed timestamps" style="margin: 0;">
-                                <div class="col-xs-6 time-entry">
+                                <div class="col-xs-6 time-entry text-danger">
                                     <div class="row condensed" style="margin: 0;">
                                         <div class="col-xs-6 time-entry">
                                             <p class="lead highlighted">ВХОД</p>
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-6 time-entry">
+                                <div class="col-xs-6 time-entry text-info">
                                     <div class="row condensed" style="margin: 0;">
                                         <div class="col-xs-6 time-exit attention-zoom" v-if="momentExited">
                                             <p class="lead highlighted">ИЗХОД</p>
@@ -200,11 +200,9 @@
     }
 
     .log-entry .time-entry {
-        color: red;
     }
 
     .log-entry .time-exit {
-        color: #04f;
     }
 
     .log-entry .time-entry > .lead,

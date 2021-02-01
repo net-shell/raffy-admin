@@ -49,22 +49,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-bordered">
-                    <div class="panel-heading" role="button" @click="showReaders = !showReaders">
-                        <h4 class="panel-title">
-                            <i class="icon voyager-location"></i>
-                            Четци
-                            <span class="badge badge-dark pull-right">
-                            {{ readersCount }}
-                        </span>
-                        </h4>
-                    </div>
-                    <collapse v-model="showReaders">
-                        <div class="panel-body">
-                            <reader-monitor @update-count="updateReadersCount"></reader-monitor>
-                        </div>
-                    </collapse>
-                </div>
             </affix>
         </div>
     </div>
