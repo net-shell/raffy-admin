@@ -40,7 +40,22 @@
                         <h3>{{ liveDate }}</h3>
 
                         <clock size="50"></clock>
+                    </div>
+                </div>
 
+                <div class="panel tools panel-bordered">
+                    <div class="panel-heading" @click="showSettings = !showSettings">
+                        <button type="button" class="btn btn-block">
+                            <i class="icon voyager-settings"></i>
+                            Инструменти
+                        </button>
+                    </div>
+                    <div v-if="showSettings" class="panel-body">
+                        <div>
+                            <button type="button" class="btn btn-success btn-block" @click="reloadData">
+                                Презареди записите
+                            </button>
+                        </div>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" v-model="showExited">
@@ -49,6 +64,7 @@
                         </div>
                     </div>
                 </div>
+
             </affix>
         </div>
     </div>
@@ -82,9 +98,7 @@
                 selectedReader: null,
                 loadingLogs: false,
                 showExited: true,
-                showReaders: true,
-                showChat: false,
-                readersCount: 0,
+                showSettings: false,
             };
         },
         computed: {
@@ -162,6 +176,10 @@
                 if (!el) return;
                 el.currentTime = 0;
                 el.play();
+            },
+            reloadData() {
+                this.newLogs = [];
+                this.loadMore();
             },
             async loadMore() {
                 this.loadingLogs = true;
