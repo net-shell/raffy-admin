@@ -4,7 +4,12 @@
 @import "../../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 .app-container {
-    background: #ddd;
+    background: rgb(207,171,140);
+background: linear-gradient(135deg, rgba(207,171,140,1) 0%, rgba(189,189,189,1) 32%);
+}
+
+.app-container .content-container .side-body {
+    padding-top: 120px;
 }
 
 .no-margin {

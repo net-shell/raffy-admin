@@ -8190,7 +8190,12 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
     background-color: var(--ag-alpine-active-color, #2196f3); }
 
 .app-container {
-  background: #ddd;
+  background: #cfab8c;
+  background: linear-gradient(135deg, #cfab8c 0%, #bdbdbd 32%);
+}
+
+.app-container .content-container .side-body {
+  padding-top: 120px;
 }
 
 .no-margin {

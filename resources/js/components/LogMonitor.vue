@@ -168,11 +168,11 @@
                 });
             },
             playLogAudio(log) {
-                let sound = log.exited_at ? 'close_sound' : 'open_sound';
+                let sound = log.exited_at ? 'exit-1' : 'enter-1';
                 this.playAudio(sound);
             },
             playAudio(name) {
-                let el = document.getElementById('audio_' + name);
+                let el = document.getElementById('audio-' + name);
                 if (!el) return;
                 el.currentTime = 0;
                 el.play();
@@ -198,6 +198,7 @@
     .load-more,
     .log-item .day-name {
         padding: 2em 0 0 0;
+        color: #000;
     }
 
     .log-item:first-child .day-name {
