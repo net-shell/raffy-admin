@@ -2,6 +2,10 @@
 
 RFID-enabled authentication, authorization and time tracking for company propery access control.
 
+<img src="https://snipboard.io/mSy84V.jpg">
+
+<img src="https://snipboard.io/Tb6kKG.jpg">
+
 ## Installation
 
 1. Clone Raffy Admin (and then `cd raffy-admin`)
