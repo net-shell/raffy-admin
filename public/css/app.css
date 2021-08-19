@@ -8191,7 +8191,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 
 .app-container {
   background: #cfab8c;
-  background: linear-gradient(135deg, #cfab8c 0%, #bdbdbd 32%);
+  background: linear-gradient(135deg, #cfab8c 0%, #bdbdbd 20%);
 }
 
 .app-container .content-container .side-body {
