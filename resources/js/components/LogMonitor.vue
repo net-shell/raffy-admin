@@ -52,6 +52,16 @@
                     </div>
                     <div v-if="showSettings" class="panel-body">
                         <div>
+                            <label class="control-label">Период от:</label>
+                            <datepicker
+                                @selected="startDateSelected"
+                                :language="bg"
+                                input-class="form-control"
+                                :monday-first="true"
+                                :format="dateFormat"
+                            ></datepicker>
+                        </div>
+                        <div>
                             <button type="button" class="btn btn-success btn-block" @click="reloadData">
                                 Презареди записите
                             </button>
@@ -72,6 +82,8 @@
 
 <script>
     import Clock from "vue-clock2";
+    import {bg} from "vuejs-datepicker/dist/locale";
+
 
     export default {
         props: ["logo", "color", "brand"],
@@ -99,7 +111,11 @@
                 loadingLogs: false,
                 showExited: true,
                 showSettings: false,
+                bg: bg,
+                startDate: '',
             };
+        },
+        watch: {
         },
         computed: {
             logs() {
@@ -122,6 +138,11 @@
             },
         },
         methods: {
+            startDateSelected(date) {
+                this.startDate = moment(date).format('YYYY-MM-DD');
+                this.newLogs = [];
+                this.loadMore();
+            },
             updateReadersCount(count) {
                 this.readersCount = count;
             },
@@ -142,6 +163,9 @@
             },
             updateTimestamp() {
                 this.timestamp = window.moment();
+            },
+            dateFormat(date) {
+                return moment(date).format("dddd DD MMMM YYYY");
             },
             onEntryLogged(log) {
                 if (this.logs.filter((l) => l.id == log.id).length > 0) {
@@ -183,7 +207,7 @@
             },
             async loadMore() {
                 this.loadingLogs = true;
-                const url = "/api/logs?skip=" + this.newLogs.length;
+                const url = "/api/logs?start=" + this.startDate + "&skip=" + this.newLogs.length;
                 const res = await fetch(url);
                 const response = await res.json();
                 const logs = response.data;
@@ -203,5 +227,9 @@
 
     .log-item:first-child .day-name {
         padding: 0;
+    }
+
+    .panel-body {
+        overflow: visible;
     }
 </style>

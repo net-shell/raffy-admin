@@ -15,7 +15,11 @@ class MonitorController extends BaseController
 
     public function logs(\Illuminate\Http\Request $request) {
         $skip = (int)$request->input('skip', 0);
+        $start = \Carbon\Carbon::parse($request->input('start'));
         return new LogResource(Log::query()
+            ->when($start, function($q, $start) {
+                $q->where('created_at', '<=', $start->addDay());
+            })
             ->orderByRaw('CASE WHEN exited_at IS NULL THEN created_at ELSE exited_at END DESC')
             //->orderBy('exited_at')
             ->limit(40)

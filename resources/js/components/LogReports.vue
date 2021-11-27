@@ -4,83 +4,7 @@
             <notify-area></notify-area>
             <div class="row">
                 <div class="col-sm-7">
-                    <div class="panel panel-bordered">
-                        <div class="panel-body filters">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="control-label so-big">
-                                        <i class="icon text-info voyager-search"></i>
-                                        Филтри
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="row bg-info" style="margin-top: .7em;">
-                                        <div class="col-sm-6">
-                                            <label class="control-label">Период от:</label>
-                                            <datepicker
-                                                v-model="filter.from"
-                                                :language="bg"
-                                                input-class="form-control"
-                                                :monday-first="true"
-                                                :format="dateFormat"
-                                            ></datepicker>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="control-label">до:</label>
-                                            <datepicker
-                                                v-model="filter.to"
-                                                :language="bg"
-                                                input-class="form-control"
-                                                :monday-first="true"
-                                                :format="dateFormat"
-                                            ></datepicker>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label class="control-label">Четец:</label>
-                                            <multiselect
-                                                v-model="filter.reader"
-                                                placeholder="Филтриране по четец..."
-                                                track-by="id"
-                                                label="text"
-                                                :options="readers"
-                                            ></multiselect>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label class="control-label">Отдел:</label>
-                                            <multiselect
-                                                v-model="filter.section"
-                                                placeholder="Филтриране по отдел..."
-                                                track-by="id"
-                                                label="text"
-                                                :options="sections"
-                                            ></multiselect>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label class="control-label">Служители:</label>
-                                            <multiselect
-                                                v-model="filter.users"
-                                                placeholder="Филтриране по служители..."
-                                                track-by="id"
-                                                label="name"
-                                                :options="users"
-                                                :multiple="true"
-                                            ></multiselect>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <filter-report @update-filter="handleUpdateFilter"></filter-report>
                 </div>
                 <div class="col-sm-5">
                     <div class="panel panel-bordered" v-if="!loading">
@@ -200,7 +124,6 @@
 </template>
 
 <script>
-    import {bg} from "vuejs-datepicker/dist/locale";
     import {AgGridVue} from "ag-grid-vue";
 
     export default {
@@ -208,45 +131,17 @@
         components: {AgGridVue},
         data() {
             return {
-                bg: bg,
-                filter: {
-                    from: new Date(),
-                    to: new Date(),
-                    section: null,
-                    users: [],
-                    reader: null,
-                },
-                allUsers: [],
-                readers: [],
+                filter: {},
                 results: [],
                 simpleView: true,
                 loading: true,
                 headings: [],
-                sections: [],
             };
         },
         created() {
-            this.getUsers();
-            this.getSections();
-            this.getReaders();
             this.getResults();
         },
-        watch: {
-            filter: {
-                deep: true,
-                handler() {
-                    this.getResults();
-                }
-            },
-        },
         computed: {
-            users() {
-                if (!this.filter.section || !this.filter.section.id)
-                    return this.allUsers;
-                let sid = this.filter.section.id;
-                let users = this.allUsers.filter(u => u.section_id == sid);
-                return users || [];
-            },
             columnDefs() {
                 let defs = [];
                 for (let h in this.headings) {
@@ -261,23 +156,9 @@
             },
         },
         methods: {
-            async getUsers() {
-                let url = "/api/workers";
-                const res = await fetch(url);
-                const users = await res.json();
-                this.allUsers = users.results;
-            },
-            async getReaders() {
-                let url = "/logs/relation?type=log_belongsto_reader_relationship";
-                const res = await fetch(url);
-                const readers = await res.json();
-                this.readers = readers.results;
-            },
-            async getSections() {
-                let url = '/users/relation?type=user_belongsto_section_relationship';
-                const res = await fetch(url);
-                const sections = await res.json();
-                this.sections = sections.results;
+            handleUpdateFilter(filter) {
+                this.filter = filter;
+                this.getResults();
             },
             getResults() {
                 this.loading = true;
@@ -320,9 +201,6 @@
                             console.log(error);
                         }
                     );
-            },
-            dateFormat(date) {
-                return moment(date).format("dddd DD MMMM YYYY");
             },
             toggleSimpleView() {
                 this.simpleView = !this.simpleView;
