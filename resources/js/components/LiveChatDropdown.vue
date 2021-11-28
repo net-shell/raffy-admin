@@ -2,7 +2,7 @@
     <li class="dropdown live-chat">
         <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button">
             <span class="badge badge-success">{{ usersOnline }}</span>
-            На линия сега
+            На линия
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-animated no-padding" @click.native.capture.stop>

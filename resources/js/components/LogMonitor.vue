@@ -33,37 +33,39 @@
         <div class="col-sm-3 col-lg-2 text-center">
             <affix>
                 <div class="panel panel-bordered">
+                    <div class="panel-heading">
+                        <h2>{{ liveTime }}</h2>
+                    </div>
                     <div class="panel-body">
                         <notify-area></notify-area>
-
-                        <h2>{{ liveTime }}</h2>
-                        <h3>{{ liveDate }}</h3>
-
                         <clock size="50"></clock>
+                        <h3>{{ liveDate }}</h3>
                     </div>
                 </div>
 
                 <div class="panel tools panel-bordered">
                     <div class="panel-heading" @click="showSettings = !showSettings">
                         <button type="button" class="btn btn-block">
-                            <i class="icon voyager-settings"></i>
-                            Инструменти
+                            <i class="icon voyager-search"></i>
+                            Търсене
                         </button>
                     </div>
                     <div v-if="showSettings" class="panel-body">
                         <div>
-                            <label class="control-label">Период от:</label>
+                            <label class="control-label">Започни от дата:</label>
                             <datepicker
                                 @selected="startDateSelected"
                                 :language="bg"
                                 input-class="form-control"
                                 :monday-first="true"
                                 :format="dateFormat"
+                                :placeholder="'днес'"
                             ></datepicker>
                         </div>
                         <div>
                             <button type="button" class="btn btn-success btn-block" @click="reloadData">
-                                Презареди записите
+                                <i class="icon voyager-refresh"></i>
+                                Зареди записите
                             </button>
                         </div>
                         <div class="checkbox">
@@ -110,7 +112,7 @@
                 selectedReader: null,
                 loadingLogs: false,
                 showExited: true,
-                showSettings: false,
+                showSettings: true,
                 bg: bg,
                 startDate: '',
             };
