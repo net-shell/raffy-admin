@@ -1,7 +1,10 @@
 <template>
     <li class="dropdown live-chat">
         <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button">
-            <span class="badge badge-success">{{ usersOnline }}</span>
+            <span class="badge badge-success">
+                {{ usersOnline }}
+                <i class="icon voyager-people"></i>
+            </span>
             На линия
             <span class="caret"></span>
         </a>

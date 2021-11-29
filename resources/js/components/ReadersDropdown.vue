@@ -3,6 +3,7 @@
         <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button">
             <span class="badge badge-dark">
                 {{ readersCount }}
+                <i class="icon voyager-credit-card"></i>
             </span>
             Четци
             <span class="caret"></span>
