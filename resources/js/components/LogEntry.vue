@@ -3,25 +3,20 @@
         <div class="panel panel-bordered">
             <div class="panel-body" :class="showDetails ? 'active' : ''" @click="showDetails = !showDetails">
                     <div class="row">
-                        <div class="no-margin text-right col-sm-2 col-lg-1"
-                             style="padding-left: 0;"
-                             :class="showDetails ? 'col-xs-5' : 'col-xs-3'">
-                            <div class="img-square"
+                        <div class="col-sm-4 no-padding no-margin details">
+                            <div class="img-square pull-left"
                                  v-if="log.user">
                                 <img class="img-responsive"
                                      :src="'/storage/' + log.user.avatar"
                                      :id="'avatar-' + log.id"
                                 />
-                                <!--<popover :title="log.user.name" :target="'#avatar-' + log.id" trigger="hover"
+                                <popover :title="log.user.name" :target="'#avatar-' + log.id" trigger="hover"
                                          placement="right">
                                     <template slot="popover">
                                         <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
                                     </template>
-                                </popover>-->
+                                </popover>
                             </div>
-                        </div>
-                        <div class="col-sm-4 no-padding no-margin details"
-                             :class="showDetails ? 'col-xs-7' : 'col-xs-9'">
                             <h3 class="name" v-if="log.user">{{ log.user.name }}</h3>
                             <div class="text-uppercase" v-if="showDetails && log.user && log.user.section">
                                 <div class="text-info">
@@ -35,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 no-padding no-margin details">
+                        <div class="col-xs-12 col-sm-8 no-padding no-margin details">
                             <div class="row condensed timestamps" style="margin: 0;">
                                 <div class="col-xs-6 time-entry text-danger">
                                     <div class="row condensed" style="margin: 0;">
@@ -149,11 +144,16 @@
     }
 
     .log-entry > .panel {
-        margin-bottom: 1em;
+        margin-bottom: 1px;
+        background-color: rgba(255, 255, 255, .7);
+         -webkit-transition: background .3s ease-out;
+        -moz-transition: background .3s ease-out;
+        -o-transition: background .3s ease-out;
+        transition: background .3s ease-out;
     }
 
     .log-entry > .panel:hover {
-        background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(222, 222, 222) 100%);
+        background: #fff;
         color: #000;
     }
 
@@ -162,7 +162,7 @@
     }
 
     .log-entry .panel-body.active {
-        background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(222, 222, 222) 100%);
+        background: #fff;
         color: #000;
     }
 
