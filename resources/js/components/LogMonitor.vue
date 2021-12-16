@@ -1,5 +1,51 @@
 <template>
     <div class="row">
+        <div class="col-sm-3 col-lg-2 text-center">
+            <div class="panel panel-bordered">
+                <div class="panel-heading">
+                    <h2>{{ liveTime }}</h2>
+                </div>
+                <div class="panel-body">
+                    <notify-area></notify-area>
+                    <clock size="50"></clock>
+                    <h3>{{ liveDate }}</h3>
+                </div>
+            </div>
+
+            <div class="panel tools panel-bordered">
+                <div class="panel-heading" @click="showSettings = !showSettings">
+                    <button type="button" class="btn btn-block">
+                        <i class="icon voyager-search"></i>
+                        Търсене
+                    </button>
+                </div>
+                <div v-if="showSettings" class="panel-body">
+                    <div>
+                        <label class="control-label">Започни от дата:</label>
+                        <datepicker
+                            @selected="startDateSelected"
+                            :language="bg"
+                            input-class="form-control"
+                            :monday-first="true"
+                            :format="dateFormat"
+                            :placeholder="'днес'"
+                        ></datepicker>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-success btn-block" @click="reloadData">
+                            <i class="icon voyager-refresh"></i>
+                            Зареди записите
+                        </button>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" v-model="showExited">
+                            Покажи излезлите служители
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-sm-9 col-lg-10">
             <div class="page-content containter-fluid">
                 <div v-for="request in newRequests" :key="request.id">
@@ -9,9 +55,11 @@
                     <div class="log-item" v-for="(log, l) in logs" :key="log.id">
                         <p class="day-name lead text-center" v-if="isDayHeader(l)"
                            :class="isToday(log) ? 'text-success' : ''">
+                           <span class="label label-default">
                             <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
                             <span class="icon voyager-calendar"></span>
                             {{ getDayName(log) }}
+                           </span>
                         </p>
                         <log-entry ref="logs" :log="log"></log-entry>
                     </div>
@@ -29,55 +77,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 col-lg-2 text-center">
-            <affix>
-                <div class="panel panel-bordered">
-                    <div class="panel-heading">
-                        <h2>{{ liveTime }}</h2>
-                    </div>
-                    <div class="panel-body">
-                        <notify-area></notify-area>
-                        <clock size="50"></clock>
-                        <h3>{{ liveDate }}</h3>
-                    </div>
-                </div>
-
-                <div class="panel tools panel-bordered">
-                    <div class="panel-heading" @click="showSettings = !showSettings">
-                        <button type="button" class="btn btn-block">
-                            <i class="icon voyager-search"></i>
-                            Търсене
-                        </button>
-                    </div>
-                    <div v-if="showSettings" class="panel-body">
-                        <div>
-                            <label class="control-label">Започни от дата:</label>
-                            <datepicker
-                                @selected="startDateSelected"
-                                :language="bg"
-                                input-class="form-control"
-                                :monday-first="true"
-                                :format="dateFormat"
-                                :placeholder="'днес'"
-                            ></datepicker>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-success btn-block" @click="reloadData">
-                                <i class="icon voyager-refresh"></i>
-                                Зареди записите
-                            </button>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" v-model="showExited">
-                                Покажи излезлите служители
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-            </affix>
         </div>
     </div>
 </template>
@@ -231,7 +230,17 @@
         padding: 0;
     }
 
+    .log-item .day-name .label {
+        background-color: rgba(255, 255, 255, .7);
+        padding: .5em 2em;
+    }
+
     .panel-body {
+        overflow: visible;
+    }
+
+    /deep/ .affix {
+        width: 250px;
         overflow: visible;
     }
 </style>

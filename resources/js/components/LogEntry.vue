@@ -4,16 +4,16 @@
             <div class="panel-body" :class="showDetails ? 'active' : ''" @click="showDetails = !showDetails">
                     <div class="row">
                         <div class="col-sm-4 no-padding no-margin details">
-                            <div class="img-square pull-left"
+                            <div class="avatar pull-left"
                                  v-if="log.user">
-                                <img class="img-responsive"
-                                     :src="'/storage/' + log.user.avatar"
+                                <img class="img-responsive img-circle"
+                                     :src="getImageSource(log.user)"
                                      :id="'avatar-' + log.id"
                                 />
                                 <popover :title="log.user.name" :target="'#avatar-' + log.id" trigger="hover"
                                          placement="right">
                                     <template slot="popover">
-                                        <img class="img-responsive" :src="'/storage/' + log.user.avatar"/>
+                                        <img class="img-responsive" :src="getImageSource(log.user)"/>
                                     </template>
                                 </popover>
                             </div>
@@ -126,6 +126,9 @@
                     ? window.moment(this.log.exited_at)
                     : null;
             },
+            getImageSource(user) {
+                return '/storage/' + user.avatar;
+            },
         },
         watch: {
             log: {
@@ -170,17 +173,16 @@
         margin: 0 15px 0 0;
     }
 
-    .log-entry .panel-body .img-square {
+    .log-entry .panel-body .avatar {
         object-fit: cover;
         object-position: center center;
-    }
-
-    .log-entry .panel-body .img-square {
         height: 50px;
-        width: 60px;
+        width: 50px;
+        margin-right: 1em;
+        margin-left: -1em;
     }
 
-    .log-entry .panel-body.active .img-square {
+    .log-entry .panel-body.active .avatar {
         height: 110px;
         width: 110px;
     }
@@ -193,10 +195,6 @@
     .log-entry .timestamps p {
         margin: 0;
         margin-right: 1em;
-    }
-
-    .log-entry .highlighted {
-        border-bottom: 1px solid #fff;
     }
 
     .log-entry .time-entry {
