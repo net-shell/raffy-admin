@@ -127,7 +127,6 @@
                     : null;
             },
             getImageSource(user) {
-                return 'http://placehold.it/150x200';
                 return '/storage/' + user.avatar;
             },
         },
