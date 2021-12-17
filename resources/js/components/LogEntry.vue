@@ -127,6 +127,7 @@
                     : null;
             },
             getImageSource(user) {
+                return 'http://placehold.it/150x200';
                 return '/storage/' + user.avatar;
             },
         },
@@ -176,15 +177,18 @@
     .log-entry .panel-body .avatar {
         object-fit: cover;
         object-position: center center;
+    }
+
+    .log-entry .panel-body .avatar img {
         height: 50px;
         width: 50px;
         margin-right: 1em;
-        margin-left: -1em;
     }
 
-    .log-entry .panel-body.active .avatar {
+    .log-entry .panel-body.active .avatar img {
         height: 110px;
         width: 110px;
+        margin-left: -20px;
     }
 
     .log-entry .name {
