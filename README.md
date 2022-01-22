@@ -2,7 +2,7 @@
 
 RFID-enabled authentication, authorization and time tracking for company propery access control.
 
-<img src="https://i.ibb.co/m09W7Z8/Screenshot-2022-01-23-at-0-12-02.png">
+<img src="https://i.ibb.co/w4PZqKg/Screenshot-2022-01-23-at-0-09-48.png">
 <img src="https://i.ibb.co/m09W7Z8/Screenshot-2022-01-23-at-0-12-02.png">
 
 ## Installation
