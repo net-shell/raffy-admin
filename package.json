@@ -26,7 +26,7 @@
         "animate.css": "^4.1.1",
         "js-file-download": "^0.4.12",
         "laravel-echo": "^1.8.1",
-        "moment": "^2.27.0",
+        "moment": "^2.29.4",
         "socket.io-client": "^2.3.0",
         "uiv": "^1.1.5",
         "vue": "^2.6.12",
