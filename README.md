@@ -37,9 +37,13 @@ Edit `laravel-echo-server.json` and set Redis password.
 
 3. Import Voyager configuration
 
-`php artisan voyager:import -y`
+`php artisan voyager:import`
 
 Note: There is a known issue with recent versions of voyager-config and the import command seems to be missing. You can import the dump.sql if migrations can't be run.
+
+## Create admin user
+
+`php artisan voyager:admin`
 
 ## Running
 
