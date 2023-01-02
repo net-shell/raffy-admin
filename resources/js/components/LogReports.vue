@@ -38,21 +38,21 @@
                             <div class="form form-horizontal">
                                 <label class="control-label so-big">
                                     <i class="icon text-success voyager-book-download"></i>
+                                    <span>
+                                        Сваляне на отчет:
+                                    </span>
                                 </label>
-                                <button type="button" class="btn btn-success" @click="getResultsCsv()">
+                                <button type="button" class="btn btn-default" @click="getResultsCsv()">
                                     <i class="icon voyager-download"></i>
-                                    {{ filename }}
-                                    <b>.CSV</b>
+                                    <b>CSV</b>
                                 </button>
                                 <button type="button" class="btn btn-default" @click="getResultsExcel()">
                                     <i class="icon voyager-download"></i>
-                                    {{ filename }}
-                                    <b>.XLSX</b>
+                                    <b>Excel</b>
                                 </button>
                                 <button type="button" class="btn btn-default" @click="getResultsPdf()">
                                     <i class="icon voyager-download"></i>
-                                    {{ filename }}
-                                    <b>.PDF</b>
+                                    <b>PDF</b>
                                 </button>
                             </div>
                         </div>
@@ -162,11 +162,7 @@
             },
             getResults() {
                 this.loading = true;
-                let url = "/report-json";
-                const res = axios
-                    .post(url, this.filter, {
-                        headers: {"Content-type": "application/json"}
-                    })
+                axios.get(this.getReportUrl("/report-json"))
                     .then(
                         response => {
                             this.results = response.data.data;
@@ -179,28 +175,19 @@
                     .finally(() => (this.loading = false));
             },
             getResultsExcel() {
-                this.downloadReport("/report-excel", "report.xls");
+                this.downloadReport("/report-excel");
             },
             getResultsCsv() {
-                this.downloadReport("/report-csv", "report.csv");
+                this.downloadReport("/report-csv");
             },
             getResultsPdf() {
-                this.downloadReport("/report-pdf", "report.pdf");
+                this.downloadReport("/report-pdf");
             },
-            downloadReport(url, filename) {
-                const request = axios
-                    .post(url, this.filter, {
-                        headers: {"Content-type": "application/json"}
-                    })
-                    .then(
-                        response => {
-                            console.log(response, request);
-                            fileDownload(response.data, filename);
-                        },
-                        error => {
-                            console.log(error);
-                        }
-                    );
+            downloadReport(url) {
+                window.location = this.getReportUrl(url);
+            },
+            getReportUrl(url) {
+                return url + "?t=" + Date.now() + "&filter=" + JSON.stringify(this.filter);
             },
             toggleSimpleView() {
                 this.simpleView = !this.simpleView;

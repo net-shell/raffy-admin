@@ -231,7 +231,8 @@
     }
 
     .log-item .day-name .label {
-        background-color: rgba(255, 255, 255, .7);
+        background-color: rgba(255, 255, 255, .5);
+        font-weight: bold;
         padding: .5em 2em;
     }
 

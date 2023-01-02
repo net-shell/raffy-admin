@@ -10,10 +10,10 @@ Route::group(['middleware' => 'admin.user'], function() {
     Route::get('monitor', 'MonitorController@index');
 
     Route::get('report', 'ReportController@index');
-    Route::post('report-json', 'ReportController@reportJson');
-    Route::post('report-excel', 'ReportController@reportExcel');
-    Route::post('report-csv', 'ReportController@reportCsv');
-    Route::post('report-pdf', 'ReportController@reportPdf');
+    Route::get('report-json', 'ReportController@reportJson');
+    Route::get('report-excel', 'ReportController@reportExcel');
+    Route::get('report-csv', 'ReportController@reportCsv');
+    Route::get('report-pdf', 'ReportController@reportPdf');
 
     Route::get('register', 'RegisterController@index');
 });

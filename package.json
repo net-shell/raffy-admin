@@ -24,7 +24,6 @@
         "ag-grid-community": "^24.1.0",
         "ag-grid-vue": "^24.1.1",
         "animate.css": "^4.1.1",
-        "js-file-download": "^0.4.12",
         "laravel-echo": "^1.8.1",
         "moment": "^2.27.0",
         "socket.io-client": "^2.3.0",

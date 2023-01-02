@@ -15,7 +15,6 @@ if (document.getElementsByClassName('page-content').length == 0) {
     window.moment.locale('bg');
     window.Vue = require('vue');
     window.Notifications = require('vue-notification');
-    window.fileDownload = require('js-file-download');
 
     Vue.use(uiv)
     Vue.use(Notifications);

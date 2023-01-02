@@ -143,7 +143,13 @@ export default {
         filter: {
             deep: true,
             handler() {
-                this.$emit('update-filter', this.filter);
+                if (moment(this.filter.to).isBefore(this.filter.from)) {
+                    this.filter.from = this.filter.to;
+                } else if (moment(this.filter.from).isAfter(this.filter.to)) {
+                    this.filter.to = this.filter.from;
+                } else {
+                    this.$emit('update-filter', this.filter);
+                }
             }
         },
     },
