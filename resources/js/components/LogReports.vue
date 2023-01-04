@@ -7,22 +7,30 @@
                     <filter-report @update-filter="handleUpdateFilter"></filter-report>
                 </div>
                 <div class="col-sm-5">
-                    <div class="panel panel-bordered" v-if="!loading">
-                        <div class="panel-body heading-row">
+                    <div class="panel panel-bordered">
+                        <div class="panel-body heading-row bg-info">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <p class="so-big">
                                         <i class="icon text-success voyager-logbook"></i>
-                                        Отчет
+                                        <span>Вид отчет:</span>
                                     </p>
+                                    <div class="form form-horizontal">
+                                        <multiselect
+                                            v-model="type"
+                                            :options="types"
+                                            track-by="id"
+                                            label="name"
+                                        ></multiselect>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" v-if="!loading">
                                     <p class="text-right so-big">
                                         <button class="btn btn-circle"
                                                 :class="!simpleView ? 'btn-success' : 'btn-default'"
                                                 v-on:click="toggleSimpleView" type="button">
                                             <i class="icon voyager-search"></i>
-                                            <i class="icon voyager-dot-3"></i>
+                                            <span>Разширена таблица</span>
                                         </button>
                                         <button class="btn btn-circle btn-default" v-on:click="getResults"
                                                 type="button">
@@ -33,19 +41,16 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel panel-bordered" v-if="!loading && results.length">
                         <div class="panel-body panel-dense">
                             <div class="form form-horizontal">
                                 <label class="control-label so-big">
                                     <i class="icon text-success voyager-book-download"></i>
                                     <span>
-                                        Сваляне на отчет:
+                                        Запази отчета като:
                                     </span>
                                 </label>
-                                <button type="button" class="btn btn-default" @click="getResultsCsv()">
-                                    <i class="icon voyager-download"></i>
-                                    <b>CSV</b>
-                                </button>
                                 <button type="button" class="btn btn-default" @click="getResultsExcel()">
                                     <i class="icon voyager-download"></i>
                                     <b>Excel</b>
@@ -54,6 +59,10 @@
                                     <i class="icon voyager-download"></i>
                                     <b>PDF</b>
                                 </button>
+                                <button type="button" class="btn btn-default" @click="getResultsCsv()">
+                                    <i class="icon voyager-download"></i>
+                                    <b>CSV</b>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -61,7 +70,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12" v-if="loading">
-                    <div class="alert alert-info so-big">
+                    <div class="alert alert-default so-big">
                         <div class="text-center">
                             <p class="lead">
                                 <i class="icon voyager-refresh"></i>
@@ -127,19 +136,21 @@
     import {AgGridVue} from "ag-grid-vue";
 
     export default {
-        props: ['filename'],
         components: {AgGridVue},
         data() {
             return {
+                type: { id: "sumTime", name: "Отчетено време" },
+                types: [
+                    { id: "sumTime", name: "Отчетено време" },
+                    { id: "workTime", name: "Работно време" },
+                    { id: "absent", name: "Отсъстващи служители" },
+                ],
                 filter: {},
                 results: [],
                 simpleView: true,
                 loading: true,
                 headings: [],
             };
-        },
-        created() {
-            this.getResults();
         },
         computed: {
             columnDefs() {
@@ -184,15 +195,22 @@
                 this.downloadReport("/report-pdf");
             },
             downloadReport(url) {
-                window.location = this.getReportUrl(url);
+                window.location.assign(this.getReportUrl(url));
             },
             getReportUrl(url) {
-                return url + "?t=" + Date.now() + "&filter=" + JSON.stringify(this.filter);
+                return url + "?t=" + Date.now()
+                    + "&filter=" + JSON.stringify(this.filter)
+                    + "&type=" + this.type.id;
             },
             toggleSimpleView() {
                 this.simpleView = !this.simpleView;
             },
-        }
+        },
+        watch: {
+            type() {
+                this.getResults();
+            },
+        },
     };
 </script>
 
@@ -203,6 +221,9 @@
 
     /deep/ b {
         font-weight: bold;
+    }
+    .panel-body {
+        overflow: visible;
     }
 
     .filters {

@@ -3,6 +3,6 @@
 @section('content')
 <div class="container-fluid">
     @include('shared.sounds')
-    <log-reports filename="{{ $filename }}"></log-reports>
+    <log-reports></log-reports>
 </div>
 @stop

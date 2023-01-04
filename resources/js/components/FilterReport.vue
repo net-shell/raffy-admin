@@ -86,8 +86,8 @@ export default {
         return {
             bg: bg,
             filter: {
-                from: null,
-                to: null,
+                from: new Date,
+                to: new Date,
                 section: null,
                 users: [],
                 reader: null,
@@ -101,11 +101,7 @@ export default {
         this.getUsers();
         this.getSections();
         this.getReaders();
-    },
-    mounted() {
-        const date = new Date();
-        this.filter.from = date;
-        this.filter.to = date;
+        this.$emit('update-filter', this.filter);
     },
     computed: {
         users() {

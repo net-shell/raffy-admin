@@ -5,27 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Exports\LogsExport;
+use App\Exports\LogsWorkExport;
+use App\Exports\LogsAbsentExport;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Facades\Excel as ExcelFacade;
 
 class ReportController extends BaseController
 {
-    public $filter;
-
+    private $filter;
     private $export;
+    private $type;
     private $filename = 'otchet_';
-
+    private $typeMap = [
+        'sumTime' => LogsExport::class,
+        'workTime' => LogsWorkExport::class,
+        'absent' => LogsAbsentExport::class,
+    ];
+    
     public function __construct(Request $request)
     {
+        $this->type = $request->input('type', 'sumTime');
         $this->filter = json_decode($request->input('filter'), true);
-        $this->export = new LogsExport($this->filter);
-        $this->filename .= date('Y-d-m_H-i');
+        $this->export = new $this->typeMap[$this->type]($this->filter);
+        $this->filename .= $this->type . '_' . date('Y-d-m_H-i');
     }
-
+    
     public function index(Request $request) {
-        return view('reports', ['filename' => $this->filename]);
+        return view('reports');
     }
-
+    
     public function reportJson(Request $request) {
         $report = $this->export->collection();
         return [

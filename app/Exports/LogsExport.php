@@ -9,15 +9,8 @@ use Date;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class LogsExport implements FromCollection, WithHeadings
+class LogsExport extends LogsBase implements FromCollection, WithHeadings
 {
-    public $filter;
-
-    public function __construct($filter)
-    {
-        $this->filter = $filter;
-    }
-
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -117,12 +110,5 @@ class LogsExport implements FromCollection, WithHeadings
         }
         $texts[] = 'Общо';
         return $texts;
-    }
-
-    private function getDuration()
-    {
-        $tsFrom = new Carbon($this->filter['from']);
-        $tsTo = new Carbon($this->filter['to']);
-        return $tsFrom->diffInDays($tsTo) + 1;
     }
 }
