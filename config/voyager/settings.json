@@ -23,7 +23,7 @@
         "id": 3,
         "key": "site.logo",
         "display_name": "Site Logo",
-        "value": "settings\/October2020\/39Xz4HEtz8Y3VcA4IkSN.png",
+        "value": "settings\/November2020\/iFm8H3bKdYjDXYFY7cop.png",
         "details": "",
         "type": "image",
         "order": 3,
@@ -36,7 +36,7 @@
         "value": null,
         "details": "",
         "type": "text",
-        "order": 4,
+        "order": 10,
         "group": "Site"
     },
     {
@@ -83,7 +83,7 @@
         "id": 9,
         "key": "admin.icon_image",
         "display_name": "Admin Icon Image",
-        "value": "settings\/October2020\/0T7rVGtBL0WfH56nFqY5.png",
+        "value": "settings\/November2020\/vGPKnJOVnwP8u7uNPCQB.png",
         "details": "",
         "type": "image",
         "order": 4,
@@ -106,7 +106,7 @@
         "value": "08:00",
         "details": null,
         "type": "text",
-        "order": 6,
+        "order": 4,
         "group": "Site"
     },
     {
@@ -123,7 +123,7 @@
         "id": 13,
         "key": "site.open_time",
         "display_name": "\u0412\u0440\u0435\u043c\u0435 \u0437\u0430 \u043e\u0442\u043a\u043b\u044e\u0447\u0432\u0430\u043d\u0435",
-        "value": "4",
+        "value": "3",
         "details": null,
         "type": "text",
         "order": 8,
@@ -137,6 +137,16 @@
         "details": null,
         "type": "text",
         "order": 9,
+        "group": "Site"
+    },
+    {
+        "id": 15,
+        "key": "site.work_breaks",
+        "display_name": "\u0420\u0430\u0431\u043e\u0442\u043d\u043e \u0432\u0440\u0435\u043c\u0435 - \u043f\u043e\u0447\u0438\u0432\u043a\u0438",
+        "value": "10:00-10:10|12:00-12:40|15:00-15:10",
+        "details": null,
+        "type": "text",
+        "order": 6,
         "group": "Site"
     }
 ]
