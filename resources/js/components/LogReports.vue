@@ -19,6 +19,7 @@
                                         <multiselect
                                             v-model="type"
                                             :options="types"
+                                            :allow-empty="false"
                                             track-by="id"
                                             label="name"
                                         ></multiselect>
