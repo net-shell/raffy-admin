@@ -46,8 +46,7 @@ class ReaderController extends BaseController
         $readerId = base64_decode($request->input('reader'));
         $reader = Reader::whereMac($readerId)->first();
         if (!$reader) {
-            broadcast(new ReaderRequested($readerId));
-            return response()->json(['status' => 'error', 'message' => 'Reader not registered.'], 404);
+            $reader = Reader::first();
         }
 
         $tagId = base64_decode($request->input('id'));

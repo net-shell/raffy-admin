@@ -102,6 +102,17 @@
             this.$on("log-added", this.playLogAudio);
             this.$on("log-updated", this.playLogAudio);
         },
+        mounted() {
+            // Support direct card input
+            window.addEventListener('keyup', (e) => {
+                if (e.key >= '0' && e.key <= '9') {
+                    this.cardKey += '' + e.key;
+                } else if (e.key == 'Enter') {
+                    this.logTag(this.cardKey);
+                    this.cardKey = '';
+                }
+            });
+        },
         data() {
             return {
                 newLogs: [],
@@ -114,6 +125,7 @@
                 showSettings: true,
                 bg: bg,
                 startDate: '',
+                cardKey: '',
             };
         },
         watch: {
@@ -214,6 +226,11 @@
                 const logs = response.data;
                 this.newLogs = this.newLogs.concat(logs);
                 this.loadingLogs = false;
+            },
+            async logTag(number) {
+                const url = "/iot/log-tag?id=" + btoa('' + number);
+                const res = await fetch(url, { method: 'POST' });
+                const response = await res.json();
             },
         },
     };
