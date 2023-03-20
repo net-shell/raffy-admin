@@ -193,6 +193,7 @@
                     this.newLogs.unshift(log);
                     this.$emit('log-added', log);
                 }
+                this.reloadData();
             },
             onTagRequested(tagId, reader) {
                 this.newRequests = this.newRequests.filter((r) => r.tagId != tagId);
