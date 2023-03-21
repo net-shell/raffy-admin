@@ -216,6 +216,7 @@
                 el.play();
             },
             reloadData() {
+                this.newRequests = [];
                 this.newLogs = [];
                 this.loadMore();
             },
