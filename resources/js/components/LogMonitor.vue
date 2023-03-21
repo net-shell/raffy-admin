@@ -188,12 +188,12 @@
                         this.newLogs.splice(i, 1, log);
                     }
                     this.$emit('log-updated', log);
+                    this.reloadData();
                 } else {
                     // Add to new logs
                     this.newLogs.unshift(log);
                     this.$emit('log-added', log);
                 }
-                this.reloadData();
             },
             onTagRequested(tagId, reader) {
                 this.newRequests = this.newRequests.filter((r) => r.tagId != tagId);
