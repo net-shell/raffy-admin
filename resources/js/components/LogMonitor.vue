@@ -102,7 +102,7 @@
             this.$on("log-added", this.playLogAudio);
             this.$on("log-updated", this.playLogAudio);
         },
-        /*mounted() {
+        mounted() {
             // Support direct card input
             window.addEventListener('keyup', (e) => {
                 if (e.key >= '0' && e.key <= '9') {
@@ -112,7 +112,7 @@
                     this.cardKey = '';
                 }
             });
-        },*/
+        },
         data() {
             return {
                 newLogs: [],
