@@ -48,6 +48,7 @@ docker exec -it raffy-php-1 /bin/sh;
 ```
 composer install
 composer run-script install-tasks
+php artisan storage:link
 ```
 
 Press `Ctrl+D` to exit the container shell.
