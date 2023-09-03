@@ -63,7 +63,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
             "@php artisan migrate",
-            "@php artisan voyager:import -y"
+            "@php artisan voyager:import"
         ],
         "install-tasks": [
             "@post-root-package-install",
