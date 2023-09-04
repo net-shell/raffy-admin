@@ -51,7 +51,7 @@ class ImportWorkers extends Command
             $user = new User();
             $user->name = $line[0];
             $user->email = $this->emailize($line[0]);
-            $user->password = 'nikdim2020';
+            $user->password = 'Raffy2023';
             if($section) {
                 $user->section_id = $section->id;
             }
@@ -65,7 +65,7 @@ class ImportWorkers extends Command
         $email = $this->transliterate($name);
         $email = strtolower($email);
         $parts = explode(' ', $email);
-        return "$parts[0].$parts[2]@nikdim.bg";
+        return "$parts[0].$parts[2]@raffy.bg";
     }
 
     private function transliterate($string) {
