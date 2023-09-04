@@ -93,3 +93,10 @@ php artisan voyager:admin
 Go to [http://raffy.local](http://raffy.local) in your web browser.
 
 You should see the login screen. Use the account created in step 3.4.
+
+## Usage
+
+### Import users from CSV
+```
+import:workers {csv}
+```
