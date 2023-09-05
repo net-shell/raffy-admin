@@ -3,7 +3,7 @@
         "id": 1,
         "key": "site.title",
         "display_name": "Site Title",
-        "value": "Raffy",
+        "value": "Nikdim",
         "details": "",
         "type": "text",
         "order": 1,
@@ -36,7 +36,7 @@
         "value": null,
         "details": "",
         "type": "text",
-        "order": 10,
+        "order": 4,
         "group": "Site"
     },
     {
@@ -53,7 +53,7 @@
         "id": 6,
         "key": "admin.title",
         "display_name": "Admin Title",
-        "value": "Raffy",
+        "value": "Nikdim",
         "details": "",
         "type": "text",
         "order": 1,
@@ -106,7 +106,7 @@
         "value": "08:00",
         "details": null,
         "type": "text",
-        "order": 4,
+        "order": 6,
         "group": "Site"
     },
     {
@@ -137,16 +137,6 @@
         "details": null,
         "type": "text",
         "order": 9,
-        "group": "Site"
-    },
-    {
-        "id": 15,
-        "key": "site.work_breaks",
-        "display_name": "\u0420\u0430\u0431\u043e\u0442\u043d\u043e \u0432\u0440\u0435\u043c\u0435 - \u043f\u043e\u0447\u0438\u0432\u043a\u0438",
-        "value": "10:00-10:10|12:00-12:40|15:00-15:10",
-        "details": null,
-        "type": "text",
-        "order": 6,
         "group": "Site"
     }
 ]
