@@ -74,7 +74,7 @@ docker exec -it raffy-php-1 /bin/sh;
 
 #### 3.2. Run the migrations
 ```
-php artisan migrate
+php artisan voyager:install
 ```
 
 #### 3.3. Import Voyager configuration
@@ -82,21 +82,20 @@ php artisan migrate
 php artisan voyager:import
 ```
 
-#### 3.4. Create admin user
-```
-php artisan voyager:admin
-```
-
-
 ### 4. Test in browser!
 
 Go to [http://raffy.local](http://raffy.local) in your web browser.
 
 You should see the login screen. Use the account created in step 3.4.
 
-## Usage
+## 5. Usage
 
-### Import users from CSV
+#### 5.1. Create admin user
 ```
-import:workers {csv}
+php artisan voyager:admin --create
+```
+
+### 5.2 Import users from CSV
+```
+php artisan import:workers {csv}
 ```

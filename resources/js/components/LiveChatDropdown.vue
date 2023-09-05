@@ -8,7 +8,7 @@
             На линия
             <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-animated no-padding" @click.native.capture.stop>
+        <ul class="dropdown-menu dropdown-menu-animated no-padding" @click.capture.stop>
             <live-chat @update-count="updateCount"></live-chat>
         </ul>
     </li>

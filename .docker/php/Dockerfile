@@ -7,7 +7,7 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 # Install GD, ZIP, etc.
 RUN apt-get update -y && apt-get install -y -qq --force-yes libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
-    libfreetype6-dev libonig-dev supervisor zlib1g-dev cron libgmp-dev netcat
+    libfreetype6-dev libonig-dev supervisor zlib1g-dev cron libgmp-dev
 RUN apt-get install -y libzip-dev
 # Configure GD
 RUN docker-php-ext-configure gd --with-freetype --with-webp  --with-jpeg
