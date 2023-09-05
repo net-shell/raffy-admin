@@ -22,7 +22,7 @@
                     <img src="{{ $user_avatar }}" class="avatar" alt="{{ Auth::user()->name }} avatar">
                     <form action="{{ route('voyager.logout') }}" method="POST" style="clear: left;">
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger" title="@lang('voyager::generic.logout')">
+                        <button type="submit" class="btn btn-default" title="@lang('voyager::generic.logout')">
                             <b class="icon voyager-power"></b>
                         </button>
                     </form>
