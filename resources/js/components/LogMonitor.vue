@@ -70,13 +70,13 @@
                             <span class="icon voyager-double-up"></span>
                             Върни се към най-новите
                         </a>
-                        <a class="btn btn-success" ref="loadmore" @click="loadMore()" :disabled="loadingLogs">
+                        <a class="btn btn-success" @click="loadMore()" :disabled="loadingLogs">
                             <span class="icon voyager-refresh"></span>
                             Зареди по-стари записи
                         </a>
                     </div>
                 </div>
-                <div v-if="loadingLogs" class="text-center lead my-8">
+                <div v-if="loadingLogs" class="text-center lead text-primary">
                     Зареждане...
                 </div>
             </div>
@@ -92,13 +92,6 @@
     export default {
         props: ["logo", "color", "brand"],
         components: {Clock},
-        mounted() {
-            this.$nextTick(function () {
-                setInterval(this.updateTimestamp, 1000);
-                this.updateTimestamp();
-                this.loadMore();
-            });
-        },
         created() {
             this.$root.$on("tag-logged", this.onEntryLogged);
             this.$root.$on("tag-requested", this.onTagRequested);
@@ -106,6 +99,12 @@
             this.$on("log-updated", this.playLogAudio);
         },
         mounted() {
+            this.$nextTick(function () {
+                setInterval(this.updateTimestamp, 1000);
+                this.updateTimestamp();
+                this.reloadData();
+            });
+
             // Support direct card input
             window.addEventListener('keyup', (e) => {
                 if (e.key >= '0' && e.key <= '9') {
@@ -230,6 +229,7 @@
                 const response = await res.json();
                 const logs = response.data;
                 this.newLogs = this.newLogs.concat(logs);
+                console.log(logs)
                 this.loadingLogs = false;
             },
             async logTag(number) {
