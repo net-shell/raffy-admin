@@ -19,7 +19,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('App.Log', function ($user) {
     return true;
-    return $user->role_id == 1;
 });
 
 Broadcast::channel('App.Tag', function ($user) {
@@ -34,7 +33,7 @@ Broadcast::channel('Chat.Global', function ($user) {
     return [
         'id' => $user->id,
         'name' => $user->name,
-        'section' => $user->section->name,
+        'section' => optional($user->section)->name,
         'avatar' => $user->avatar,
     ];
 });

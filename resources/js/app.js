@@ -43,11 +43,7 @@ if (document.getElementsByClassName('page-content').length == 0) {
         window.Echo = new Echo({
             broadcaster: 'socket.io',
             host: window.location.hostname + ':6001',
-            auth: {
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content'),
-                }
-            }
+            csrfToken: document.querySelector('meta[name=csrf-token]').getAttribute('content'),
         });
 
         window.Echo.join(`Chat.Global`)
@@ -67,8 +63,8 @@ if (document.getElementsByClassName('page-content').length == 0) {
                 Vue.notify({
                     group: 'app',
                     type: 'success',
-                    duration: 15000,
-                    text: "Засечена е карта на: " + e.log.reader.name,
+                    duration: 5000,
+                    text: "Засечена е карта на " + e.log.reader.name,
                     title: e.log.user.name
                 });
             });
@@ -79,8 +75,8 @@ if (document.getElementsByClassName('page-content').length == 0) {
                 Vue.notify({
                     group: 'app',
                     type: 'error',
-                    duration: 15000,
-                    text: "Непозната карта на: " + e.reader.name,
+                    duration: 5000,
+                    text: "Непозната карта на " + e.reader.name,
                     title: e.tagId
                 });
             });

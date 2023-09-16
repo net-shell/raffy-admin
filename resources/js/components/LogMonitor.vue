@@ -64,7 +64,7 @@
                         <log-entry ref="logs" :log="log"></log-entry>
                     </div>
                 </div>
-                <div class="load-more">
+                <div class="load-more" v-if="!loadingLogs">
                     <div class="btn-group btn-group-lg btn-group-justified">
                         <a class="btn btn-info" @click="scrollTop()" :disabled="!logs.length">
                             <span class="icon voyager-double-up"></span>
@@ -75,6 +75,9 @@
                             Зареди по-стари записи
                         </a>
                     </div>
+                </div>
+                <div v-if="loadingLogs" class="text-center lead my-8">
+                    Зареждане...
                 </div>
             </div>
         </div>

@@ -43,6 +43,7 @@ DOMAIN=raffy.local docker-compose up -d
 ```
 docker exec -it raffy-php-1 /bin/sh;
 ```
+Press `Ctrl+D` to exit the container shell.
 
 #### 2.2.3. Install dependencies
 ```
@@ -51,8 +52,6 @@ composer run-script install-tasks
 php artisan storage:link
 ```
 
-Press `Ctrl+D` to exit the container shell.
-
 #### 2.2.4. Shell in the Echo container
 ```
 docker exec -it raffy-echo-1 /bin/sh;
@@ -60,6 +59,7 @@ docker exec -it raffy-echo-1 /bin/sh;
 
 #### 2.2.5. Build assets
 ```
+export NODE_OPTIONS=--openssl-legacy-provider
 npm install
 npm run prod
 ```

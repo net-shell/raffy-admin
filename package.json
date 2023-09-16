@@ -21,11 +21,11 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "ag-grid-community": "^24.1.0",
-        "ag-grid-vue": "^24.1.1",
+        "ag-grid-community": "^30.1.0",
+        "ag-grid-vue": "^30.1.0",
         "animate.css": "^4.1.1",
         "caniuse-lite": "^1.0.30001441",
-        "laravel-echo": "^1.8.1",
+        "laravel-echo": "^1.15.3",
         "moment": "^2.27.0",
         "socket.io-client": "^2.3.0",
         "uiv": "^1.1.5",
@@ -35,7 +35,7 @@
         "vue-multiselect": "^2.1.6",
         "vue-notification": "^1.3.20",
         "vue-pie-chart": "^1.1.0",
-        "vue-property-decorator": "^9.0.2",
+        "vue-property-decorator": "^9.1.2",
         "vuejs-datepicker": "^1.6.2"
     }
 }

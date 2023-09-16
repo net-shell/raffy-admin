@@ -1,5 +1,5 @@
 {
-	"authHost": "http://web",
+	"authHost": "http://localhost",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -9,7 +9,15 @@
 	],
 	"database": "redis",
 	"databaseConfig": {
-		"redis": {},
+		"redis": {
+			"host": "redis",
+			"port": "6379",
+			"password": "Lotus2112",
+			"keyPrefix": "",
+			"options": {
+				"db": "0"
+			}
+		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
