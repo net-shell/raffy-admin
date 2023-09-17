@@ -188,9 +188,10 @@
                     if (this.newLogs.filter((l) => l.id == log.id).length > 0) {
                         let i = this.newLogs.findIndex((l) => l.id == log.id);
                         this.newLogs.splice(i, 1, log);
+                    } else {
+                        this.newLogs.unshift(log);
                     }
                     this.$emit('log-updated', log);
-                    this.reloadData();
                 } else {
                     // Add to new logs
                     this.newLogs.unshift(log);
