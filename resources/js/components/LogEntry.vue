@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-6 time-entry text-primary">
+                                <div class="col-xs-6 time-entry text-black">
                                     <div class="row condensed" style="margin: 0;">
                                         <div class="col-xs-6 time-exit attention-zoom" v-if="momentExited">
                                             <p class="lead highlighted">ИЗХОД</p>
