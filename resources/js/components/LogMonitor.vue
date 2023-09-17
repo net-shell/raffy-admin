@@ -55,8 +55,8 @@
                     <div class="log-item" v-for="(log, l) in logs" :key="log.id">
                         <p class="day-name lead text-center" v-if="isDayHeader(l)"
                            :class="isToday(log) ? 'text-success' : ''">
-                           <span class="label label-default">
-                            <span class="badge badge-success text-uppercase" v-if="isToday(log)">Днес</span>
+                           <span class="badge" :class="isToday(log) ? 'badge-primary' : 'badge-default'">
+                            <span class="badge badge-success" v-if="isToday(log)">Днес</span>
                             <span class="icon voyager-calendar"></span>
                             {{ getDayName(log) }}
                            </span>
