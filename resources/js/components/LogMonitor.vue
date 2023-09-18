@@ -234,6 +234,7 @@
                 this.loadingLogs = false;
             },
             async logTag(number) {
+                if (!number) return;
                 const url = "/iot/log-tag?id=" + btoa('' + number);
                 const res = await fetch(url, { method: 'POST' });
                 const response = await res.json();
