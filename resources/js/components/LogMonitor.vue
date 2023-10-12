@@ -66,18 +66,18 @@
                 </div>
                 <div class="load-more" v-if="!loadingLogs">
                     <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-info" @click="scrollTop()" :disabled="!logs.length">
+                        <a class="btn btn-info" @click="scrollTop()">
                             <span class="icon voyager-double-up"></span>
                             Върни се към най-новите
                         </a>
-                        <a class="btn btn-success" @click="loadMore()" :disabled="loadingLogs">
+                        <a class="btn btn-success" @click="loadMore()">
                             <span class="icon voyager-refresh"></span>
                             Зареди по-стари записи
                         </a>
                     </div>
                 </div>
-                <div v-if="loadingLogs" class="text-center lead text-primary">
-                    Зареждане...
+                <div v-if="loadingLogs">
+                    <loader></loader>
                 </div>
             </div>
         </div>

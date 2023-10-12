@@ -1,13 +1,11 @@
 <template>
     <div class="panel panel-bordered">
         <div class="panel-body filters">
-            <div class="row">
-                <div class="col-sm-12">
-                    <label class="control-label so-big">
-                        <i class="icon text-info voyager-search"></i>
-                        Филтри
-                    </label>
-                </div>
+            <div>
+                <label class="so-big">
+                    <i class="icon text-success voyager-search"></i>
+                    Филтри
+                </label>
             </div>
             <div class="row">
                 <div class="col-sm-6">

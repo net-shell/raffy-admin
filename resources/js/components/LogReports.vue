@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-black">
         <div class="page-content">
             <notify-area></notify-area>
             <div class="row">
@@ -71,18 +71,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12" v-if="loading">
-                    <div class="alert alert-default so-big">
-                        <div class="text-center">
-                            <p class="lead">
-                                <i class="icon voyager-refresh"></i>
-                                Зареждане... Моля, изчакайте.
-                            </p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar"
-                                     style="width: 92%"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <loader></loader>
                 </div>
                 <div class="col-sm-12">
                     <div class="panel panel-bordered" v-if="!loading">
@@ -221,7 +210,10 @@
     /deep/ .form-control[readonly] {
         background-color: #fff;
     }
-
+    /deep/ .multiselect__placeholder,
+    /deep/ .form-control {
+        color: #000;
+    }
     /deep/ b {
         font-weight: bold;
     }
@@ -257,7 +249,7 @@
         color: #000;
     }
 
-    .so-big {
+    /deep/ .so-big {
         font-size: 1.6em;
         vertical-align: middle;
     }
