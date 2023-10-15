@@ -33,23 +33,22 @@ cd raffy-admin
 
 ### 2.2. Start Docker services
 
-#### 2.2.1. In [WSL2 terminal](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) run this command:
+#### 2.2.1. Shell in the PHP container
+```
+docker exec -it raffy-web-1 /bin/bash
+```
+Later, press `Ctrl+D` to exit the container shell.
 
-```
-DOMAIN=raffy.local docker-compose up -d
-```
-
-#### 2.2.2. Shell in the PHP container
-```
-docker exec -it raffy-php-1 /bin/sh;
-```
-Press `Ctrl+D` to exit the container shell.
-
-#### 2.2.3. Install dependencies
+#### 2.2.2. Install dependencies
 ```
 composer install
 composer run-script install-tasks
 php artisan storage:link
+```
+#### 2.2.3. In [WSL2 terminal](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) run this command:
+
+```
+./vendor/bin/sail up -d
 ```
 
 #### 2.2.4. Shell in the Echo container
